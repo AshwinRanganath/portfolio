@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "Microservices",
     "Portfolio",
   ],
-  authors: [{ name: "Ashwin Ranganath", url: "https://github.com/AshwinRanganathCNZ" }],
+  authors: [{ name: "Ashwin Ranganath", url: "https://github.com/AshwinRanganath" }],
   openGraph: {
     title: "Ashwin Ranganath | Senior Software Engineer & Platform Lead",
     description:

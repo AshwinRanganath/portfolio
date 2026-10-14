@@ -77,7 +77,7 @@ export const profileData: ProfileData = {
   timezone: "Asia/Kolkata",
   email: "ashwinr619@live.com",
   linkedin: "https://www.linkedin.com/in/ashwinranganath1997",
-  github: "https://github.com/AshwinRanganathCNZ",
+  github: "https://github.com/AshwinRanganath",
   bio: "Product-minded Software Engineer with a Master of Technology in Computer Science Engineering and 3+ years of hands-on experience architecting scalable Java (Spring Boot) backend microservices, resilient multi-tenant enterprise pipelines, and modern TypeScript/React web systems. Active practitioner of agentic engineering, utilizing multi-agent AI systems for automated diagnostics and high developer velocity.",
   shortBio: "Architecting resilient Java microservices, modern TypeScript/React applications, and multi-agent AI workflows.",
   stats: [
@@ -365,7 +365,7 @@ Key highlights of his current work:
 You can reach him directly through:
 - **Email**: [ashwinr619@live.com](mailto:ashwinr619@live.com)
 - **LinkedIn**: [linkedin.com/in/ashwinranganath1997](https://www.linkedin.com/in/ashwinranganath1997)
-- **GitHub**: [github.com/AshwinRanganathCNZ](https://github.com/AshwinRanganathCNZ)
+- **GitHub**: [github.com/AshwinRanganath](https://github.com/AshwinRanganath)
 - **Resume**: Available for direct download from the landing page.`,
       followUps: ["current-role", "projects", "skills"],
       tags: ["contact", "email", "hire", "socials", "reach", "linkedin", "github"],
