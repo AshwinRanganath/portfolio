@@ -65,11 +65,15 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6 pb-6 border-b border-white/10">
             {/* Avatar with Glow and Status Beacon */}
             <div className="relative group shrink-0">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-br from-cyan-500/20 via-blue-600/30 to-purple-600/20 border border-cyan-400/30 flex items-center justify-center font-mono text-2xl sm:text-3xl font-bold tracking-tight text-white shadow-lg shadow-cyan-500/10">
-                <span>AR</span>
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-cyan-400/40 shadow-xl shadow-cyan-500/15 bg-neutral-800 relative">
+                <img
+                  src={profileData.avatarUrl}
+                  alt={profileData.name}
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
+                />
               </div>
               <div
-                className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-neutral-900 flex items-center justify-center"
+                className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-neutral-900 flex items-center justify-center shadow-md"
                 title="Active & Available"
               >
                 <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
@@ -212,9 +216,9 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
             <div className="text-neutral-500 flex items-center gap-2">
               <span>Press</span>
               <kbd className="px-1.5 py-0.5 rounded bg-white/10 text-[11px] text-neutral-300 border border-white/10 font-mono">
-                1-6
+                /
               </kbd>
-              <span>for quick answers</span>
+              <span>to ask any question</span>
             </div>
           </div>
         </div>

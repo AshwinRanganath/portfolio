@@ -28,19 +28,20 @@ export interface Education {
 
 export interface BotTopic {
   id: string;
-  keyNumber: number;
-  label: string;
+  realisticQuestion: string;
+  shortLabel: string;
   icon: string;
-  question: string;
   summary: string;
   answerMarkdown: string;
   followUps: string[];
   tags: string[];
+  sampleUserQueries: string[];
 }
 
 export interface ProfileData {
   name: string;
   handle: string;
+  avatarUrl: string;
   title: string;
   company: string;
   companyRole: string;
@@ -53,6 +54,10 @@ export interface ProfileData {
   github: string;
   bio: string;
   shortBio: string;
+  languages: {
+    programming: string[];
+    spoken: { name: string; level: string }[];
+  };
   stats: { label: string; value: string; hint: string }[];
   skills: {
     category: string;
@@ -68,6 +73,7 @@ export interface ProfileData {
 export const profileData: ProfileData = {
   name: "Ashwin Ranganath",
   handle: "ashwinr",
+  avatarUrl: "/ashwin.png",
   title: "Senior Software Engineer & Full-Stack Platform Lead",
   company: "CNZ Consultants",
   companyRole: "Senior Software Engineer (Java & Full-Stack Platform Lead)",
@@ -80,6 +86,23 @@ export const profileData: ProfileData = {
   github: "https://github.com/AshwinRanganath",
   bio: "Product-minded Software Engineer with a Master of Technology in Computer Science Engineering and 3+ years of hands-on experience architecting scalable Java (Spring Boot) backend microservices, resilient multi-tenant enterprise pipelines, and modern TypeScript/React web systems. Active practitioner of agentic engineering, utilizing multi-agent AI systems for automated diagnostics and high developer velocity.",
   shortBio: "Architecting resilient Java microservices, modern TypeScript/React applications, and multi-agent AI workflows.",
+  languages: {
+    programming: [
+      "Java (17 / 21)",
+      "TypeScript",
+      "JavaScript (ES6+)",
+      "Python 3.x",
+      "C# (.NET)",
+      "SQL (PostgreSQL)",
+      "PHP",
+      "HTML5 / CSS3",
+    ],
+    spoken: [
+      { name: "English", level: "Full Professional Proficiency (cross-border delivery across NZ, APAC & US)" },
+      { name: "Kannada", level: "Native / Bilingual" },
+      { name: "Hindi", level: "Professional Working Proficiency" },
+    ],
+  },
   stats: [
     { label: "Experience", value: "3+ Yrs", hint: "Enterprise & Global Delivery" },
     { label: "Academics", value: "M.Tech CSE", hint: "Manipal University (GPA 7.9)" },
@@ -91,7 +114,7 @@ export const profileData: ProfileData = {
       category: "Backend & Architecture",
       items: [
         "Java 17 / 21",
-        "Spring Boot 3",
+        "Spring Boot 3 (Spring 6)",
         "Microservices Architecture",
         "RESTful APIs",
         "Reactive Patterns",
@@ -124,7 +147,8 @@ export const profileData: ProfileData = {
         "Next.js",
         "Tailwind CSS",
         "Vite",
-        "Component Architecture",
+        "Angular Material",
+        "ApexCharts",
         "State Management",
         "Accessibility (a11y)",
         "REST Integrations",
@@ -257,118 +281,387 @@ export const profileData: ProfileData = {
   ],
   botTopics: [
     {
-      id: "current-role",
-      keyNumber: 1,
-      label: "Current Focus & Role",
-      icon: "Briefcase",
-      question: "What is Ashwin currently working on?",
-      summary: "Senior Software Engineer & Full-Stack Platform Lead @ CNZ Consultants",
-      answerMarkdown: `Ashwin is currently a **Senior Software Engineer & Full-Stack Platform Lead** at **CNZ Consultants** (Remote, NZ).
+      id: "programming-languages",
+      realisticQuestion: "What programming languages do you code in?",
+      shortLabel: "Programming Languages",
+      icon: "Code",
+      summary: "Java 21/17, TypeScript, JavaScript, Python 3, C#, SQL, PHP",
+      answerMarkdown: `Ashwin works across several programming languages across the stack:
 
-Key highlights of his current work:
-- **Architecting Multi-Domain Integration Pipelines**: Connecting Accounting (Xero, MYOB), E-Commerce (Shopify), and WMS/3PL systems (ShipHero, ControlPort, GRL).
-- **Modern Spring Boot 3 & Java 21**: Leading the refactor from legacy monolithic scripts into a clean, layered microservices architecture.
-- **Dynamic Multi-Tenant Security**: Designed extensible strategy-based authorization supporting OAuth2, API key headers, MD5 query signatures, and Azure AD for dozens of client orgs.
+1. **Java (17 / 21)**
+   - *Primary Backend Language*: Advanced OOP, Spring Boot 3, modular microservices, REST APIs, reactive patterns, AST parsing, and multithreading.
+2. **TypeScript & JavaScript (ES6+)**
+   - *Modern Web & Full-Stack*: React (18/19), Next.js, component architecture, state management, and type-safe API consumption.
+3. **Python (3.x)**
+   - *Automation, Data Pipelines & AI*: Task scheduling, automated batching, NLP data pipelines, and LLM scripting.
+4. **C# (.NET)**
+   - *Enterprise Systems*: Entity Framework, LINQ, RESTful APIs, and database migrations built during his time at AMD.
+5. **SQL (PostgreSQL / Relational)**
+   - *Data Stores*: Transactional schema design, query optimization, indexing, and multi-tenant isolation.
+6. **PHP & HTML5/CSS3**
+   - *Web Foundations*: Enterprise modules (EMMVEE) and accessible, responsive styling.`,
+      followUps: ["spoken-languages", "backend-stack", "current-role"],
+      tags: ["languages", "programming", "java", "typescript", "python", "c#", "sql", "coding", "tech", "code"],
+      sampleUserQueries: [
+        "what programming languages do you know",
+        "what languages do you code in",
+        "which coding languages do you use",
+        "what languages are you comfortable with",
+        "do you know java",
+        "do you know python",
+        "do you know typescript",
+      ],
+    },
+    {
+      id: "spoken-languages",
+      realisticQuestion: "What languages do you speak and communicate in?",
+      shortLabel: "Spoken Languages",
+      icon: "Globe",
+      summary: "English (Professional Fluent), Kannada (Native), Hindi (Professional)",
+      answerMarkdown: `Ashwin is multilingual and experienced in communicating across distributed international teams:
+
+- **English**: Full Professional Working Proficiency. Daily communication with cross-border engineering teams across New Zealand, APAC, and the US.
+- **Kannada**: Native / Bilingual.
+- **Hindi**: Professional Working Proficiency.
+
+He has extensive experience conducting sprint reviews, technical architecture presentations, and asynchronous remote collaboration across different time zones.`,
+      followUps: ["programming-languages", "remote-work", "current-role"],
+      tags: ["spoken", "languages", "english", "kannada", "hindi", "communication", "speak", "talk"],
+      sampleUserQueries: [
+        "what languages do you speak",
+        "what spoken languages do you know",
+        "do you speak english",
+        "can you communicate in english",
+        "what are your languages",
+      ],
+    },
+    {
+      id: "experience-unisys",
+      realisticQuestion: "Tell me about your work experience at Unisys.",
+      shortLabel: "Experience at Unisys",
+      icon: "Briefcase",
+      summary: "Associate Cloud Engineer / Software Engineer (Aug 2023 – Dec 2025)",
+      answerMarkdown: `At **Unisys** (Aug 2023 – Dec 2025) in Bengaluru, Ashwin served as an **Associate Cloud Engineer / Software Engineer**:
+
+- **Java AST & Static Analysis**: Engineered Java-based static analysis and Abstract Syntax Tree (AST) parsing tools to inspect system complexity, module hierarchies, and dependency graphs across large enterprise software codebases.
+- **Generative AI & LLM Tooling**: Integrated OpenAI and Azure OpenAI APIs to build intelligent developer tooling, applying agentic reasoning to explain code architecture and generate automated refactoring and modernization recommendations.
+- **40% Velocity Boost**: Automated technical assessment workflows through tailored prompt engineering, accelerating codebase evaluations by **over 40%** while enhancing developer productivity.
+- **Clean Architecture & TDD**: Applied clean object-oriented architecture and Test-Driven Development (TDD) using JUnit, building modular microservices-ready components across distributed teams.`,
+      followUps: ["experience-amd", "current-role", "agentic-ai"],
+      tags: ["unisys", "ast", "static analysis", "openai", "azure openai", "past work", "cloud engineer", "java"],
+      sampleUserQueries: [
+        "what did you do at unisys",
+        "tell me about your time at unisys",
+        "tell me about your work at unisys",
+        "unisys experience",
+        "what was your role at unisys",
+        "how did you use ai at unisys",
+      ],
+    },
+    {
+      id: "experience-amd",
+      realisticQuestion: "What did you do during your time at AMD India?",
+      shortLabel: "Experience at AMD India",
+      icon: "Award",
+      summary: "Full Stack Developer Intern (Aug 2022 – Jul 2023) & Best Poster Award Winner",
+      answerMarkdown: `At **AMD India Private Limited** (Aug 2022 – Jul 2023) in Hyderabad, Ashwin worked as a **Full Stack Developer Intern**:
+
+- **Enterprise Web Apps & APIs**: Engineered full-stack business applications and high-performance RESTful APIs from concept to production using C# Entity Framework, LINQ, and SQL databases.
+- **High-Density Data Visualizations**: Built dynamic, responsive web interfaces using Angular Material, PrimeNG, and ApexCharts, focusing on high data density, smooth interactions, and real-time visualization.
+- **Operational Automation**: Automated task scheduling and operational data batching using Python scripts, reducing server latency and optimizing system compute efficiency.
+- **🏆 Best Poster Award**: Honored with the **Best Poster Award at the AMD Innovation EXPO 2023** for innovative full-stack tool architecture and visualization.`,
+      followUps: ["experience-unisys", "awards", "current-role"],
+      tags: ["amd", "amd india", "c#", "angular", "apexcharts", "intern", "innovation expo", "award", "past work"],
+      sampleUserQueries: [
+        "what did you do at amd",
+        "tell me about amd",
+        "tell me about your time at amd",
+        "amd internship",
+        "amd experience",
+        "best poster award",
+      ],
+    },
+    {
+      id: "experience-emmvee",
+      realisticQuestion: "What was your internship at EMMVEE Photovoltaic?",
+      shortLabel: "Experience at EMMVEE",
+      icon: "Layers",
+      summary: "Web Developer Intern (Jul 2018 – Aug 2018)",
+      answerMarkdown: `At **EMMVEE Photovoltaic Private Limited** (Jul 2018 – Aug 2018) in Bengaluru, Ashwin worked as a **Web Developer Intern**:
+
+- **PRISM Enterprise System**: Implemented a core production tracking module for the internal PRISM enterprise system.
+- **Operational Metrics**: Enabled factory operations personnel to classify material throughput and track real-time operational metrics intuitively.
+- **Tech Used**: JavaScript, HTML5, CSS3, PHP, MySQL.`,
+      followUps: ["experience-amd", "experience-unisys", "career-journey"],
+      tags: ["emmvee", "solar", "photovoltaic", "intern", "prism", "php", "mysql"],
+      sampleUserQueries: [
+        "what did you do at emmvee",
+        "tell me about emmvee",
+        "first internship",
+        "emmvee photovoltaic",
+      ],
+    },
+    {
+      id: "career-journey",
+      realisticQuestion: "Where have you worked in the past? Give me your career journey.",
+      shortLabel: "Career Journey & History",
+      icon: "TrendingUp",
+      summary: "CNZ Consultants → Unisys → AMD India → EMMVEE Photovoltaic",
+      answerMarkdown: `Here is Ashwin's career trajectory over the past 3+ years:
+
+1. **CNZ Consultants** (Jan 2026 – Present) | *Senior Software Engineer & Platform Lead*
+   - Leading the modular Spring Boot 3 & Java 21 architecture overhaul, multi-domain integration pipelines (Xero, MYOB, Shopify, ShipHero), dynamic multi-tenant security, and agentic middleware diagnostics.
+2. **Unisys** (Aug 2023 – Dec 2025) | *Associate Cloud Engineer / Software Engineer*
+   - Built Java AST static analysis tools, integrated OpenAI/Azure OpenAI for automated code explanation and refactoring, accelerating codebase audits by **40%**.
+3. **AMD India** (Aug 2022 – Jul 2023) | *Full Stack Developer Intern*
+   - Built high-performance C# / .NET RESTful APIs, Angular Material + ApexCharts visualization dashboards, and won the **Best Poster Award at AMD Innovation EXPO 2023**.
+4. **EMMVEE Photovoltaic** (Jul 2018 – Aug 2018) | *Web Developer Intern*
+   - Implemented production tracking modules for the PRISM enterprise management system.`,
+      followUps: ["current-role", "experience-unisys", "education"],
+      tags: ["career", "past work", "history", "experience", "journey", "companies", "timeline", "jobs"],
+      sampleUserQueries: [
+        "where have you worked in the past",
+        "tell me about your past work experience",
+        "what is your career history",
+        "what companies have you worked for",
+        "tell me about your background",
+        "past work experience",
+      ],
+    },
+    {
+      id: "current-role",
+      realisticQuestion: "What are you currently working on at CNZ Consultants?",
+      shortLabel: "Current Focus at CNZ",
+      icon: "Briefcase",
+      summary: "Senior Software Engineer & Full-Stack Platform Lead @ CNZ Consultants (Remote, NZ)",
+      answerMarkdown: `Ashwin is currently a **Senior Software Engineer & Full-Stack Platform Lead** at **CNZ Consultants** (Remote, NZ):
+
+- **Modular Spring Boot 3 Architecture**: Leading the overhaul of legacy monolithic integration files into decoupled, layered services separating Core HTTP clients from client-specific business handlers.
+- **Multi-Domain Pipelines**: Connecting Accounting (Xero, MYOB invoices & COGS), E-Commerce (Shopify catalogs & orders), and WMS/3PL systems (ShipHero, ControlPort, GRL) via REST and automated SFTP syncs.
+- **Multi-Tenant Security**: Designed extensible authorization supporting OAuth2, API key headers, MD5 query signatures, and Azure AD across dozens of organizations.
 - **Agentic Engineering**: Pioneering multi-agent AI workflows in middleware to automate service diagnostics, payload telemetry inspections, and exception remediation.
-- **Full-Stack Telemetry**: Built React & TypeScript dashboards with 1-click operational bottleneck remediation drawers.`,
-      followUps: ["skills", "projects", "education"],
-      tags: ["work", "current", "role", "cnz", "spring boot", "java", "lead"],
+- **Operations Telemetry**: Built React & TypeScript dashboards featuring 1-click bottleneck remediation drawers for warehouse and operations personnel.`,
+      followUps: ["programming-languages", "backend-stack", "projects"],
+      tags: ["current", "role", "cnz", "work", "job", "spring boot", "java", "lead"],
+      sampleUserQueries: [
+        "what are you currently working on",
+        "what is your current role",
+        "what do you do now",
+        "tell me about your current work",
+        "cnz consultants",
+      ],
+    },
+    {
+      id: "backend-stack",
+      realisticQuestion: "What is your backend engineering & microservices experience?",
+      shortLabel: "Backend & Microservices",
+      icon: "Server",
+      summary: "Java 21, Spring Boot 3, RESTful APIs, OOP, JUnit/TDD, PostgreSQL, Docker",
+      answerMarkdown: `Ashwin specializes in high-throughput, mission-critical backend systems:
+
+- **Java (17 / 21) & Spring Boot 3 (Spring 6)**: Modular microservices, dependency injection, reactive patterns, and resilient RESTful API design.
+- **Resilience & Reliability**: Circuit breaking, exponential backoff, retry mechanisms, and rate limiting for high-volume third-party API consumers.
+- **Database Architecture**: PostgreSQL, relational schema design, transactional integrity, multi-tenant data isolation, and indexing.
+- **Testing & Quality**: Test-Driven Development (TDD) using JUnit 5 and Mockito, ensuring regression-free deployments.
+- **Containerization**: Docker containerization and CI/CD automation for zero-downtime releases.`,
+      followUps: ["enterprise-integrations", "programming-languages", "projects"],
+      tags: ["backend", "java", "spring boot", "microservices", "api", "rest", "postgresql", "docker", "server"],
+      sampleUserQueries: [
+        "what is your backend experience",
+        "tell me about your spring boot experience",
+        "how do you build microservices",
+        "what is your backend stack",
+        "do you know java backend",
+      ],
+    },
+    {
+      id: "agentic-ai",
+      realisticQuestion: "What is your experience with Agentic AI and LLM tools?",
+      shortLabel: "Agentic AI & LLMs",
+      icon: "Cpu",
+      summary: "Multi-Agent Orchestration, Automated Diagnostics, OpenAI & Azure OpenAI APIs",
+      answerMarkdown: `Ashwin is an active practitioner of **Agentic Engineering**:
+
+- **Middleware Diagnostics & Remediation**: Built multi-agent AI workflows inside integration pipelines that inspect payload telemetry, automatically diagnose failed transactions, and suggest or execute 1-click remedies.
+- **Codebase Modernization Tooling**: At Unisys, integrated OpenAI and Azure OpenAI APIs with Java AST parsers, using agentic reasoning to explain legacy architectures and generate automated refactoring suggestions (cutting evaluation times by **40%**).
+- **Prompt Engineering & Tool Orchestration**: Proficient with model function calling, structured outputs, multi-agent collaboration, and developer velocity workflows.`,
+      followUps: ["experience-unisys", "projects", "current-role"],
+      tags: ["ai", "agentic", "agents", "llm", "openai", "azure openai", "prompt engineering", "ast", "automation"],
+      sampleUserQueries: [
+        "what is your experience with ai",
+        "what is agentic engineering",
+        "how do you use llms",
+        "do you know openai",
+        "tell me about your ai projects",
+      ],
+    },
+    {
+      id: "enterprise-integrations",
+      realisticQuestion: "What enterprise tools and platforms have you integrated?",
+      shortLabel: "Enterprise Integrations",
+      icon: "Layers",
+      summary: "Shopify, Xero, MYOB, ShipHero, ControlPort, Cin7 Core/Omni, SFTP, EDI",
+      answerMarkdown: `Ashwin has architected enterprise integration pipelines across multiple critical business domains:
+
+- **Accounting & ERP**: Xero, MYOB (invoices, COGS ledgers, purchase orders), Cin7 Core & Cin7 Omni.
+- **E-Commerce Platforms**: Shopify catalog synchronization, multi-currency live FX engines, and automated order processing.
+- **WMS & 3PL (Warehousing)**: ShipHero, ControlPort, GRL, Consignly, and automated SFTP/CSV syncs (CartonCloud).
+- **Security & Authorization**: Strategy-based multi-tenant authorization supporting OAuth2, API Key headers, MD5 query signatures, and Azure AD / Microsoft Graph.`,
+      followUps: ["current-role", "backend-stack", "projects"],
+      tags: ["integrations", "enterprise", "xero", "myob", "shopify", "shiphero", "wms", "erp", "cin7", "sftp"],
+      sampleUserQueries: [
+        "what enterprise tools have you integrated",
+        "have you worked with shopify",
+        "have you worked with xero",
+        "tell me about your integration experience",
+        "wms 3pl erp integrations",
+      ],
     },
     {
       id: "education",
-      keyNumber: 2,
-      label: "Education & Academics",
+      realisticQuestion: "Where was your education and what degrees do you hold?",
+      shortLabel: "Education & Academics",
       icon: "GraduationCap",
-      question: "Where was Ashwin's education and what are his qualifications?",
       summary: "M.Tech CSE from Manipal University (GPA 7.9) & B.E. ISE from VTU",
       answerMarkdown: `Ashwin holds advanced formal degrees in Computer Science:
 
 1. **Master of Technology (M.Tech) in Computer Science Engineering**
-   - **Manipal University** (Aug 2021 – Jul 2023)
-   - **GPA: 7.9 / 10.0**
-   - Specialization in scalable distributed systems, algorithms, and data engineering.
+   - **Manipal University** (Aug 2021 – Jul 2023) | **GPA: 7.9 / 10.0**
+   - Specialized in distributed systems, scalable data engineering, and software architecture.
 
 2. **Bachelor of Engineering (B.E.) in Information Science and Engineering**
    - **Visvesvaraya Technological University (VTU)** (Jul 2015 – May 2019)
-   - Foundational computer science, data structures, operating systems, networking, and software engineering.
+   - Core foundations in data structures, algorithms, operating systems, and computer networks.
 
-**Honors**:
+**Academic & Industry Recognition**:
 - **Best Poster Award** at AMD Innovation EXPO 2023.`,
-      followUps: ["current-role", "projects", "awards"],
-      tags: ["education", "degree", "mtech", "manipal", "vtu", "university", "college", "gpa"],
+      followUps: ["career-journey", "awards", "current-role"],
+      tags: ["education", "degree", "mtech", "manipal", "vtu", "university", "college", "gpa", "academics"],
+      sampleUserQueries: [
+        "where was your education",
+        "where did you study",
+        "what degrees do you have",
+        "tell me about your master degree",
+        "what is your gpa",
+        "manipal university",
+      ],
     },
     {
       id: "projects",
-      keyNumber: 3,
-      label: "Featured Projects",
+      realisticQuestion: "What major platforms and projects have you built?",
+      shortLabel: "Featured Projects",
       icon: "Rocket",
-      question: "What major platforms and projects has Ashwin built?",
-      summary: "Enterprise Middleware & Telemetry, Java AST Code Analyzer, Sentiment Research",
-      answerMarkdown: `Here are three standout engineering systems Ashwin has architected:
+      summary: "Enterprise Middleware & Telemetry, Java AST Analyzer, Sentiment Corpus Research",
+      answerMarkdown: `Here are three standout engineering platforms Ashwin has built:
 
 1. **Multi-Domain Integration & Telemetry Platform**
    - *Tech: Java 21, Spring Boot 3, TypeScript, React, PostgreSQL, Docker*
-   - Enterprise middleware connecting ERPs, Accounting (Xero/MYOB), E-Commerce (Shopify), and WMS/3PL systems.
-   - Features real-time payload telemetry, circuit breaking, dynamic credential resolution, and 1-click exception remediation drawers.
+   - Multi-tenant enterprise middleware connecting ERPs, Accounting (Xero/MYOB), E-Commerce (Shopify), and WMS/3PL systems with live telemetry and 1-click remediation drawers.
 
 2. **Automated Code Complexity & AST Dependency Analyzer**
    - *Tech: Java, AST Parsing, Azure OpenAI, Prompt Engineering*
-   - Maps module hierarchies, computes cyclomatic metrics, and uses LLM agents to provide automated refactoring suggestions, accelerating codebase evaluations by **40%**.
+   - Computes code metrics, maps module dependencies, and leverages LLM agents to deliver automated modernization insights—slashing audit time by **40%**.
 
 3. **Echo Chamber & Social Corpus Sentiment Analyzer**
    - *Tech: Python, Pandas, NetworkX, NLP*
-   - Large-scale data pipeline analyzing sentiment polarization and community interaction clustering.`,
-      followUps: ["skills", "current-role", "contact"],
-      tags: ["projects", "portfolio", "telemetry", "ast", "middleware", "code"],
-    },
-    {
-      id: "skills",
-      keyNumber: 4,
-      label: "Tech Stack & Toolkit",
-      icon: "Cpu",
-      question: "What is Ashwin's tech stack and core engineering toolkit?",
-      summary: "Java 21, Spring Boot 3, TypeScript, React, Agentic AI, Docker, Multi-tenant Architecture",
-      answerMarkdown: `Ashwin's core technical toolkit spans backend, enterprise integrations, frontend, and AI:
-
-- **Backend & Architecture**: Java (17 / 21), Spring Boot 3 (Spring 6), Microservices, RESTful APIs, OOP Refactoring, Reactive Patterns, Maven, JUnit, Python 3, PostgreSQL, SQL.
-- **Enterprise Integrations**: Accounting (Xero, MYOB), E-Commerce (Shopify), WMS & 3PL (ShipHero, ControlPort, GRL, Consignly), ERPs (Cin7), SFTP, EDI.
-- **Frontend & Web**: TypeScript, React (18/19), Next.js, Vite, Tailwind CSS, Component Architecture, Accessibility (a11y).
-- **Security & Cloud**: Multi-Tenant Credential Resolution, OAuth2, API Keys, MD5 Signatures, Docker, Git, CI/CD, Linux, Azure AD / Microsoft Graph.
-- **AI & Agentic Tools**: Multi-agent Orchestration, Automated Error Diagnosis & Remediation, OpenAI & Azure OpenAI APIs, Prompt Engineering.`,
-      followUps: ["projects", "current-role", "contact"],
-      tags: ["skills", "tech stack", "languages", "tools", "java", "react", "typescript", "spring"],
+   - Data pipeline analyzing sentiment polarization and interaction clustering across large social platform corpora.`,
+      followUps: ["programming-languages", "backend-stack", "contact"],
+      tags: ["projects", "portfolio", "built", "telemetry", "ast", "code"],
+      sampleUserQueries: [
+        "what projects have you worked on",
+        "what have you built",
+        "show me your projects",
+        "tell me about your major projects",
+        "featured projects",
+      ],
     },
     {
       id: "awards",
-      keyNumber: 5,
-      label: "Awards & Milestones",
+      realisticQuestion: "What awards and notable milestones have you achieved?",
+      shortLabel: "Awards & Milestones",
       icon: "Award",
-      question: "What awards and notable milestones has Ashwin achieved?",
-      summary: "AMD Innovation EXPO 2023 Best Poster Award & 40% speedup on enterprise code audits",
-      answerMarkdown: `Key career accolades and impact highlights:
+      summary: "AMD Innovation EXPO Best Poster Award & 40% speedup on enterprise code audits",
+      answerMarkdown: `Notable achievements and recognitions:
 
-- **Best Poster Award (AMD Innovation EXPO 2023)**: Awarded at AMD India for outstanding architectural design and visualization of full-stack internal enterprise tools.
-- **40% Velocity Boost at Unisys**: Built Java AST parsers and OpenAI-driven modernization tooling that cut codebase technical evaluation times by over 40%.
-- **Zero-Downtime Multi-Domain Pipelines**: Successfully refactored and deployed mission-critical middleware syncing hundreds of thousands of retail transactions across NZ, Australia, and US operations.`,
-      followUps: ["current-role", "education", "contact"],
-      tags: ["awards", "achievements", "amd", "unisys", "milestones"],
+- **🏆 Best Poster Award (AMD Innovation EXPO 2023)**: Awarded at AMD India for outstanding architectural design and visualization of full-stack business applications.
+- **⚡ 40% Velocity Boost at Unisys**: Built Java AST parsers and OpenAI-driven modernization tooling that cut codebase evaluation times by over 40%.
+- **🚀 Zero-Downtime Multi-Domain Pipelines**: Successfully refactored and deployed mission-critical middleware syncing hundreds of thousands of retail transactions across NZ, Australia, and US operations.`,
+      followUps: ["experience-amd", "current-role", "contact"],
+      tags: ["awards", "achievements", "amd", "unisys", "milestones", "recognition"],
+      sampleUserQueries: [
+        "what awards have you won",
+        "tell me about your awards",
+        "what are your biggest achievements",
+        "amd innovation expo award",
+      ],
+    },
+    {
+      id: "strengths",
+      realisticQuestion: "Why should we hire you? What are your key strengths?",
+      shortLabel: "Why Hire Ashwin?",
+      icon: "Sparkles",
+      summary: "Platform mindset, deep Java/Spring expertise, agentic engineering, global delivery",
+      answerMarkdown: `Here is what sets Ashwin apart:
+
+1. **Platform Thinking & Modular Architecture**: Proven ability to take messy, monolithic integration scripts and refactor them into clean, layered, testable microservices.
+2. **Deep Enterprise Domain Knowledge**: Hands-on mastery of real-world retail, WMS, ERP, and accounting pipelines (Shopify, Xero, MYOB, ShipHero, Cin7).
+3. **Agentic Velocity**: Active practitioner who uses multi-agent systems and AI tooling to automate diagnostics and accelerate developer throughput.
+4. **Reliability & TDD**: Writes resilient systems with circuit breakers, retry backoffs, and comprehensive JUnit/TDD test coverage.
+5. **Global Remote Adaptability**: Experience delivering across New Zealand, APAC, and US time zones with seamless asynchronous communication.`,
+      followUps: ["current-role", "programming-languages", "contact"],
+      tags: ["why hire", "strengths", "value", "hire", "skills", "standout", "unique"],
+      sampleUserQueries: [
+        "why should we hire you",
+        "what are your strengths",
+        "what makes you unique",
+        "what value do you bring",
+        "why ashwin",
+      ],
+    },
+    {
+      id: "remote-work",
+      realisticQuestion: "Can you work remotely and what is your time zone availability?",
+      shortLabel: "Remote & Time Zone",
+      icon: "MapPin",
+      summary: "Based in Bengaluru (IST / UTC+05:30) · Global Remote Delivery (NZ, APAC, US)",
+      answerMarkdown: `Ashwin is based in **Bengaluru, India** (IST / UTC+05:30) and is a seasoned global remote engineer:
+
+- **Proven Cross-Border Delivery**: Currently delivering as Senior Platform Lead for New Zealand-based clients (CNZ Consultants) with significant time zone overlaps.
+- **Flexible Overlap**: Comfortable aligning with APAC, European, and US working hours for sprint ceremonies and cross-functional meetings.
+- **Asynchronous Communication**: Excels at detailed PR documentation, architectural decision records (ADRs), and autonomous problem solving.`,
+      followUps: ["current-role", "strengths", "contact"],
+      tags: ["remote", "location", "timezone", "india", "bengaluru", "new zealand", "work from home", "availability"],
+      sampleUserQueries: [
+        "can you work remotely",
+        "where are you located",
+        "what is your timezone",
+        "are you open to remote work",
+        "can you work with us or europe time zones",
+      ],
     },
     {
       id: "contact",
-      keyNumber: 6,
-      label: "How to Reach Ashwin",
+      realisticQuestion: "How can I contact or hire Ashwin?",
+      shortLabel: "Contact & Connect",
       icon: "Mail",
-      question: "How can I contact or hire Ashwin?",
       summary: "Email: ashwinr619@live.com · LinkedIn · GitHub",
       answerMarkdown: `Ashwin is open to conversations regarding high-impact software engineering roles, platform lead opportunities, and technical consulting.
 
-You can reach him directly through:
+Direct channels:
 - **Email**: [ashwinr619@live.com](mailto:ashwinr619@live.com)
 - **LinkedIn**: [linkedin.com/in/ashwinranganath1997](https://www.linkedin.com/in/ashwinranganath1997)
 - **GitHub**: [github.com/AshwinRanganath](https://github.com/AshwinRanganath)
-- **Resume**: Available for direct download from the landing page.`,
-      followUps: ["current-role", "projects", "skills"],
-      tags: ["contact", "email", "hire", "socials", "reach", "linkedin", "github"],
+- **Resume**: Available to view and print at [/resume](/resume).`,
+      followUps: ["current-role", "projects", "strengths"],
+      tags: ["contact", "email", "hire", "reach", "socials", "linkedin", "github", "phone", "talk"],
+      sampleUserQueries: [
+        "how can i contact you",
+        "what is your email",
+        "how do i hire you",
+        "can i get your linkedin",
+        "contact details",
+        "get in touch",
+      ],
     },
   ],
 };

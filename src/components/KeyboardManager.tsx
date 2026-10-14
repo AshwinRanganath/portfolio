@@ -36,7 +36,7 @@ export function KeyboardManager({
         const num = parseInt(e.key, 10);
         if (num >= 1 && num <= profileData.botTopics.length) {
           e.preventDefault();
-          const targetTopic = profileData.botTopics.find((t) => t.keyNumber === num);
+          const targetTopic = profileData.botTopics[num - 1];
           if (targetTopic) {
             onSelectTopic(targetTopic.id);
           }
