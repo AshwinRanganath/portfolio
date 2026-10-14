@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://portfolio-git-main-ashwinranganaths-projects.vercel.app"),
   title: "Ashwin Ranganath | Senior Software Engineer & Platform Lead",
   description:
     "Product-minded Software Engineer with M.Tech in CSE (Manipal) and 3+ years experience building scalable Java (Spring Boot) microservices, enterprise pipelines, and Agentic AI systems.",
@@ -29,11 +30,26 @@ export const metadata: Metadata = {
     "Portfolio",
   ],
   authors: [{ name: "Ashwin Ranganath", url: "https://github.com/AshwinRanganath" }],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Ashwin Ranganath | Senior Software Engineer & Platform Lead",
     description:
       "Interactive portfolio featuring Java microservices, enterprise platforms, and an interactive conversational assistant.",
+    url: "https://portfolio-git-main-ashwinranganaths-projects.vercel.app",
+    siteName: "Ashwin Ranganath Portfolio",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Ashwin Ranganath | Senior Software Engineer & Platform Lead",
+    description:
+      "Interactive portfolio featuring Java microservices, enterprise platforms, and an interactive conversational assistant.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

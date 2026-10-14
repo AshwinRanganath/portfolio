@@ -43,7 +43,7 @@ export default function Home() {
       <Header onOpenBot={handleOpenBot} />
 
       {/* Main Single-Viewport Hero Centerpiece */}
-      <main className="flex-1 flex items-center justify-center py-6">
+      <main className="flex-1 flex items-center justify-center py-4 pb-28 sm:py-6 sm:pb-20">
         <HeroCard
           onOpenBot={handleOpenBot}
           onSelectTopic={handleSelectTopic}

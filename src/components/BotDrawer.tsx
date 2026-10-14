@@ -106,6 +106,15 @@ Type any question below or click any suggestion to get started!`,
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
+  // Cleanup interval on unmount
+  useEffect(() => {
+    return () => {
+      if (activeStreamRef.current) {
+        clearInterval(activeStreamRef.current);
+      }
+    };
+  }, []);
+
   const streamBotResponse = (
     fullText: string,
     topicId?: string,
@@ -379,6 +388,8 @@ You can click any of the suggested questions below to dive into details!`;
               <img
                 src={profileData.avatarUrl}
                 alt={profileData.name}
+                width={32}
+                height={32}
                 className="w-full h-full object-cover object-center"
               />
             </div>

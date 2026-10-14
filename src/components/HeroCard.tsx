@@ -69,6 +69,8 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
                 <img
                   src={profileData.avatarUrl}
                   alt={profileData.name}
+                  width={96}
+                  height={96}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-300"
                 />
               </div>
