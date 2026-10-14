@@ -57,15 +57,15 @@ export function Header({ onOpenBot }: HeaderProps) {
     <header className="w-full max-w-6xl mx-auto px-4 sm:px-6 pt-4 pb-2 flex items-center justify-between text-xs sm:text-sm select-none">
       {/* Left: Terminal brand identifier */}
       <div className="flex items-center gap-2 sm:gap-3">
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/5 border border-white/10 dark:border-white/10 border-neutral-300">
-          <Terminal className="w-3.5 h-3.5 text-cyan-400" />
-          <span className="font-mono font-medium tracking-tight text-white dark:text-white text-neutral-900">
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md theme-subtle-box">
+          <Terminal className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
+          <span className="font-mono font-medium tracking-tight theme-heading">
             {profileData.handle}@platform:~$
           </span>
         </div>
 
         {/* Status indicator */}
-        <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+        <div className="hidden md:flex items-center gap-2 px-2.5 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
           <span className="relative flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -77,7 +77,7 @@ export function Header({ onOpenBot }: HeaderProps) {
       {/* Right: Clock + Hotkey Trigger + Theme Toggle */}
       <div className="flex items-center gap-2 sm:gap-3">
         {timeStr && (
-          <div className="hidden sm:flex items-center gap-1.5 font-mono text-xs text-neutral-400 px-2.5 py-1 rounded-md bg-white/5 border border-white/10">
+          <div className="hidden sm:flex items-center gap-1.5 font-mono text-xs theme-muted px-2.5 py-1 rounded-md theme-subtle-box">
             <span>{timeStr}</span>
           </div>
         )}
@@ -85,12 +85,12 @@ export function Header({ onOpenBot }: HeaderProps) {
         {/* Quick Assistant Launcher */}
         <button
           onClick={onOpenBot}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 transition-all font-mono text-xs"
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30 transition-all font-mono text-xs"
           title="Open Interactive Assistant (Press /)"
         >
-          <Sparkles className="w-3.5 h-3.5" />
-          <span className="hidden sm:inline">Ask AI Bot</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-black/40 text-[10px] text-cyan-300 border border-cyan-500/40">
+          <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+          <span className="hidden sm:inline font-medium">Ask AI Bot</span>
+          <kbd className="px-1.5 py-0.5 rounded bg-cyan-950/20 dark:bg-black/40 text-[10px] text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
             /
           </kbd>
         </button>
@@ -98,9 +98,9 @@ export function Header({ onOpenBot }: HeaderProps) {
         {/* Resume Link */}
         <a
           href="/resume"
-          className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-md bg-white/5 hover:bg-white/10 text-neutral-300 border border-white/10 transition-all font-mono text-xs"
+          className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-md theme-subtle-box theme-body hover:theme-heading transition-all font-mono text-xs"
         >
-          <FileText className="w-3.5 h-3.5 text-neutral-400" />
+          <FileText className="w-3.5 h-3.5 theme-muted" />
           <span>Resume</span>
         </a>
 
@@ -108,7 +108,8 @@ export function Header({ onOpenBot }: HeaderProps) {
         <button
           onClick={toggleTheme}
           aria-label="Toggle color theme"
-          className="p-1.5 rounded-md bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white border border-white/10 transition-colors"
+          className="p-1.5 rounded-md theme-subtle-box theme-muted hover:theme-heading transition-colors"
+          title={isLight ? "Switch to Dark Mode" : "Switch to Light Mode"}
         >
           {isLight ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
         </button>

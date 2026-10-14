@@ -2,66 +2,130 @@
 
 @layer base {
   :root {
+    /* Dark mode by default */
     --bg-primary: #090a0f;
     --bg-secondary: #0f111a;
-    --bg-card: rgba(18, 21, 31, 0.75);
-    --bg-card-hover: rgba(26, 31, 46, 0.85);
-    --border-subtle: rgba(255, 255, 255, 0.08);
-    --border-accent: rgba(56, 189, 248, 0.3);
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
-    --accent-emerald: #10b981;
-    --accent-cyan: #06b6d4;
-    --accent-blue: #3b82f6;
-    --accent-amber: #f59e0b;
+    --bg-card: rgba(18, 21, 31, 0.85);
+    --bg-card-hover: rgba(26, 31, 46, 0.95);
+    --bg-titlebar: rgba(0, 0, 0, 0.5);
+    --bg-subtle: rgba(255, 255, 255, 0.05);
+    --bg-subtle-hover: rgba(255, 255, 255, 0.1);
+    --border-subtle: rgba(255, 255, 255, 0.1);
+    --border-accent: rgba(6, 182, 212, 0.35);
+    --text-heading: #ffffff;
+    --text-body: #e2e8f0;
+    --text-muted: #94a3b8;
+    --text-faint: #64748b;
+    --bg-drawer: #0d1017;
+    --bg-bubble-bot: rgba(255, 255, 255, 0.05);
+    --border-bubble-bot: rgba(255, 255, 255, 0.1);
+    --bg-dock: rgba(15, 17, 26, 0.95);
+    --shadow-card: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    --dot-color: rgba(255, 255, 255, 0.07);
+    --ambient-glow-1: rgba(6, 182, 212, 0.05);
+    --ambient-glow-2: rgba(59, 130, 246, 0.05);
   }
 
   html.light {
+    /* Light mode */
     --bg-primary: #f8fafc;
     --bg-secondary: #f1f5f9;
-    --bg-card: rgba(255, 255, 255, 0.9);
-    --bg-card-hover: rgba(248, 250, 252, 1);
-    --border-subtle: rgba(0, 0, 0, 0.08);
-    --border-accent: rgba(14, 165, 233, 0.4);
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
+    --bg-card: #ffffff;
+    --bg-card-hover: #ffffff;
+    --bg-titlebar: #f1f5f9;
+    --bg-subtle: rgba(0, 0, 0, 0.04);
+    --bg-subtle-hover: rgba(0, 0, 0, 0.08);
+    --border-subtle: rgba(0, 0, 0, 0.12);
+    --border-accent: rgba(14, 165, 233, 0.45);
+    --text-heading: #0f172a;
+    --text-body: #334155;
     --text-muted: #64748b;
+    --text-faint: #94a3b8;
+    --bg-drawer: #ffffff;
+    --bg-bubble-bot: #f1f5f9;
+    --border-bubble-bot: rgba(0, 0, 0, 0.08);
+    --bg-dock: rgba(255, 255, 255, 0.96);
+    --shadow-card: 0 20px 40px -15px rgba(0, 0, 0, 0.12);
+    --dot-color: rgba(0, 0, 0, 0.08);
+    --ambient-glow-1: rgba(6, 182, 212, 0.08);
+    --ambient-glow-2: rgba(59, 130, 246, 0.06);
   }
 }
 
 body {
   background-color: var(--bg-primary);
-  color: var(--text-primary);
+  color: var(--text-body);
   overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 /* Developer CLI subtle dot grid background */
 .bg-grid-pattern {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-image: radial-gradient(var(--dot-color) 1.5px, transparent 1.5px);
   background-size: 24px 24px;
 }
 
-html.light .bg-grid-pattern {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
-}
-
-/* Glassmorphism card utility */
-.cli-card {
-  background: var(--bg-card);
+/* Semantic utility classes */
+.theme-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-card);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--border-subtle);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cli-card:hover {
-  background: var(--bg-card-hover);
-  border-color: rgba(255, 255, 255, 0.16);
+.theme-card:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-accent);
 }
 
-html.light .cli-card:hover {
-  border-color: rgba(0, 0, 0, 0.18);
+.theme-titlebar {
+  background-color: var(--bg-titlebar);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.theme-subtle-box {
+  background-color: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.15s ease;
+}
+
+.theme-subtle-box:hover {
+  background-color: var(--bg-subtle-hover);
+}
+
+.theme-dock {
+  background-color: var(--bg-dock);
+  border: 1px solid var(--border-accent);
+  box-shadow: var(--shadow-card);
+}
+
+.theme-drawer {
+  background-color: var(--bg-drawer);
+  border-left: 1px solid var(--border-subtle);
+}
+
+.theme-bubble-bot {
+  background-color: var(--bg-bubble-bot);
+  border: 1px solid var(--border-bubble-bot);
+  color: var(--text-body);
+}
+
+.theme-heading {
+  color: var(--text-heading);
+}
+
+.theme-body {
+  color: var(--text-body);
+}
+
+.theme-muted {
+  color: var(--text-muted);
+}
+
+.theme-faint {
+  color: var(--text-faint);
 }
 
 /* Custom minimal scrollbar */
@@ -75,12 +139,12 @@ html.light .cli-card:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.2);
+  background: rgba(148, 163, 184, 0.25);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.4);
+  background: rgba(148, 163, 184, 0.45);
 }
 
 /* Terminal blink cursor animation */
@@ -91,13 +155,4 @@ html.light .cli-card:hover {
 
 .animate-cursor {
   animation: blink 1s step-end infinite;
-}
-
-/* Subtle glow */
-.glow-cyan {
-  box-shadow: 0 0 25px -5px rgba(6, 182, 212, 0.25);
-}
-
-.glow-emerald {
-  box-shadow: 0 0 20px -5px rgba(16, 185, 129, 0.3);
 }

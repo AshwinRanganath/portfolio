@@ -370,10 +370,10 @@ You can click any of the suggested questions below to dive into details!`;
         role="dialog"
         aria-modal="true"
         aria-label="Interactive Assistant Drawer"
-        className="relative w-full max-w-xl h-full bg-[#0d1017] border-l border-white/10 shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-300"
+        className="relative w-full max-w-xl h-full theme-drawer shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-300"
       >
         {/* Drawer Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/10 bg-black/40">
+        <div className="flex items-center justify-between px-5 py-3.5 theme-titlebar">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg overflow-hidden border border-cyan-500/40 shrink-0">
               <img
@@ -384,14 +384,14 @@ You can click any of the suggested questions below to dive into details!`;
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-semibold text-white">
+                <span className="font-mono text-sm font-semibold theme-heading">
                   ashwin-assistant
                 </span>
-                <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">
+                <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
                   online
                 </span>
               </div>
-              <p className="text-[11px] text-neutral-400 font-sans">
+              <p className="text-[11px] theme-muted font-sans">
                 Ask about past experience, languages, or current roles
               </p>
             </div>
@@ -400,14 +400,14 @@ You can click any of the suggested questions below to dive into details!`;
           <div className="flex items-center gap-2">
             <button
               onClick={clearChat}
-              className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 transition-colors"
+              className="p-1.5 rounded-lg theme-muted hover:theme-heading hover:bg-[var(--bg-subtle)] transition-colors"
               title="Reset Conversation"
             >
               <RotateCcw className="w-4 h-4" />
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-white/5 transition-colors"
+              className="p-1.5 rounded-lg theme-muted hover:theme-heading hover:bg-[var(--bg-subtle)] transition-colors"
               title="Close (Esc)"
             >
               <X className="w-5 h-5" />
@@ -416,9 +416,9 @@ You can click any of the suggested questions below to dive into details!`;
         </div>
 
         {/* Realistic Suggested Questions Strip */}
-        <div className="px-4 py-2.5 bg-black/20 border-b border-white/5 flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-          <span className="text-[11px] font-mono text-neutral-500 shrink-0 flex items-center gap-1">
-            <MessageCircleQuestion className="w-3.5 h-3.5 text-cyan-400" />
+        <div className="px-4 py-2.5 theme-titlebar flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+          <span className="text-[11px] font-mono theme-faint shrink-0 flex items-center gap-1">
+            <MessageCircleQuestion className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
             Try:
           </span>
           {[
@@ -432,7 +432,7 @@ You can click any of the suggested questions below to dive into details!`;
             <button
               key={item.id}
               onClick={() => handleSelectTopic(item.id)}
-              className="shrink-0 px-2.5 py-1 rounded-md text-xs font-sans bg-white/5 hover:bg-cyan-500/15 text-neutral-300 hover:text-cyan-200 border border-white/10 hover:border-cyan-500/30 transition-all active:scale-95 flex items-center gap-1"
+              className="shrink-0 px-2.5 py-1 rounded-md text-xs font-sans theme-subtle-box text-neutral-700 dark:text-neutral-300 hover:text-cyan-700 dark:hover:text-cyan-200 hover:border-cyan-500/30 transition-all active:scale-95 flex items-center gap-1"
             >
               <span>{item.text}</span>
             </button>
@@ -448,7 +448,7 @@ You can click any of the suggested questions below to dive into details!`;
                 msg.sender === "user" ? "items-end" : "items-start"
               }`}
             >
-              <div className="flex items-center gap-1.5 text-[10px] font-mono text-neutral-500 mb-1 px-1">
+              <div className="flex items-center gap-1.5 text-[10px] font-mono theme-faint mb-1 px-1">
                 <span>{msg.sender === "user" ? "You" : "Ashwin Assistant"}</span>
                 <span>·</span>
                 <span>{msg.timestamp}</span>
@@ -458,7 +458,7 @@ You can click any of the suggested questions below to dive into details!`;
                 className={`max-w-[90%] sm:max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                   msg.sender === "user"
                     ? "bg-cyan-600 text-white font-medium rounded-tr-sm"
-                    : "bg-white/[0.05] border border-white/10 text-neutral-200 rounded-tl-sm shadow-md"
+                    : "theme-bubble-bot rounded-tl-sm shadow-sm"
                 }`}
               >
                 {/* Render Rich Markdown content */}
@@ -469,16 +469,16 @@ You can click any of the suggested questions below to dive into details!`;
 
                 {/* Message Utilities (Copy) for Bot */}
                 {msg.sender === "bot" && !msg.isStreaming && msg.text && (
-                  <div className="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-xs font-mono text-neutral-400">
+                  <div className="mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs font-mono theme-muted">
                     <button
                       onClick={() => copyMessage(msg.id, msg.text)}
-                      className="flex items-center gap-1 hover:text-cyan-300 transition-colors"
+                      className="flex items-center gap-1 hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors"
                       title="Copy response"
                     >
                       {copiedId === msg.id ? (
                         <>
-                          <Check className="w-3.5 h-3.5 text-emerald-400" />
-                          <span className="text-emerald-400">Copied</span>
+                          <Check className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
+                          <span className="text-emerald-500 dark:text-emerald-400 font-medium">Copied</span>
                         </>
                       ) : (
                         <>
@@ -490,7 +490,7 @@ You can click any of the suggested questions below to dive into details!`;
                     {msg.topicId === "contact" && (
                       <a
                         href={`mailto:${profileData.email}`}
-                        className="text-cyan-400 hover:underline flex items-center gap-1"
+                        className="text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 font-medium"
                       >
                         Email Ashwin <ExternalLink className="w-3 h-3" />
                       </a>
@@ -502,7 +502,7 @@ You can click any of the suggested questions below to dive into details!`;
               {/* Follow-up Suggestion Chips with Realistic Wording */}
               {msg.followUps && msg.followUps.length > 0 && !msg.isStreaming && (
                 <div className="flex flex-wrap items-center gap-1.5 mt-2.5 max-w-[85%]">
-                  <span className="text-[10px] font-mono text-neutral-500 mr-1">
+                  <span className="text-[10px] font-mono theme-faint mr-1">
                     Related questions:
                   </span>
                   {msg.followUps.map((fId) => {
@@ -512,7 +512,7 @@ You can click any of the suggested questions below to dive into details!`;
                       <button
                         key={fId}
                         onClick={() => handleSelectTopic(fId)}
-                        className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-sans bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/20 transition-all hover:scale-105 active:scale-95 text-left"
+                        className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-sans bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20 transition-all hover:scale-105 active:scale-95 text-left"
                       >
                         <span>{followTopic.realisticQuestion}</span>
                         <ChevronRight className="w-3 h-3 shrink-0" />
@@ -527,19 +527,19 @@ You can click any of the suggested questions below to dive into details!`;
         </div>
 
         {/* Input Bar */}
-        <div className="p-4 border-t border-white/10 bg-black/40">
+        <div className="p-4 theme-titlebar border-t">
           <form
             onSubmit={handleSendMessage}
-            className="flex items-center gap-2 rounded-xl bg-white/5 border border-white/15 px-3 py-2.5 focus-within:border-cyan-500/50 transition-colors"
+            className="flex items-center gap-2 rounded-xl theme-subtle-box px-3 py-2.5 focus-within:border-cyan-500/50 transition-colors"
           >
-            <Search className="w-4 h-4 text-neutral-400 shrink-0" />
+            <Search className="w-4 h-4 theme-muted shrink-0" />
             <input
               ref={inputRef}
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Ask anything (e.g. 'Unisys experience', 'What languages do you code in?')..."
-              className="flex-1 bg-transparent text-sm text-white placeholder-neutral-500 focus:outline-none font-sans"
+              className="flex-1 bg-transparent text-sm theme-heading placeholder:text-[var(--text-faint)] focus:outline-none font-sans"
             />
             <button
               type="submit"
@@ -550,7 +550,7 @@ You can click any of the suggested questions below to dive into details!`;
               <Send className="w-4 h-4" />
             </button>
           </form>
-          <div className="mt-2 flex items-center justify-between text-[11px] font-mono text-neutral-500 px-1">
+          <div className="mt-2 flex items-center justify-between text-[11px] font-mono theme-faint px-1">
             <span>Type any question & press Enter</span>
             <span>Esc to close</span>
           </div>

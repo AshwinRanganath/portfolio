@@ -22,7 +22,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
             href={linkMatch[2]}
             target={isExternal && !linkMatch[2].startsWith("mailto") ? "_blank" : undefined}
             rel={isExternal ? "noopener noreferrer" : undefined}
-            className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 font-medium"
+            className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 underline underline-offset-2 font-medium"
           >
             {linkMatch[1]}
           </a>
@@ -33,7 +33,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
       const boldMatch = part.match(/^\*\*(.*?)\*\*$/);
       if (boldMatch) {
         return (
-          <strong key={index} className="text-white font-semibold">
+          <strong key={index} className="theme-heading font-semibold">
             {boldMatch[1]}
           </strong>
         );
@@ -43,7 +43,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
       const italicMatch = part.match(/^\*(.*?)\*$/);
       if (italicMatch) {
         return (
-          <em key={index} className="text-neutral-300 italic">
+          <em key={index} className="theme-muted italic">
             {italicMatch[1]}
           </em>
         );
@@ -55,7 +55,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
         return (
           <code
             key={index}
-            className="px-1.5 py-0.5 rounded bg-white/10 text-cyan-300 font-mono text-[11px]"
+            className="px-1.5 py-0.5 rounded theme-subtle-box text-cyan-700 dark:text-cyan-300 font-mono text-[11px]"
           >
             {codeMatch[1]}
           </code>
@@ -135,7 +135,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
   if (currentOl) parsedBlocks.push({ type: "ol", items: currentOl });
 
   return (
-    <div className="space-y-3 font-sans text-sm text-neutral-200 leading-relaxed">
+    <div className="space-y-3 font-sans text-sm theme-body leading-relaxed">
       {parsedBlocks.map((block, idx) => {
         if (block.type === "p") {
           return (
@@ -150,7 +150,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
             <ul key={idx} className="space-y-2 my-2 pl-1">
               {block.items.map((item, itemIdx) => (
                 <li key={itemIdx} className="flex items-start gap-2.5">
-                  <span className="text-cyan-400 font-bold mt-0.5 text-xs select-none">▸</span>
+                  <span className="text-cyan-600 dark:text-cyan-400 font-bold mt-0.5 text-xs select-none">▸</span>
                   <span className="flex-1 leading-relaxed">{parseInline(item)}</span>
                 </li>
               ))}
@@ -163,7 +163,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
             <ol key={idx} className="space-y-2.5 my-2">
               {block.items.map((item, itemIdx) => (
                 <li key={itemIdx} className="flex items-start gap-2.5">
-                  <span className="shrink-0 w-5 h-5 rounded-md bg-white/10 text-cyan-400 font-mono text-xs flex items-center justify-center font-bold select-none">
+                  <span className="shrink-0 w-5 h-5 rounded-md theme-subtle-box text-cyan-700 dark:text-cyan-400 font-mono text-xs flex items-center justify-center font-bold select-none">
                     {item.num}
                   </span>
                   <span className="flex-1 leading-relaxed">{parseInline(item.text)}</span>
@@ -177,7 +177,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
       })}
 
       {isStreaming && (
-        <span className="inline-block w-2 h-4 bg-cyan-400 ml-1 animate-cursor align-middle" />
+        <span className="inline-block w-2 h-4 bg-cyan-500 ml-1 animate-cursor align-middle" />
       )}
     </div>
   );
