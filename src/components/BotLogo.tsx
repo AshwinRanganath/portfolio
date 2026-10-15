@@ -39,7 +39,7 @@ export function BotLogo({
 
   return (
     <div
-      className={`relative inline-flex items-center justify-center shrink-0 ${currentSize.container} bg-gradient-to-br from-cyan-500 via-cyan-600 to-blue-600 text-white shadow-md shadow-cyan-500/25 border border-cyan-400/50 ${className}`}
+      className={`relative inline-flex items-center justify-center shrink-0 ${currentSize.container} bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/25 border border-amber-400/50 ${className}`}
       aria-label="AsP Bot Logo"
     >
       <Bot className={`${currentSize.icon} text-white drop-shadow-sm`} />

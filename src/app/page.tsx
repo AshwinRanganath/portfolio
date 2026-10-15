@@ -27,7 +27,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-screen flex flex-col justify-between bg-grid-pattern selection:bg-cyan-500/20 selection:text-cyan-600 dark:selection:text-cyan-200">
+    <div className="relative min-h-screen flex flex-col justify-between bg-grid-pattern selection:bg-amber-500/25 selection:text-amber-800 dark:selection:text-amber-200">
       {/* Ambient background glows */}
       <div className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[var(--ambient-glow-1)] blur-[140px] pointer-events-none -z-10 rounded-full" />
       <div className="fixed bottom-10 right-10 w-[400px] h-[300px] bg-[var(--ambient-glow-2)] blur-[120px] pointer-events-none -z-10 rounded-full" />

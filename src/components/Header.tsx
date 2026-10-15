@@ -58,7 +58,7 @@ export function Header({ onOpenBot }: HeaderProps) {
       {/* Left: Terminal brand identifier */}
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md theme-subtle-box">
-          <Terminal className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400" />
+          <Terminal className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
           <span className="font-mono font-medium tracking-tight theme-heading">
             {profileData.handle}@platform:~$
           </span>
@@ -85,12 +85,12 @@ export function Header({ onOpenBot }: HeaderProps) {
         {/* Quick Assistant Launcher */}
         <button
           onClick={onOpenBot}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30 transition-all font-mono text-xs"
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30 transition-all font-mono text-xs"
           title="Open AsP Assistant (Press /)"
         >
-          <Bot className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+          <Bot className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
           <span className="hidden sm:inline font-medium">Ask AsP</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-cyan-950/20 dark:bg-black/40 text-[10px] text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
+          <kbd className="px-1.5 py-0.5 rounded bg-amber-950/20 dark:bg-black/40 text-[10px] text-amber-700 dark:text-amber-300 border border-amber-500/30">
             /
           </kbd>
         </button>

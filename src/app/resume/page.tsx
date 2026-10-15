@@ -25,7 +25,7 @@ export default function ResumePage() {
 
         <button
           onClick={handlePrint}
-          className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30 transition-colors font-mono text-xs"
+          className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30 transition-colors font-mono text-xs"
         >
           <Printer className="w-4 h-4" />
           <span>Print / Save PDF</span>
@@ -41,7 +41,7 @@ export default function ResumePage() {
               <h1 className="text-3xl font-bold tracking-tight theme-heading print:text-black">
                 {profileData.name}
               </h1>
-              <p className="text-base text-cyan-600 dark:text-cyan-400 print:text-neutral-800 font-medium mt-0.5">
+              <p className="text-base text-amber-600 dark:text-amber-400 print:text-neutral-800 font-medium mt-0.5">
                 {profileData.title}
               </p>
             </div>
@@ -53,7 +53,7 @@ export default function ResumePage() {
               </span>
               <a
                 href={`mailto:${profileData.email}`}
-                className="flex items-center gap-1.5 hover:text-cyan-600 dark:hover:text-cyan-400"
+                className="flex items-center gap-1.5 hover:text-amber-600 dark:hover:text-amber-400"
               >
                 <Mail className="w-3.5 h-3.5 theme-muted" />
                 {profileData.email}
@@ -63,7 +63,7 @@ export default function ResumePage() {
                   href={profileData.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-cyan-600 dark:hover:text-cyan-400"
+                  className="flex items-center gap-1 hover:text-amber-600 dark:hover:text-amber-400"
                 >
                   <LinkedinIcon className="w-3.5 h-3.5 theme-muted" />
                   <span>LinkedIn</span>
@@ -73,7 +73,7 @@ export default function ResumePage() {
                   href={profileData.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 hover:text-cyan-600 dark:hover:text-cyan-400"
+                  className="flex items-center gap-1 hover:text-amber-600 dark:hover:text-amber-400"
                 >
                   <GithubIcon className="w-3.5 h-3.5 theme-muted" />
                   <span>GitHub</span>
@@ -85,7 +85,7 @@ export default function ResumePage() {
 
         {/* Professional Summary */}
         <section className="space-y-2">
-          <h2 className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 print:text-neutral-900 font-bold">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-amber-600 dark:text-amber-400 print:text-neutral-900 font-bold">
             Professional Profile
           </h2>
           <p className="text-sm theme-body print:text-neutral-800 leading-relaxed">
@@ -95,7 +95,7 @@ export default function ResumePage() {
 
         {/* Technical Skills */}
         <section className="space-y-3">
-          <h2 className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 print:text-neutral-900 font-bold">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-amber-600 dark:text-amber-400 print:text-neutral-900 font-bold">
             Technical Skills
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
@@ -117,7 +117,7 @@ export default function ResumePage() {
 
         {/* Professional Experience */}
         <section className="space-y-4">
-          <h2 className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 print:text-neutral-900 font-bold">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-amber-600 dark:text-amber-400 print:text-neutral-900 font-bold">
             Professional Experience
           </h2>
           <div className="space-y-5">
@@ -126,7 +126,7 @@ export default function ResumePage() {
                 <div className="flex flex-col sm:flex-row sm:items-baseline justify-between">
                   <div className="font-bold theme-heading print:text-black text-sm">
                     {exp.role} ·{" "}
-                    <span className="text-cyan-600 dark:text-cyan-300 print:text-neutral-800 font-medium">
+                    <span className="text-amber-600 dark:text-amber-300 print:text-neutral-800 font-medium">
                       {exp.company}
                     </span>
                   </div>
@@ -138,7 +138,7 @@ export default function ResumePage() {
                 <ul className="space-y-1 text-xs theme-body print:text-neutral-800 pt-1">
                   {exp.bullets.map((bullet, bIdx) => (
                     <li key={bIdx} className="flex items-start gap-2">
-                      <span className="text-cyan-600 dark:text-cyan-400 print:text-black mt-0.5">▸</span>
+                      <span className="text-amber-600 dark:text-amber-400 print:text-black mt-0.5">▸</span>
                       <span>{bullet}</span>
                     </li>
                   ))}
@@ -161,14 +161,14 @@ export default function ResumePage() {
 
         {/* Education & Qualifications */}
         <section className="space-y-3">
-          <h2 className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 print:text-neutral-900 font-bold">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-amber-600 dark:text-amber-400 print:text-neutral-900 font-bold">
             Education & Qualifications
           </h2>
           <div className="space-y-3 text-xs">
             {profileData.education.map((edu, idx) => (
               <div
                 key={idx}
-                className="flex flex-col sm:flex-row sm:items-baseline justify-between border-l-2 border-cyan-500/40 print:border-black pl-3"
+                className="flex flex-col sm:flex-row sm:items-baseline justify-between border-l-2 border-amber-500/40 print:border-black pl-3"
               >
                 <div>
                   <div className="font-bold theme-heading print:text-black">
@@ -188,7 +188,7 @@ export default function ResumePage() {
 
         {/* Selected Engineering Projects */}
         <section className="space-y-3">
-          <h2 className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 print:text-neutral-900 font-bold">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-amber-600 dark:text-amber-400 print:text-neutral-900 font-bold">
             Selected Engineering Projects
           </h2>
           <div className="space-y-3 text-xs">
@@ -201,13 +201,13 @@ export default function ResumePage() {
                   <div className="font-bold theme-heading print:text-black font-sans">
                     {proj.title}
                   </div>
-                  <span className="text-[10px] font-mono text-cyan-600 dark:text-cyan-400 print:text-neutral-600">
+                  <span className="text-[10px] font-mono text-amber-600 dark:text-amber-400 print:text-neutral-600">
                     {proj.category}
                   </span>
                 </div>
                 <p className="theme-muted print:text-neutral-700">{proj.description}</p>
                 <p className="theme-body print:text-neutral-800 font-medium">
-                  <span className="text-cyan-600 dark:text-cyan-400 print:text-black">Impact:</span> {proj.impact}
+                  <span className="text-amber-600 dark:text-amber-400 print:text-black">Impact:</span> {proj.impact}
                 </p>
                 <div className="text-[10px] font-mono theme-faint print:text-neutral-600">
                   Tech: {proj.technologies.join(", ")}
@@ -219,7 +219,7 @@ export default function ResumePage() {
 
         {/* Honors & Awards */}
         <section className="space-y-2">
-          <h2 className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 print:text-neutral-900 font-bold">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-amber-600 dark:text-amber-400 print:text-neutral-900 font-bold">
             Honors & Awards
           </h2>
           <div className="text-xs space-y-1">

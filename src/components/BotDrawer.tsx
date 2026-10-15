@@ -9,14 +9,18 @@ import {
   Copy,
   Check,
   ChevronRight,
-  Terminal,
   Search,
   ExternalLink,
   MessageCircleQuestion,
   Bot,
+  ArrowLeft,
+  ArrowRight,
+  Briefcase,
+  Calendar,
+  MapPin,
 } from "lucide-react";
 import { BotLogo } from "@/components/BotLogo";
-import { profileData, BotTopic } from "@/data/profile";
+import { profileData, BotTopic, Experience } from "@/data/profile";
 import { FormattedMarkdown } from "@/components/FormattedMarkdown";
 
 export interface ChatMessage {
@@ -39,6 +43,7 @@ export function BotDrawer({ isOpen, onClose, initialTopicId }: BotDrawerProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
+  const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const activeStreamRef = useRef<NodeJS.Timeout | null>(null);
@@ -80,16 +85,23 @@ Type any question below or click any suggestion to get started!`,
     }
   }, [isOpen, initialTopicId]);
 
+  // Reset selected experience when drawer is closed
+  useEffect(() => {
+    if (!isOpen) {
+      setSelectedExperience(null);
+    }
+  }, [isOpen]);
+
   // Auto-scroll on new message
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !selectedExperience) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, isOpen]);
+  }, [messages, isOpen, selectedExperience]);
 
   // Focus input when opened (desktop only to prevent mobile keyboard layout freeze)
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && !selectedExperience) {
       const isMobile =
         typeof window !== "undefined" &&
         window.matchMedia("(max-width: 768px)").matches;
@@ -100,18 +112,22 @@ Type any question below or click any suggestion to get started!`,
         return () => clearTimeout(timer);
       }
     }
-  }, [isOpen]);
+  }, [isOpen, selectedExperience]);
 
-  // Close on Escape
+  // Close on Escape or back out of detail view
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
-        onClose();
+        if (selectedExperience) {
+          setSelectedExperience(null);
+        } else {
+          onClose();
+        }
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, selectedExperience, onClose]);
 
   // Cleanup interval on unmount
   useEffect(() => {
@@ -158,15 +174,16 @@ Type any question below or click any suggestion to get started!`,
         activeStreamRef.current = null;
         setMessages((prev) =>
           prev.map((msg) =>
-            msg.id === botMsgId ? { ...msg, text: fullText, isStreaming: false } : msg
+            msg.id === botMsgId
+              ? { ...msg, text: fullText, isStreaming: false }
+              : msg
           )
         );
       } else {
+        const partial = fullText.slice(0, currentIndex);
         setMessages((prev) =>
           prev.map((msg) =>
-            msg.id === botMsgId
-              ? { ...msg, text: fullText.slice(0, currentIndex) }
-              : msg
+            msg.id === botMsgId ? { ...msg, text: partial } : msg
           )
         );
       }
@@ -174,6 +191,7 @@ Type any question below or click any suggestion to get started!`,
   };
 
   const handleSelectTopic = (topicId: string) => {
+    setSelectedExperience(null);
     const topic = profileData.botTopics.find((t) => t.id === topicId);
     if (!topic) return;
 
@@ -189,6 +207,76 @@ Type any question below or click any suggestion to get started!`,
 
     // Stream bot response
     streamBotResponse(topic.answerMarkdown, topic.id, topic.followUps);
+  };
+
+  // Helper to resolve related experiences for action cards
+  const getRelatedExperiences = (topicId?: string, text?: string): Experience[] => {
+    if (!topicId && !text) return [];
+    const matches: Experience[] = [];
+
+    if (topicId === "current-role" || topicId === "exp-cnz") {
+      const cnz = profileData.experiences.find((e) => e.company.includes("CNZ"));
+      if (cnz) matches.push(cnz);
+    } else if (topicId === "experience-unisys") {
+      const unisys = profileData.experiences.find((e) => e.company.includes("Unisys"));
+      if (unisys) matches.push(unisys);
+    } else if (topicId === "experience-amd") {
+      const amd = profileData.experiences.find((e) => e.company.includes("AMD"));
+      if (amd) matches.push(amd);
+    } else if (topicId === "experience-emmvee") {
+      const emmvee = profileData.experiences.find((e) => e.company.includes("EMMVEE"));
+      if (emmvee) matches.push(emmvee);
+    } else if (topicId === "career-journey" || topicId === "exp-overview") {
+      return profileData.experiences;
+    } else if (text) {
+      const t = text.toLowerCase();
+      for (const exp of profileData.experiences) {
+        const compLower = exp.company.toLowerCase();
+        if (
+          (compLower.includes("cnz") && t.includes("cnz")) ||
+          (compLower.includes("unisys") && t.includes("unisys")) ||
+          (compLower.includes("amd") && t.includes("amd")) ||
+          (compLower.includes("emmvee") && t.includes("emmvee"))
+        ) {
+          if (!matches.some((m) => m.company === exp.company)) {
+            matches.push(exp);
+          }
+        }
+      }
+    }
+    return matches;
+  };
+
+  // Curated prompts tailored for each experience
+  const getExperiencePrompts = (company: string): string[] => {
+    if (company.includes("CNZ")) {
+      return [
+        "How did you design the dynamic multi-tenant auth architecture?",
+        "Tell me about the accounting & e-commerce integration pipelines",
+        "How do the agentic middleware diagnostic workflows work?",
+      ];
+    }
+    if (company.includes("Unisys")) {
+      return [
+        "How did the Java AST code parsing engine work?",
+        "How did you integrate OpenAI and Azure OpenAI APIs for refactoring?",
+        "How did you accelerate enterprise codebase evaluations by 40%?",
+      ];
+    }
+    if (company.includes("AMD")) {
+      return [
+        "Tell me about the REST APIs and Angular dashboard at AMD",
+        "What did you win the AMD Innovation EXPO Best Poster Award for?",
+        "How did Python automation scripts reduce server latency?",
+      ];
+    }
+    if (company.includes("EMMVEE")) {
+      return [
+        "What did you build for the PRISM enterprise system?",
+        "What was the tech stack used at EMMVEE?",
+      ];
+    }
+    return [];
   };
 
   // Comprehensive NLP & Semantic query resolution for natural user questions
@@ -282,6 +370,31 @@ It includes full breakdowns of his 3+ years of experience across CNZ Consultants
       return;
     }
 
+    // 3b. Role specific direct prompts
+    if (q.includes("tenant") || q.includes("auth strategy") || q.includes("multi-tenant")) {
+      const cnzTopic = profileData.botTopics.find((t) => t.id === "current-role" || t.id === "enterprise-integrations");
+      if (cnzTopic) {
+        streamBotResponse(cnzTopic.answerMarkdown, cnzTopic.id, cnzTopic.followUps);
+        return;
+      }
+    }
+
+    if (q.includes("ast") || q.includes("static analysis") || q.includes("code parser")) {
+      const unisysTopic = profileData.botTopics.find((t) => t.id === "experience-unisys");
+      if (unisysTopic) {
+        streamBotResponse(unisysTopic.answerMarkdown, unisysTopic.id, unisysTopic.followUps);
+        return;
+      }
+    }
+
+    if (q.includes("best poster") || q.includes("innovation expo") || q.includes("poster award")) {
+      const amdTopic = profileData.botTopics.find((t) => t.id === "experience-amd" || t.id === "awards");
+      if (amdTopic) {
+        streamBotResponse(amdTopic.answerMarkdown, amdTopic.id, amdTopic.followUps);
+        return;
+      }
+    }
+
     // 4. Match against sampleUserQueries in all botTopics
     let bestTopic: BotTopic | null = null;
     let highestScore = 0;
@@ -371,6 +484,19 @@ You can click any of the suggested questions below to dive into details!`;
     resolveUserQuery(query);
   };
 
+  // Follow-up prompt directly from experience detail view
+  const handleSendPrompt = (promptText: string) => {
+    setSelectedExperience(null);
+    const userMsg: ChatMessage = {
+      id: "user-" + Date.now(),
+      sender: "user",
+      text: promptText,
+      timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    };
+    setMessages((prev) => [...prev, userMsg]);
+    resolveUserQuery(promptText);
+  };
+
   const copyMessage = (id: string, text: string) => {
     navigator.clipboard.writeText(text);
     setCopiedId(id);
@@ -382,6 +508,7 @@ You can click any of the suggested questions below to dive into details!`;
       clearInterval(activeStreamRef.current);
       activeStreamRef.current = null;
     }
+    setSelectedExperience(null);
     setMessages([
       {
         id: "cleared-" + Date.now(),
@@ -391,7 +518,7 @@ You can click any of the suggested questions below to dive into details!`;
           "programming-languages",
           "experience-unisys",
           "career-journey",
-          "education",
+          "current-role",
         ],
         timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
       },
@@ -424,185 +551,404 @@ You can click any of the suggested questions below to dive into details!`;
         }`}
       >
         {/* Drawer Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 theme-titlebar">
-          <div className="flex items-center gap-2.5">
-            <BotLogo size="md" withBeacon={true} />
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-semibold theme-heading">
-                  AsP Assistant
-                </span>
-                <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
-                  online
-                </span>
-              </div>
-              <p className="text-[11px] theme-muted font-sans">
-                Ask about past experience, languages, or current roles
-              </p>
+        {selectedExperience ? (
+          <div className="flex items-center justify-between px-5 py-3.5 theme-titlebar">
+            <div className="flex items-center gap-2 min-w-0 pr-2">
+              <button
+                onClick={() => setSelectedExperience(null)}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-mono text-xs transition-all active:scale-95 shrink-0"
+                title="Back to conversation"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span className="font-medium">Back to Chat</span>
+              </button>
+              <span className="theme-faint text-xs shrink-0">/</span>
+              <span className="text-xs font-mono font-semibold theme-heading truncate">
+                {selectedExperience.company}
+              </span>
             </div>
-          </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              onClick={clearChat}
-              className="p-1.5 rounded-lg theme-muted hover:theme-heading hover:bg-[var(--bg-subtle)] transition-colors"
-              title="Reset Conversation"
-            >
-              <RotateCcw className="w-4 h-4" />
-            </button>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg theme-muted hover:theme-heading hover:bg-[var(--bg-subtle)] transition-colors"
+              className="p-1.5 rounded-lg theme-muted hover:theme-heading hover:bg-[var(--bg-subtle)] transition-colors shrink-0"
               title="Close (Esc)"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
-        </div>
+        ) : (
+          <div className="flex items-center justify-between px-5 py-3.5 theme-titlebar">
+            <div className="flex items-center gap-2.5">
+              <BotLogo size="md" withBeacon={true} />
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="font-mono text-sm font-semibold theme-heading">
+                    AsP Assistant
+                  </span>
+                  <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
+                    online
+                  </span>
+                </div>
+                <p className="text-[11px] theme-muted font-sans">
+                  Ask about past experience, languages, or current roles
+                </p>
+              </div>
+            </div>
 
-        {/* Realistic Suggested Questions Strip */}
-        <div className="px-4 py-2.5 theme-titlebar flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-          <span className="text-[11px] font-mono theme-faint shrink-0 flex items-center gap-1">
-            <MessageCircleQuestion className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-            Try:
-          </span>
-          {[
-            { id: "programming-languages", text: "Languages you know" },
-            { id: "experience-unisys", text: "Unisys experience" },
-            { id: "experience-amd", text: "AMD role & award" },
-            { id: "career-journey", text: "Past career journey" },
-            { id: "current-role", text: "Current role at CNZ" },
-            { id: "education", text: "Education & GPA" },
-          ].map((item) => (
-            <button
-              key={item.id}
-              onClick={() => handleSelectTopic(item.id)}
-              className="shrink-0 px-2.5 py-1 rounded-md text-xs font-sans theme-subtle-box text-neutral-700 dark:text-neutral-300 hover:text-cyan-700 dark:hover:text-cyan-200 hover:border-cyan-500/30 transition-all active:scale-95 flex items-center gap-1"
-            >
-              <span>{item.text}</span>
-            </button>
-          ))}
-        </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={clearChat}
+                className="p-1.5 rounded-lg theme-muted hover:theme-heading hover:bg-[var(--bg-subtle)] transition-colors"
+                title="Reset Conversation"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </button>
+              <button
+                onClick={onClose}
+                className="p-1.5 rounded-lg theme-muted hover:theme-heading hover:bg-[var(--bg-subtle)] transition-colors"
+                title="Close (Esc)"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        )}
 
-        {/* Messages Stream */}
-        <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
-          {messages.map((msg) => (
-            <div
-              key={msg.id}
-              className={`flex flex-col ${
-                msg.sender === "user" ? "items-end" : "items-start"
-              }`}
-            >
-              <div className="flex items-center gap-1.5 text-[10px] font-mono theme-faint mb-1 px-1">
-                {msg.sender === "bot" && (
-                  <Bot className="w-3 h-3 text-cyan-600 dark:text-cyan-400 shrink-0" />
-                )}
-                <span>{msg.sender === "user" ? "You" : "AsP"}</span>
-                <span>·</span>
-                <span>{msg.timestamp}</span>
+        {/* Conditional View: Experience Detail Sub-View VS Chat Stream */}
+        {selectedExperience ? (
+          /* Experience Detail View */
+          <div className="flex-1 overflow-y-auto p-5 space-y-6">
+            {/* Header Hero Card */}
+            <div className="p-4 sm:p-5 rounded-2xl theme-subtle-box border border-amber-500/30 space-y-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 shrink-0">
+                    <Briefcase className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-lg sm:text-xl font-bold theme-heading font-sans">
+                      {selectedExperience.company}
+                    </h2>
+                    <p className="text-xs sm:text-sm font-medium text-amber-700 dark:text-amber-300">
+                      {selectedExperience.role}
+                    </p>
+                  </div>
+                </div>
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shrink-0">
+                  Verified Role
+                </span>
               </div>
 
-              <div
-                className={`max-w-[90%] sm:max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-                  msg.sender === "user"
-                    ? "bg-cyan-600 text-white font-medium rounded-tr-sm"
-                    : "theme-bubble-bot rounded-tl-sm shadow-sm"
-                }`}
-              >
-                {/* Render Rich Markdown content */}
-                <FormattedMarkdown
-                  content={msg.text}
-                  isStreaming={msg.isStreaming}
-                />
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono theme-muted pt-2 border-t border-[var(--border-subtle)]">
+                <span className="flex items-center gap-1.5">
+                  <Calendar className="w-3.5 h-3.5 theme-faint" />
+                  {selectedExperience.period}
+                </span>
+                <span className="theme-faint hidden sm:inline">·</span>
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 theme-faint" />
+                  {selectedExperience.location}
+                </span>
+              </div>
 
-                {/* Message Utilities (Copy) for Bot */}
-                {msg.sender === "bot" && !msg.isStreaming && msg.text && (
-                  <div className="mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs font-mono theme-muted">
+              {/* Summary Box */}
+              <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs leading-relaxed theme-body">
+                <span className="font-semibold text-amber-700 dark:text-amber-300 font-mono">
+                  Role Overview:{" "}
+                </span>
+                {selectedExperience.summary}
+              </div>
+            </div>
+
+            {/* Core Architectural & Technical Contributions */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-700 dark:text-amber-400 font-bold">
+                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                <span>Core Architectural Impact & Responsibilities</span>
+              </div>
+              <div className="space-y-2.5">
+                {selectedExperience.bullets.map((bullet, idx) => (
+                  <div
+                    key={idx}
+                    className="flex items-start gap-3 p-3 rounded-xl theme-subtle-box border border-[var(--border-subtle)] hover:border-amber-500/30 transition-colors text-xs leading-relaxed theme-body"
+                  >
+                    <span className="shrink-0 w-5 h-5 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 font-mono text-xs flex items-center justify-center font-bold mt-0.5 select-none">
+                      {idx + 1}
+                    </span>
+                    <span className="flex-1">{bullet}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Technologies Used */}
+            <div className="space-y-2.5">
+              <div className="text-xs font-mono uppercase tracking-wider text-amber-700 dark:text-amber-400 font-bold">
+                Technologies & Infrastructure
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {selectedExperience.technologies.map((tech, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2.5 py-1 rounded-lg text-xs font-mono theme-subtle-box text-neutral-800 dark:text-neutral-200 border border-[var(--border-subtle)] hover:border-amber-500/40 hover:text-amber-700 dark:hover:text-amber-300 transition-colors"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* 1-Click Interactive Follow-up Prompts */}
+            {getExperiencePrompts(selectedExperience.company).length > 0 && (
+              <div className="p-4 rounded-2xl theme-subtle-box border border-amber-500/30 space-y-3">
+                <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-amber-700 dark:text-amber-300">
+                  <MessageCircleQuestion className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                  <span>Ask AsP about this role:</span>
+                </div>
+                <div className="space-y-1.5">
+                  {getExperiencePrompts(selectedExperience.company).map((prompt, idx) => (
                     <button
-                      onClick={() => copyMessage(msg.id, msg.text)}
-                      className="flex items-center gap-1 hover:text-cyan-600 dark:hover:text-cyan-300 transition-colors"
-                      title="Copy response"
+                      key={idx}
+                      onClick={() => handleSendPrompt(prompt)}
+                      className="w-full flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-xs font-sans text-neutral-800 dark:text-neutral-200 hover:text-amber-800 dark:hover:text-amber-200 transition-all text-left active:scale-[0.99] group"
                     >
-                      {copiedId === msg.id ? (
-                        <>
-                          <Check className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
-                          <span className="text-emerald-500 dark:text-emerald-400 font-medium">Copied</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy className="w-3.5 h-3.5" />
-                          <span>Copy</span>
-                        </>
-                      )}
+                      <span>{prompt}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 group-hover:translate-x-0.5 transition-transform shrink-0 ml-2" />
                     </button>
-                    {msg.topicId === "contact" && (
-                      <a
-                        href={`mailto:${profileData.email}`}
-                        className="text-cyan-600 dark:text-cyan-400 hover:underline flex items-center gap-1 font-medium"
-                      >
-                        Email Ashwin <ExternalLink className="w-3 h-3" />
-                      </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Return Button */}
+            <div className="pt-2 pb-6">
+              <button
+                onClick={() => setSelectedExperience(null)}
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold text-xs sm:text-sm shadow-md shadow-amber-500/20 active:scale-98 transition-all"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Return to Conversation</span>
+              </button>
+            </div>
+          </div>
+        ) : (
+          /* Standard Conversation View */
+          <>
+            {/* Realistic Suggested Questions Strip */}
+            <div className="px-4 py-2.5 theme-titlebar flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+              <span className="text-[11px] font-mono theme-faint shrink-0 flex items-center gap-1">
+                <MessageCircleQuestion className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                Try:
+              </span>
+              {[
+                { id: "programming-languages", text: "Languages you know" },
+                { id: "experience-unisys", text: "Unisys experience" },
+                { id: "experience-amd", text: "AMD role & award" },
+                { id: "career-journey", text: "Past career journey" },
+                { id: "current-role", text: "Current role at CNZ" },
+                { id: "education", text: "Education & GPA" },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => handleSelectTopic(item.id)}
+                  className="shrink-0 px-2.5 py-1 rounded-md text-xs font-sans theme-subtle-box text-neutral-700 dark:text-neutral-300 hover:text-amber-700 dark:hover:text-amber-200 hover:border-amber-500/30 transition-all active:scale-95 flex items-center gap-1"
+                >
+                  <span>{item.text}</span>
+                </button>
+              ))}
+            </div>
+
+            {/* Messages Stream */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-4">
+              {messages.map((msg) => {
+                const relatedExps =
+                  msg.sender === "bot" && !msg.isStreaming
+                    ? getRelatedExperiences(msg.topicId, msg.text)
+                    : [];
+
+                return (
+                  <div
+                    key={msg.id}
+                    className={`flex flex-col ${
+                      msg.sender === "user" ? "items-end" : "items-start"
+                    }`}
+                  >
+                    <div className="flex items-center gap-1.5 text-[10px] font-mono theme-faint mb-1 px-1">
+                      {msg.sender === "bot" && (
+                        <Bot className="w-3 h-3 text-amber-600 dark:text-amber-400 shrink-0" />
+                      )}
+                      <span>{msg.sender === "user" ? "You" : "AsP"}</span>
+                      <span>·</span>
+                      <span>{msg.timestamp}</span>
+                    </div>
+
+                    <div
+                      className={`max-w-[90%] sm:max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                        msg.sender === "user"
+                          ? "bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold rounded-tr-sm shadow-md shadow-amber-500/20"
+                          : "theme-bubble-bot rounded-tl-sm shadow-sm"
+                      }`}
+                    >
+                      {/* Render Rich Markdown content */}
+                      <FormattedMarkdown
+                        content={msg.text}
+                        isStreaming={msg.isStreaming}
+                      />
+
+                      {/* Prominent Action Cards for Work Experience */}
+                      {relatedExps.length > 0 && (
+                        <div className="mt-3.5 pt-3 border-t border-[var(--border-subtle)] space-y-2">
+                          {relatedExps.length === 1 ? (
+                            <div className="p-3 rounded-xl bg-amber-500/10 dark:bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center shrink-0 text-amber-700 dark:text-amber-400">
+                                  <Briefcase className="w-4 h-4" />
+                                </div>
+                                <div className="min-w-0">
+                                  <div className="font-semibold text-xs theme-heading flex items-center gap-1.5">
+                                    <span className="truncate">{relatedExps[0].company}</span>
+                                    <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-800 dark:text-amber-300 shrink-0">
+                                      {relatedExps[0].period}
+                                    </span>
+                                  </div>
+                                  <div className="text-[11px] theme-muted font-sans truncate">
+                                    {relatedExps[0].role}
+                                  </div>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => setSelectedExperience(relatedExps[0])}
+                                className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold shadow-sm transition-all active:scale-95 shrink-0"
+                              >
+                                <span>View Full Role Details</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="space-y-2">
+                              <div className="text-[11px] font-mono text-amber-700 dark:text-amber-400 font-semibold flex items-center gap-1">
+                                <Sparkles className="w-3 h-3" />
+                                <span>Detailed role breakdown & architecture:</span>
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                {relatedExps.map((exp) => (
+                                  <button
+                                    key={exp.company}
+                                    onClick={() => setSelectedExperience(exp)}
+                                    className="flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-all text-left group active:scale-98"
+                                  >
+                                    <div className="min-w-0 pr-2">
+                                      <div className="font-semibold text-xs theme-heading truncate group-hover:text-amber-700 dark:group-hover:text-amber-300">
+                                        {exp.company}
+                                      </div>
+                                      <div className="text-[10px] font-mono theme-muted truncate">
+                                        {exp.period}
+                                      </div>
+                                    </div>
+                                    <div className="shrink-0 w-6 h-6 rounded-md bg-amber-500/20 flex items-center justify-center text-amber-700 dark:text-amber-400 group-hover:bg-amber-500 group-hover:text-black transition-colors">
+                                      <ArrowRight className="w-3.5 h-3.5" />
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Message Utilities (Copy) for Bot */}
+                      {msg.sender === "bot" && !msg.isStreaming && msg.text && (
+                        <div className="mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs font-mono theme-muted">
+                          <button
+                            onClick={() => copyMessage(msg.id, msg.text)}
+                            className="flex items-center gap-1 hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
+                            title="Copy response"
+                          >
+                            {copiedId === msg.id ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
+                                <span className="text-emerald-500 dark:text-emerald-400 font-medium">
+                                  Copied
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" />
+                                <span>Copy</span>
+                              </>
+                            )}
+                          </button>
+                          {msg.topicId === "contact" && (
+                            <a
+                              href={`mailto:${profileData.email}`}
+                              className="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1 font-medium"
+                            >
+                              Email Ashwin <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Follow-up Suggestion Chips with Realistic Wording */}
+                    {msg.followUps && msg.followUps.length > 0 && !msg.isStreaming && (
+                      <div className="flex flex-wrap items-center gap-1.5 mt-2.5 max-w-[85%]">
+                        <span className="text-[10px] font-mono theme-faint mr-1">
+                          Related questions:
+                        </span>
+                        {msg.followUps.map((fId) => {
+                          const followTopic = profileData.botTopics.find((t) => t.id === fId);
+                          if (!followTopic) return null;
+                          return (
+                            <button
+                              key={fId}
+                              onClick={() => handleSelectTopic(fId)}
+                              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-sans bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 transition-all hover:scale-105 active:scale-95 text-left"
+                            >
+                              <span>{followTopic.realisticQuestion}</span>
+                              <ChevronRight className="w-3 h-3 shrink-0" />
+                            </button>
+                          );
+                        })}
+                      </div>
                     )}
                   </div>
-                )}
-              </div>
-
-              {/* Follow-up Suggestion Chips with Realistic Wording */}
-              {msg.followUps && msg.followUps.length > 0 && !msg.isStreaming && (
-                <div className="flex flex-wrap items-center gap-1.5 mt-2.5 max-w-[85%]">
-                  <span className="text-[10px] font-mono theme-faint mr-1">
-                    Related questions:
-                  </span>
-                  {msg.followUps.map((fId) => {
-                    const followTopic = profileData.botTopics.find((t) => t.id === fId);
-                    if (!followTopic) return null;
-                    return (
-                      <button
-                        key={fId}
-                        onClick={() => handleSelectTopic(fId)}
-                        className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-sans bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/20 transition-all hover:scale-105 active:scale-95 text-left"
-                      >
-                        <span>{followTopic.realisticQuestion}</span>
-                        <ChevronRight className="w-3 h-3 shrink-0" />
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
+                );
+              })}
+              <div ref={messagesEndRef} />
             </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
 
-        {/* Input Bar */}
-        <div className="p-4 theme-titlebar border-t">
-          <form
-            onSubmit={handleSendMessage}
-            className="flex items-center gap-2 rounded-xl theme-subtle-box px-3 py-2.5 focus-within:border-cyan-500/50 transition-colors"
-          >
-            <Search className="w-4 h-4 theme-muted shrink-0" />
-            <input
-              ref={inputRef}
-              type="text"
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask AsP anything (e.g. 'Unisys experience', 'What languages do you code in?')..."
-              className="flex-1 bg-transparent text-sm theme-heading placeholder:text-[var(--text-faint)] focus:outline-none font-sans"
-            />
-            <button
-              type="submit"
-              disabled={!inputValue.trim()}
-              className="p-1.5 rounded-lg bg-cyan-500 text-black font-semibold hover:bg-cyan-400 disabled:opacity-30 disabled:hover:bg-cyan-500 transition-all shrink-0"
-              title="Send question"
-            >
-              <Send className="w-4 h-4" />
-            </button>
-          </form>
-          <div className="mt-2 flex items-center justify-between text-[11px] font-mono theme-faint px-1">
-            <span>Type any question & press Enter</span>
-            <span>Esc to close</span>
-          </div>
-        </div>
+            {/* Input Bar */}
+            <div className="p-4 theme-titlebar border-t">
+              <form
+                onSubmit={handleSendMessage}
+                className="flex items-center gap-2 rounded-xl theme-subtle-box px-3 py-2.5 focus-within:border-amber-500/50 transition-colors"
+              >
+                <Search className="w-4 h-4 theme-muted shrink-0" />
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Ask AsP anything (e.g. 'Unisys experience', 'What languages do you code in?')..."
+                  className="flex-1 bg-transparent text-sm theme-heading placeholder:text-[var(--text-faint)] focus:outline-none font-sans"
+                />
+                <button
+                  type="submit"
+                  disabled={!inputValue.trim()}
+                  className="p-1.5 rounded-lg bg-amber-500 text-black font-semibold hover:bg-amber-400 disabled:opacity-30 disabled:hover:bg-amber-500 transition-all shrink-0"
+                  title="Send question"
+                >
+                  <Send className="w-4 h-4" />
+                </button>
+              </form>
+              <div className="mt-2 flex items-center justify-between text-[11px] font-mono theme-faint px-1">
+                <span>Type any question & press Enter</span>
+                <span>Esc to close</span>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -65,7 +65,7 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6 pb-6 border-b border-[var(--border-subtle)]">
             {/* Avatar with Glow and Status Beacon */}
             <div className="relative group shrink-0">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-cyan-500/40 shadow-xl shadow-cyan-500/15 bg-neutral-100 dark:bg-neutral-800 relative">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-amber-500/40 shadow-xl shadow-amber-500/15 bg-neutral-100 dark:bg-neutral-800 relative">
                 <img
                   src={profileData.avatarUrl}
                   alt={profileData.name}
@@ -88,12 +88,12 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight theme-heading font-sans">
                   {profileData.name}
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30">
                   {profileData.handle}
                 </span>
               </div>
 
-              <p className="text-base sm:text-lg font-medium text-cyan-700 dark:text-cyan-300 flex flex-wrap items-center gap-x-2">
+              <p className="text-base sm:text-lg font-medium text-amber-700 dark:text-amber-300 flex flex-wrap items-center gap-x-2">
                 <span>{profileData.title}</span>
               </p>
 
@@ -113,7 +113,7 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
           {/* Bio Snippet */}
           <div className="py-5 font-mono text-xs sm:text-sm theme-body leading-relaxed">
             <p className="max-w-3xl">
-              <span className="text-cyan-600 dark:text-cyan-400 font-semibold">{">"}</span> Product-minded Software Engineer with a Master of Technology in Computer Science Engineering (Manipal University) and 3+ years building high-throughput Java (Spring Boot) microservices, multi-tenant enterprise integration pipelines, and modern TypeScript/React applications. Pioneer of agentic workflows and automated developer tooling.
+              <span className="text-amber-600 dark:text-amber-400 font-semibold">{">"}</span> Product-minded Software Engineer with a Master of Technology in Computer Science Engineering (Manipal University) and 3+ years building high-throughput Java (Spring Boot) microservices, multi-tenant enterprise integration pipelines, and modern TypeScript/React applications. Pioneer of agentic workflows and automated developer tooling.
             </p>
           </div>
 
@@ -140,7 +140,7 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
             {/* Primary Assistant Trigger */}
             <button
               onClick={onOpenBot}
-              className="group flex-1 sm:flex-none flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-semibold text-sm transition-all duration-200 shadow-lg shadow-cyan-500/25 active:scale-[0.98]"
+              className="group flex-1 sm:flex-none flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold text-sm transition-all duration-200 shadow-lg shadow-amber-500/25 active:scale-[0.98]"
             >
               <Bot className="w-4 h-4 text-black group-hover:scale-110 transition-transform" />
               <span>Ask AsP</span>
@@ -187,7 +187,7 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
                 href={profileData.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 theme-muted hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+                className="flex items-center gap-1 theme-muted hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
               >
                 <LinkedinIcon className="w-4 h-4" />
                 <span>LinkedIn</span>
@@ -198,7 +198,7 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
                 href={profileData.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 theme-muted hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+                className="flex items-center gap-1 theme-muted hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
               >
                 <GithubIcon className="w-4 h-4" />
                 <span>GitHub</span>
@@ -207,7 +207,7 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
               <span className="theme-faint">·</span>
               <a
                 href={`mailto:${profileData.email}`}
-                className="flex items-center gap-1 theme-muted hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors"
+                className="flex items-center gap-1 theme-muted hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 <span>Email</span>
