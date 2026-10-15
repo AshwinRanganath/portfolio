@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Bot, Sparkles, Send, ArrowUpRight } from "lucide-react";
 import { SpecularBorder } from "../SpecularBorder";
+import { NeuralWaveform } from "../graphics/NeuralWaveform";
 
 interface AspCopilotTileProps {
   onExpand: (initialQuery?: string) => void;
@@ -44,7 +45,7 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
     >
       <div className="p-3 sm:p-5 flex flex-col justify-between h-full relative group">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between pb-1 border-b border-[var(--border-subtle)]">
           <div className="flex items-center gap-1.5 sm:gap-2">
             <div className="relative">
               <div className="p-1 sm:p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)]">
@@ -57,10 +58,10 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
             </div>
             <div>
               <h2 className="text-xs sm:text-sm font-bold text-[var(--text-heading)] group-hover:text-[var(--theme-accent-text-dark)] transition-colors">
-                Ask AsP
+                AsP &bull; AI Co-pilot
               </h2>
               <span className="hidden sm:inline-block text-[10px] font-mono text-[var(--text-faint)]">
-                AI Co-pilot &bull; Interactive Terminal
+                Neural Equalizer &bull; Interactive Terminal
               </span>
             </div>
           </div>
@@ -74,12 +75,17 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
           </button>
         </div>
 
+        {/* Live Neural Audio Waveform Graphic */}
+        <div className="my-1 sm:my-1.5">
+          <NeuralWaveform />
+        </div>
+
         {/* Dynamic Rotating Suggestion Ticker */}
         <div
           onClick={() => onExpand(suggestions[activeSuggestionIdx])}
-          className="my-1.5 sm:my-2.5 p-2 sm:p-3 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] cursor-pointer transition-all"
+          className="my-1 p-2 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] cursor-pointer transition-all"
         >
-          <div className="flex items-center gap-1 text-[9px] sm:text-[10px] font-mono text-[var(--theme-accent-text-dark)] mb-0.5 sm:mb-1">
+          <div className="flex items-center gap-1 text-[9px] sm:text-[10px] font-mono text-[var(--theme-accent-text-dark)] mb-0.5">
             <Sparkles className="w-3 h-3 text-[var(--theme-accent)]" />
             <span>Interactive Prompt:</span>
           </div>

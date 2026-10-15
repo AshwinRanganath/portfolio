@@ -9,6 +9,7 @@ import {
   Bot,
 } from "lucide-react";
 import { profileData } from "@/data/profile";
+import { CompanySystemSandbox } from "../graphics/CompanySystemSandbox";
 
 interface ExperienceExpandedViewProps {
   onAskAsp: (query?: string) => void;
@@ -82,6 +83,9 @@ export function ExperienceExpandedView({ onAskAsp }: ExperienceExpandedViewProps
             <span>Ask AsP about this</span>
           </button>
         </div>
+
+        {/* Real-World Systems Connection Sandbox Diagram */}
+        <CompanySystemSandbox companyIndex={selectedIdx} />
 
         {/* Summary Narrative */}
         <p className="text-xs sm:text-sm text-[var(--text-body)] leading-relaxed italic bg-black/10 dark:bg-black/20 p-3 rounded-xl border border-white/5">

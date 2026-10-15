@@ -5,12 +5,20 @@ import Image from "next/image";
 import { MapPin, Maximize2 } from "lucide-react";
 import { profileData } from "@/data/profile";
 import { SpecularBorder } from "../SpecularBorder";
+import { KpiArcGauge } from "../graphics/KpiArcGauge";
 
 interface HeroIdentityTileProps {
   onExpand: () => void;
 }
 
 export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
+  const kpiGauges = [
+    { value: "3+ Yrs", label: "Experience", sublabel: "Enterprise", percentage: 92, color: "var(--theme-accent)" },
+    { value: "40%", label: "Velocity", sublabel: "AST & AI", percentage: 80, color: "#38bdf8" },
+    { value: "100%", label: "Coverage", sublabel: "Microservices", percentage: 100, color: "#34d399" },
+    { value: "Global", label: "Delivery", sublabel: "NZ · US · APAC", percentage: 95, color: "#a78bfa" },
+  ];
+
   return (
     <SpecularBorder
       layoutId="hero-tile"
@@ -74,28 +82,21 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
         </div>
 
         {/* Bio Excerpt */}
-        <p className="text-[11px] sm:text-xs text-[var(--text-body)] line-clamp-1 sm:line-clamp-2 my-2 sm:my-3 font-mono leading-relaxed opacity-90">
+        <p className="text-[11px] sm:text-xs text-[var(--text-body)] line-clamp-1 sm:line-clamp-2 my-1.5 sm:my-2 font-mono leading-relaxed opacity-90">
           &gt; {profileData.shortBio}
         </p>
 
-        {/* Cockpit Telemetry Stats Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 pt-2 border-t border-[var(--border-subtle)]">
-          {profileData.stats.map((stat, i) => (
-            <div
-              key={i}
-              className={`p-1.5 sm:p-2 rounded-xl bg-[var(--bg-subtle)]/60 border border-[var(--border-subtle)]/70 hover:border-[var(--theme-accent-border)] transition-colors ${
-                i >= 2 ? "hidden sm:block" : ""
-              }`}
-            >
-              <span className="block text-[9px] sm:text-[10px] uppercase font-mono text-[var(--text-faint)] tracking-wider">
-                {stat.label}
-              </span>
-              <span className="block text-xs sm:text-sm font-bold text-[var(--text-heading)] mt-0.5">
-                {stat.value}
-              </span>
-              <span className="block text-[9px] sm:text-[10px] text-[var(--text-muted)] truncate">
-                {stat.hint}
-              </span>
+        {/* Visual KPI Arc Gauges Grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 pt-1.5 border-t border-[var(--border-subtle)]">
+          {kpiGauges.map((gauge, i) => (
+            <div key={i} className={i >= 2 ? "hidden sm:block" : ""}>
+              <KpiArcGauge
+                value={gauge.value}
+                label={gauge.label}
+                sublabel={gauge.sublabel}
+                percentage={gauge.percentage}
+                color={gauge.color}
+              />
             </div>
           ))}
         </div>
