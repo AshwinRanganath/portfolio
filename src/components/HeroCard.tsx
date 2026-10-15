@@ -276,7 +276,7 @@ export function HeroCard({
       className={`w-full mx-auto my-auto py-2 transition-all duration-300 ${
         isMaximized
           ? "max-w-none w-[98vw] px-2"
-          : "max-w-4xl xl:max-w-7xl px-4 sm:px-6"
+          : "max-w-4xl min-[1800px]:max-w-7xl px-4 sm:px-6"
       }`}
     >
       {/* CLI Centerpiece Window Container */}
@@ -288,14 +288,14 @@ export function HeroCard({
           isMaximized
             ? "h-[92vh] max-h-none"
             : activeTab === "chat"
-            ? "h-[calc(100dvh-130px)] min-h-[520px] sm:h-[78vh] sm:min-h-[580px] sm:max-h-[750px] xl:h-[82vh] xl:min-h-[640px] xl:max-h-[880px]"
-            : "h-auto xl:h-[82vh] xl:min-h-[640px] xl:max-h-[880px]"
+            ? "h-[calc(100dvh-130px)] min-h-[520px] sm:h-[78vh] sm:min-h-[580px] sm:max-h-[750px] min-[1800px]:h-[82vh] min-[1800px]:min-h-[640px] min-[1800px]:max-h-[880px]"
+            : "h-auto min-[1800px]:h-[82vh] min-[1800px]:min-h-[640px] min-[1800px]:max-h-[880px]"
         }`}
       >
         {/* =========================================================================
-            1. Title Bar: Mobile/Tablet Mode (< 1280px)
+            1. Title Bar: Standard / Laptop Mode (< 1800px)
             ========================================================================= */}
-        <div className="flex xl:hidden items-center justify-between px-3 sm:px-4 py-2 theme-titlebar select-none overflow-x-auto scrollbar-none border-b border-[var(--border-subtle)] shrink-0">
+        <div className="flex min-[1800px]:hidden items-center justify-between px-3 sm:px-4 py-2 theme-titlebar select-none overflow-x-auto scrollbar-none border-b border-[var(--border-subtle)] shrink-0">
           {/* Left: Window controls + IDE Tabs */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Traffic Light Window Controls */}
@@ -398,9 +398,9 @@ export function HeroCard({
         </div>
 
         {/* =========================================================================
-            2. Title Bar: Desktop Dual-Pane Mode (≥ 1280px)
+            2. Title Bar: Desktop Dual-Pane Mode (≥ 1800px, e.g. External Monitors)
             ========================================================================= */}
-        <div className="hidden xl:flex items-center justify-between theme-titlebar select-none border-b border-[var(--border-subtle)] shrink-0 overflow-hidden">
+        <div className="hidden min-[1800px]:flex items-center justify-between theme-titlebar select-none border-b border-[var(--border-subtle)] shrink-0 overflow-hidden">
           {/* Left Titlebar Section: Profile Pane */}
           <div
             style={{ width: `${splitRatio}%` }}
@@ -492,9 +492,9 @@ export function HeroCard({
         </div>
 
         {/* =========================================================================
-            3. Content View: Mobile/Tablet Mode (< 1280px)
+            3. Content View: Standard / Laptop Mode (< 1800px)
             ========================================================================= */}
-        <div className="xl:hidden flex-1 flex flex-col min-h-0">
+        <div className="min-[1800px]:hidden flex-1 flex flex-col min-h-0">
           {activeTab === "profile" ? (
             renderProfileContent(false)
           ) : (
@@ -511,9 +511,9 @@ export function HeroCard({
         </div>
 
         {/* =========================================================================
-            4. Content View: Desktop Dual-Pane Mode (≥ 1280px)
+            4. Content View: Desktop Dual-Pane Mode (≥ 1800px, e.g. External Monitors)
             ========================================================================= */}
-        <div className="hidden xl:flex flex-row flex-1 min-h-0 relative overflow-hidden">
+        <div className="hidden min-[1800px]:flex flex-row flex-1 min-h-0 relative overflow-hidden">
           {/* Left Pane: Profile Overview */}
           <div
             style={{ width: `${splitRatio}%` }}

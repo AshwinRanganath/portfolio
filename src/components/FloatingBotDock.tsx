@@ -28,7 +28,7 @@ export function FloatingBotDock({
 
   return (
     <div
-      className={`fixed bottom-4 inset-x-0 z-30 px-4 pointer-events-none transition-all duration-300 ease-out xl:opacity-0 xl:pointer-events-none xl:translate-y-6 ${
+      className={`fixed bottom-4 inset-x-0 z-30 px-4 pointer-events-none transition-all duration-300 ease-out min-[1800px]:opacity-0 min-[1800px]:pointer-events-none min-[1800px]:translate-y-6 ${
         isBotOpen
           ? "opacity-0 translate-y-6 pointer-events-none"
           : "opacity-100 translate-y-0"
