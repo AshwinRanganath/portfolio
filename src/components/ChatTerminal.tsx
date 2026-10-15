@@ -37,12 +37,16 @@ interface ChatTerminalProps {
   initialTopicId?: string | null;
   onReturnToProfile: () => void;
   isActive: boolean;
+  resetTrigger?: number;
+  isDualPane?: boolean;
 }
 
 export function ChatTerminal({
   initialTopicId,
   onReturnToProfile,
   isActive,
+  resetTrigger,
+  isDualPane = false,
 }: ChatTerminalProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
@@ -51,6 +55,13 @@ export function ChatTerminal({
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const activeStreamRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Handle external reset trigger (e.g. from window traffic light red button)
+  useEffect(() => {
+    if (resetTrigger && resetTrigger > 0) {
+      clearChat();
+    }
+  }, [resetTrigger]);
 
   // Initialize with greeting
   useEffect(() => {
@@ -891,8 +902,12 @@ You can click any of the suggested questions below to dive into details!`;
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset Chat</span>
                 </button>
-                <span>·</span>
-                <span>Esc to return to Profile</span>
+                {!isDualPane && (
+                  <>
+                    <span>·</span>
+                    <span>Esc to return to Profile</span>
+                  </>
+                )}
               </div>
             </div>
           </div>
