@@ -9,16 +9,26 @@ import {
   Mail,
   ExternalLink,
   MapPin,
+  Sparkles,
 } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/Icons";
+import { BotLogo } from "@/components/BotLogo";
 import { profileData } from "@/data/profile";
+import { ChatTerminal } from "@/components/ChatTerminal";
 
 interface HeroCardProps {
-  onOpenBot: () => void;
+  activeTab: "profile" | "chat";
+  onTabChange: (tab: "profile" | "chat") => void;
+  activeTopicId?: string | null;
   onSelectTopic: (topicId: string) => void;
 }
 
-export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
+export function HeroCard({
+  activeTab,
+  onTabChange,
+  activeTopicId,
+  onSelectTopic,
+}: HeroCardProps) {
   const [copied, setCopied] = useState(false);
 
   const copyEmail = async () => {
@@ -27,40 +37,105 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2500);
     } catch {
-      // Fallback
       window.location.href = `mailto:${profileData.email}`;
     }
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 my-auto py-4">
-      {/* CLI Window Container */}
-      <div className="theme-card rounded-2xl overflow-hidden relative">
-        {/* Window Title Bar */}
-        <div className="flex items-center justify-between px-4 py-2.5 theme-titlebar select-none">
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1.5">
+    <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 my-auto py-2 transition-all duration-300">
+      {/* CLI Centerpiece Window Container */}
+      <div
+        className={`theme-card rounded-2xl overflow-hidden relative flex flex-col transition-all duration-300 ${
+          activeTab === "chat"
+            ? "h-[calc(100dvh-130px)] min-h-[520px] sm:h-[78vh] sm:min-h-[580px] sm:max-h-[750px]"
+            : "h-auto"
+        }`}
+      >
+        {/* Window Title Bar with IDE Tabs */}
+        <div className="flex items-center justify-between px-3 sm:px-4 py-2 theme-titlebar select-none overflow-x-auto scrollbar-none border-b border-[var(--border-subtle)] shrink-0">
+          {/* Left: Window controls + IDE Tabs */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="flex items-center gap-1.5 shrink-0">
               <span className="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
               <span className="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
               <span className="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
             </div>
-            <span className="text-xs font-mono theme-muted ml-2">
-              ashwin_profile.json
-            </span>
+
+            {/* IDE Tabs */}
+            <div className="flex items-center gap-1 font-mono text-xs">
+              <button
+                onClick={() => onTabChange("profile")}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition-all ${
+                  activeTab === "profile"
+                    ? "bg-[var(--bg-subtle-hover)] text-amber-700 dark:text-amber-300 font-semibold border border-amber-500/30"
+                    : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200"
+                }`}
+                title="View Profile Overview"
+              >
+                <span className="text-amber-600 dark:text-amber-400">📄</span>
+                <span>ashwin_profile.json</span>
+              </button>
+
+              <button
+                onClick={() => onTabChange("chat")}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition-all ${
+                  activeTab === "chat"
+                    ? "bg-[var(--bg-subtle-hover)] text-amber-700 dark:text-amber-300 font-semibold border border-amber-500/30 shadow-sm"
+                    : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200"
+                }`}
+                title="Open AsP Interactive Terminal"
+              >
+                <BotLogo size="xs" withBeacon={activeTab === "chat"} />
+                <span>asp_chat.terminal</span>
+                {activeTab === "chat" && (
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse ml-0.5" />
+                )}
+              </button>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 font-mono text-[11px] theme-muted">
-            <span className="px-2 py-0.5 rounded theme-subtle-box">
-              UTF-8
-            </span>
-            <span className="hidden sm:inline px-2 py-0.5 rounded theme-subtle-box">
-              Java 21 · TypeScript
-            </span>
+          {/* Right: Actions / Hotkey Indicator */}
+          <div className="flex items-center gap-2 font-mono text-[11px] theme-muted shrink-0">
+            {activeTab === "chat" ? (
+              <button
+                onClick={() => onTabChange("profile")}
+                className="flex items-center gap-1 px-2.5 py-1 rounded-lg theme-subtle-box hover:text-amber-700 dark:hover:text-amber-300 hover:border-amber-500/30 transition-all text-xs active:scale-95"
+                title="Return to Profile Overview (Esc)"
+              >
+                <span>← Profile</span>
+                <kbd className="hidden sm:inline px-1 py-0.2 rounded bg-black/20 text-[10px]">
+                  Esc
+                </kbd>
+              </button>
+            ) : (
+              <>
+                <span className="hidden sm:inline px-2 py-0.5 rounded theme-subtle-box">
+                  UTF-8
+                </span>
+                <button
+                  onClick={() => onTabChange("chat")}
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30 transition-all text-xs"
+                  title="Open interactive assistant (Press /)"
+                >
+                  <Bot className="w-3.5 h-3.5" />
+                  <span className="font-medium hidden sm:inline">Ask AsP</span>
+                  <kbd className="px-1.5 py-0.2 rounded bg-amber-950/20 dark:bg-black/40 text-[10px]">
+                    /
+                  </kbd>
+                </button>
+              </>
+            )}
           </div>
         </div>
 
-        {/* Card Body */}
-        <div className="p-6 sm:p-8 md:p-10">
+        {/* Tab 1: Profile View */}
+        <div
+          className={
+            activeTab === "profile"
+              ? "p-6 sm:p-8 md:p-10 block overflow-y-auto"
+              : "hidden"
+          }
+        >
           {/* Top Row: Avatar + Headline Info */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6 pb-6 border-b border-[var(--border-subtle)]">
             {/* Avatar with Glow and Status Beacon */}
@@ -139,7 +214,7 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
           <div className="pt-6 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3">
             {/* Primary Assistant Trigger */}
             <button
-              onClick={onOpenBot}
+              onClick={() => onTabChange("chat")}
               className="group flex-1 sm:flex-none flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold text-sm transition-all duration-200 shadow-lg shadow-amber-500/25 active:scale-[0.98]"
             >
               <Bot className="w-4 h-4 text-black group-hover:scale-110 transition-transform" />
@@ -220,9 +295,22 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
               <kbd className="px-1.5 py-0.5 rounded theme-subtle-box text-[11px] theme-body font-mono">
                 /
               </kbd>
-              <span>to ask any question</span>
+              <span>to open interactive chat</span>
             </div>
           </div>
+        </div>
+
+        {/* Tab 2: Interactive AsP Chat Terminal */}
+        <div
+          className={
+            activeTab === "chat" ? "flex-1 flex flex-col min-h-0" : "hidden"
+          }
+        >
+          <ChatTerminal
+            isActive={activeTab === "chat"}
+            initialTopicId={activeTopicId}
+            onReturnToProfile={() => onTabChange("profile")}
+          />
         </div>
       </div>
     </div>

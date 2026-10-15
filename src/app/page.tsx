@@ -4,26 +4,20 @@ import React, { useState } from "react";
 import { Header } from "@/components/Header";
 import { HeroCard } from "@/components/HeroCard";
 import { FloatingBotDock } from "@/components/FloatingBotDock";
-import { BotDrawer } from "@/components/BotDrawer";
 import { KeyboardManager } from "@/components/KeyboardManager";
 
 export default function Home() {
-  const [isBotOpen, setIsBotOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"profile" | "chat">("profile");
   const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
 
   const handleOpenBot = () => {
     setActiveTopicId(null);
-    setIsBotOpen(true);
+    setActiveTab("chat");
   };
 
   const handleSelectTopic = (topicId: string) => {
     setActiveTopicId(topicId);
-    setIsBotOpen(true);
-  };
-
-  const handleCloseBot = () => {
-    setIsBotOpen(false);
-    setActiveTopicId(null);
+    setActiveTab("chat");
   };
 
   return (
@@ -36,16 +30,18 @@ export default function Home() {
       <KeyboardManager
         onOpenBot={handleOpenBot}
         onSelectTopic={handleSelectTopic}
-        isBotOpen={isBotOpen}
+        isBotOpen={activeTab === "chat"}
       />
 
       {/* Top CLI Header */}
       <Header onOpenBot={handleOpenBot} />
 
       {/* Main Single-Viewport Hero Centerpiece */}
-      <main className="flex-1 flex items-center justify-center py-4 pb-28 sm:py-6 sm:pb-20">
+      <main className="flex-1 flex items-center justify-center py-2 pb-24 sm:py-4 sm:pb-16">
         <HeroCard
-          onOpenBot={handleOpenBot}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          activeTopicId={activeTopicId}
           onSelectTopic={handleSelectTopic}
         />
       </main>
@@ -54,14 +50,7 @@ export default function Home() {
       <FloatingBotDock
         onOpenBot={handleOpenBot}
         onSelectTopic={handleSelectTopic}
-        isBotOpen={isBotOpen}
-      />
-
-      {/* Slide-over Interactive Bot Drawer */}
-      <BotDrawer
-        isOpen={isBotOpen}
-        onClose={handleCloseBot}
-        initialTopicId={activeTopicId}
+        isBotOpen={activeTab === "chat"}
       />
     </div>
   );
