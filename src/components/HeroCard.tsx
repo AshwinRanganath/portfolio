@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import {
-  Sparkles,
+  Bot,
   FileText,
   Copy,
   Check,
@@ -142,8 +142,8 @@ export function HeroCard({ onOpenBot, onSelectTopic }: HeroCardProps) {
               onClick={onOpenBot}
               className="group flex-1 sm:flex-none flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-black font-semibold text-sm transition-all duration-200 shadow-lg shadow-cyan-500/25 active:scale-[0.98]"
             >
-              <Sparkles className="w-4 h-4 text-black group-hover:rotate-12 transition-transform" />
-              <span>Ask Interactive Bot</span>
+              <Bot className="w-4 h-4 text-black group-hover:scale-110 transition-transform" />
+              <span>Ask AsP</span>
               <kbd className="px-1.5 py-0.5 rounded bg-black/20 text-xs text-black/80 font-mono border border-black/20">
                 /
               </kbd>

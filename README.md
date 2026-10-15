@@ -52,7 +52,7 @@ src/
 
 ## 🤖 Client-Side Assistant Engine (`BotDrawer.tsx`)
 
-The portfolio features an embedded interactive assistant (`ashwin-assistant`) designed to guide recruiters and engineers through Ashwin's background:
+The portfolio features an embedded interactive assistant (**AsP**) designed to guide recruiters and engineers through Ashwin's background:
 
 ```
 [User Input] 

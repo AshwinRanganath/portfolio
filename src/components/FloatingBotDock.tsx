@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MessageSquareCode } from "lucide-react";
+import { BotLogo } from "@/components/BotLogo";
 import { profileData } from "@/data/profile";
 
 interface FloatingBotDockProps {
@@ -36,14 +36,11 @@ export function FloatingBotDock({
           {/* Main Bot Button */}
           <button
             onClick={onOpenBot}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40 transition-all font-mono text-xs shrink-0 group active:scale-95"
+            className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-cyan-500/15 hover:bg-cyan-500/25 text-cyan-700 dark:text-cyan-300 border border-cyan-500/40 transition-all font-mono text-xs shrink-0 group active:scale-95"
+            title="Open AsP interactive assistant (Press /)"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
-            </span>
-            <MessageSquareCode className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform" />
-            <span className="font-semibold theme-heading">Ask Ashwin Bot</span>
+            <BotLogo size="xs" withBeacon={true} />
+            <span className="font-semibold theme-heading">Ask AsP</span>
             <kbd className="px-1.5 py-0.5 rounded bg-cyan-950/20 dark:bg-black/50 text-[10px] text-cyan-700 dark:text-cyan-300 border border-cyan-500/40 font-mono">
               /
             </kbd>

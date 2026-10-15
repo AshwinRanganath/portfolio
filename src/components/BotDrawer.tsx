@@ -13,7 +13,9 @@ import {
   Search,
   ExternalLink,
   MessageCircleQuestion,
+  Bot,
 } from "lucide-react";
+import { BotLogo } from "@/components/BotLogo";
 import { profileData, BotTopic } from "@/data/profile";
 import { FormattedMarkdown } from "@/components/FormattedMarkdown";
 
@@ -48,7 +50,7 @@ export function BotDrawer({ isOpen, onClose, initialTopicId }: BotDrawerProps) {
         {
           id: "welcome-1",
           sender: "bot",
-          text: `Hi there! 👋 I am Ashwin's interactive portfolio assistant.
+          text: `Hi there! 👋 I am **AsP**, Ashwin's interactive portfolio assistant.
 
 You can ask me real questions about his background, such as:
 - **"What programming languages do you code in?"**
@@ -201,7 +203,7 @@ Type any question below or click any suggestion to get started!`,
     ) {
       const greeting = `Hello! 👋 Great to connect with you.
 
-I'm Ashwin's interactive assistant. You can ask me natural questions like:
+I'm **AsP**, Ashwin's interactive assistant. You can ask me natural questions like:
 - **"What programming languages do you know?"**
 - **"Tell me about your time at Unisys"**
 - **"What did you build at AMD India?"**
@@ -210,6 +212,34 @@ I'm Ashwin's interactive assistant. You can ask me natural questions like:
 
 What would you like to explore first?`;
       streamBotResponse(greeting, "greeting", [
+        "programming-languages",
+        "experience-unisys",
+        "career-journey",
+        "current-role",
+      ]);
+      return;
+    }
+
+    // 1b. AsP Identity queries
+    if (
+      q === "who are you" ||
+      q === "who are you?" ||
+      q === "what is your name" ||
+      q === "what is your name?" ||
+      q === "what are you" ||
+      q.includes("who is asp") ||
+      q.includes("what is asp")
+    ) {
+      const aspBio = `I am **AsP** — Ashwin's automated portfolio assistant! 🤖
+
+I'm programmed to answer questions about his 3+ years of software engineering experience, including:
+- **Current Position**: Senior Platform Lead at **CNZ Consultants** (Java 21, Spring Boot 3, Multi-domain enterprise integrations).
+- **Past Work**: Software Engineer at **Unisys** (Java AST analysis & developer tooling), Intern at **AMD India** (Best Technical Poster Award).
+- **Tech Stack**: Java (17/21), TypeScript, React, Python 3, C# (.NET), PostgreSQL / SQL.
+- **Academics**: M.Tech in Computer Science Engineering from **Manipal University** (GPA 7.9).
+
+Feel free to ask me anything about his technical background or projects!`;
+      streamBotResponse(aspBio, "asp-identity", [
         "programming-languages",
         "experience-unisys",
         "career-journey",
@@ -384,19 +414,11 @@ You can click any of the suggested questions below to dive into details!`;
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-3.5 theme-titlebar">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg overflow-hidden border border-cyan-500/40 shrink-0">
-              <img
-                src={profileData.avatarUrl}
-                alt={profileData.name}
-                width={32}
-                height={32}
-                className="w-full h-full object-cover object-center"
-              />
-            </div>
+            <BotLogo size="md" withBeacon={true} />
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-mono text-sm font-semibold theme-heading">
-                  ashwin-assistant
+                  AsP Assistant
                 </span>
                 <span className="px-1.5 py-0.2 rounded text-[10px] font-mono bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">
                   online
@@ -460,7 +482,10 @@ You can click any of the suggested questions below to dive into details!`;
               }`}
             >
               <div className="flex items-center gap-1.5 text-[10px] font-mono theme-faint mb-1 px-1">
-                <span>{msg.sender === "user" ? "You" : "Ashwin Assistant"}</span>
+                {msg.sender === "bot" && (
+                  <Bot className="w-3 h-3 text-cyan-600 dark:text-cyan-400 shrink-0" />
+                )}
+                <span>{msg.sender === "user" ? "You" : "AsP"}</span>
                 <span>·</span>
                 <span>{msg.timestamp}</span>
               </div>
@@ -549,7 +574,7 @@ You can click any of the suggested questions below to dive into details!`;
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask anything (e.g. 'Unisys experience', 'What languages do you code in?')..."
+              placeholder="Ask AsP anything (e.g. 'Unisys experience', 'What languages do you code in?')..."
               className="flex-1 bg-transparent text-sm theme-heading placeholder:text-[var(--text-faint)] focus:outline-none font-sans"
             />
             <button

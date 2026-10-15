@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { Terminal, Moon, Sun, FileText, Sparkles } from "lucide-react";
+import { Terminal, Moon, Sun, FileText, Bot } from "lucide-react";
 import { profileData } from "@/data/profile";
 
 interface HeaderProps {
@@ -86,10 +86,10 @@ export function Header({ onOpenBot }: HeaderProps) {
         <button
           onClick={onOpenBot}
           className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-400 border border-cyan-500/30 transition-all font-mono text-xs"
-          title="Open Interactive Assistant (Press /)"
+          title="Open AsP Assistant (Press /)"
         >
-          <Sparkles className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-          <span className="hidden sm:inline font-medium">Ask AI Bot</span>
+          <Bot className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+          <span className="hidden sm:inline font-medium">Ask AsP</span>
           <kbd className="px-1.5 py-0.5 rounded bg-cyan-950/20 dark:bg-black/40 text-[10px] text-cyan-700 dark:text-cyan-300 border border-cyan-500/30">
             /
           </kbd>
