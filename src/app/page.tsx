@@ -1,57 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
-import { Header } from "@/components/Header";
-import { HeroCard } from "@/components/HeroCard";
-import { FloatingBotDock } from "@/components/FloatingBotDock";
-import { KeyboardManager } from "@/components/KeyboardManager";
+import React from "react";
+import { CockpitContainer } from "@/components/cockpit/CockpitContainer";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<"profile" | "chat">("profile");
-  const [activeTopicId, setActiveTopicId] = useState<string | null>(null);
-
-  const handleOpenBot = () => {
-    setActiveTopicId(null);
-    setActiveTab("chat");
-  };
-
-  const handleSelectTopic = (topicId: string) => {
-    setActiveTopicId(topicId);
-    setActiveTab("chat");
-  };
-
-  return (
-    <div className="relative min-h-screen flex flex-col justify-between bg-grid-pattern selection:bg-amber-500/25 selection:text-amber-800 dark:selection:text-amber-200">
-      {/* Ambient background glows */}
-      <div className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] bg-[var(--ambient-glow-1)] blur-[140px] pointer-events-none -z-10 rounded-full" />
-      <div className="fixed bottom-10 right-10 w-[400px] h-[300px] bg-[var(--ambient-glow-2)] blur-[120px] pointer-events-none -z-10 rounded-full" />
-
-      {/* Global Hotkey Manager */}
-      <KeyboardManager
-        onOpenBot={handleOpenBot}
-        onSelectTopic={handleSelectTopic}
-        isBotOpen={activeTab === "chat"}
-      />
-
-      {/* Top CLI Header */}
-      <Header onOpenBot={handleOpenBot} />
-
-      {/* Main Single-Viewport Hero Centerpiece */}
-      <main className="flex-1 flex items-center justify-center py-2 pb-24 sm:py-4 sm:pb-16">
-        <HeroCard
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          activeTopicId={activeTopicId}
-          onSelectTopic={handleSelectTopic}
-        />
-      </main>
-
-      {/* Floating Interactive Bot Pill Dock */}
-      <FloatingBotDock
-        onOpenBot={handleOpenBot}
-        onSelectTopic={handleSelectTopic}
-        isBotOpen={activeTab === "chat"}
-      />
-    </div>
-  );
+  return <CockpitContainer />;
 }
