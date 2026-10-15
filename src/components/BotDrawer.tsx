@@ -87,13 +87,18 @@ Type any question below or click any suggestion to get started!`,
     }
   }, [messages, isOpen]);
 
-  // Focus input when opened
+  // Focus input when opened (desktop only to prevent mobile keyboard layout freeze)
   useEffect(() => {
     if (isOpen) {
-      const timer = setTimeout(() => {
-        inputRef.current?.focus();
-      }, 150);
-      return () => clearTimeout(timer);
+      const isMobile =
+        typeof window !== "undefined" &&
+        window.matchMedia("(max-width: 768px)").matches;
+      if (!isMobile) {
+        const timer = setTimeout(() => {
+          inputRef.current?.focus();
+        }, 50);
+        return () => clearTimeout(timer);
+      }
     }
   }, [isOpen]);
 
@@ -393,13 +398,18 @@ You can click any of the suggested questions below to dive into details!`;
     ]);
   };
 
-  if (!isOpen) return null;
-
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
+    <div
+      className={`fixed inset-0 z-50 flex justify-end transition-[visibility] ${
+        isOpen ? "visible pointer-events-auto" : "invisible pointer-events-none"
+      }`}
+      aria-hidden={!isOpen}
+    >
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200"
+        className={`fixed inset-0 bg-black/60 transition-opacity duration-200 ease-out ${
+          isOpen ? "opacity-100" : "opacity-0"
+        }`}
         onClick={onClose}
         aria-hidden="true"
       />
@@ -407,9 +417,11 @@ You can click any of the suggested questions below to dive into details!`;
       {/* Drawer Container */}
       <div
         role="dialog"
-        aria-modal="true"
+        aria-modal={isOpen}
         aria-label="Interactive Assistant Drawer"
-        className="relative w-full max-w-xl h-full theme-drawer shadow-2xl flex flex-col z-10 animate-in slide-in-from-right duration-300"
+        className={`relative w-full max-w-xl h-full theme-drawer shadow-2xl flex flex-col z-10 transition-transform duration-200 ease-out will-change-transform ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        }`}
       >
         {/* Drawer Header */}
         <div className="flex items-center justify-between px-5 py-3.5 theme-titlebar">
