@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { ThemeProvider } from "@/context/ThemeContext";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -76,13 +77,23 @@ export default function RootLayout({
                   } else {
                     document.documentElement.classList.remove('light');
                   }
+                  var savedAccent = localStorage.getItem('portfolio-accent-theme');
+                  var valid = ['amber', 'emerald', 'violet', 'coral', 'glacier', 'titanium'];
+                  if (savedAccent && valid.indexOf(savedAccent) !== -1) {
+                    document.documentElement.setAttribute('data-accent', savedAccent);
+                  } else {
+                    document.documentElement.setAttribute('data-accent', 'amber');
+                  }
                 } catch (e) {}
               })();
             `,
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
+

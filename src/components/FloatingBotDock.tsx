@@ -41,12 +41,12 @@ export function FloatingBotDock({
           {/* Main Bot Button */}
           <button
             onClick={onOpenBot}
-            className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl bg-amber-500/15 hover:bg-amber-500/25 text-amber-700 dark:text-amber-300 border border-amber-500/40 transition-all font-mono text-xs shrink-0 group active:scale-95"
+            className="flex items-center gap-2 px-2.5 py-1.5 rounded-xl accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] transition-all font-mono text-xs shrink-0 group active:scale-95"
             title="Open AsP interactive assistant (Press /)"
           >
             <BotLogo size="xs" withBeacon={true} />
             <span className="font-semibold theme-heading">Ask AsP</span>
-            <kbd className="px-1.5 py-0.5 rounded bg-amber-950/20 dark:bg-black/50 text-[10px] text-amber-700 dark:text-amber-300 border border-amber-500/40 font-mono">
+            <kbd className="px-1.5 py-0.5 rounded bg-black/10 dark:bg-black/50 text-[10px] text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] font-mono">
               /
             </kbd>
           </button>
@@ -57,10 +57,10 @@ export function FloatingBotDock({
               <button
                 key={q.id}
                 onClick={() => onSelectTopic(q.id)}
-                className="shrink-0 flex items-center gap-1.5 px-3 py-1 rounded-lg theme-subtle-box text-neutral-700 dark:text-neutral-300 hover:text-amber-700 dark:hover:text-amber-200 hover:border-amber-500/40 transition-all active:scale-95 group text-left"
+                className="shrink-0 flex items-center gap-1.5 px-3 py-1 rounded-lg theme-subtle-box text-neutral-700 dark:text-neutral-300 hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] hover:border-[var(--border-accent)] transition-all active:scale-95 group text-left"
                 title={`Ask: "${q.text}"`}
               >
-                <span className="text-amber-600 dark:text-amber-400/80 group-hover:text-amber-700 dark:group-hover:text-amber-300">💬</span>
+                <span className="text-[var(--theme-accent)] transition-colors duration-300">💬</span>
                 <span>{q.text}</span>
               </button>
             ))}

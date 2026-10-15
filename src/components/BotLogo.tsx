@@ -39,10 +39,10 @@ export function BotLogo({
 
   return (
     <div
-      className={`relative inline-flex items-center justify-center shrink-0 ${currentSize.container} bg-gradient-to-br from-amber-400 via-amber-500 to-amber-600 text-white shadow-md shadow-amber-500/25 border border-amber-400/50 ${className}`}
+      className={`relative inline-flex items-center justify-center shrink-0 ${currentSize.container} accent-gradient text-[var(--theme-accent-btn-text)] accent-shadow border border-white/25 transition-all duration-300 ${className}`}
       aria-label="AsP Bot Logo"
     >
-      <Bot className={`${currentSize.icon} text-white drop-shadow-sm`} />
+      <Bot className={`${currentSize.icon} text-[var(--theme-accent-btn-text)] drop-shadow-sm`} />
       {withBeacon && (
         <span
           className={`absolute ${currentSize.beacon} rounded-full bg-emerald-400 border border-[var(--bg-primary)] shadow-sm animate-pulse`}

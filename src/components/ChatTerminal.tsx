@@ -533,7 +533,7 @@ You can click any of the suggested questions below to dive into details!`;
             <div className="flex items-center gap-2 min-w-0 pr-2">
               <button
                 onClick={() => setSelectedExperience(null)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 font-mono text-xs transition-all active:scale-95 shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] font-mono text-xs transition-all active:scale-95 shrink-0"
                 title="Back to conversation"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -557,17 +557,17 @@ You can click any of the suggested questions below to dive into details!`;
           {/* Detail Scrollable Body */}
           <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
             {/* Header Hero Card */}
-            <div className="p-4 sm:p-5 rounded-2xl theme-subtle-box border border-amber-500/30 space-y-3">
+            <div className="p-4 sm:p-5 rounded-2xl theme-subtle-box border border-[var(--border-accent)] space-y-3">
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 shrink-0">
+                  <div className="p-2.5 rounded-xl accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] shrink-0">
                     <Briefcase className="w-5 h-5" />
                   </div>
                   <div>
                     <h2 className="text-lg sm:text-xl font-bold theme-heading font-sans">
                       {selectedExperience.company}
                     </h2>
-                    <p className="text-xs sm:text-sm font-medium text-amber-700 dark:text-amber-300">
+                    <p className="text-xs sm:text-sm font-medium accent-text">
                       {selectedExperience.role}
                     </p>
                   </div>
@@ -590,8 +590,8 @@ You can click any of the suggested questions below to dive into details!`;
               </div>
 
               {/* Summary Box */}
-              <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 text-xs sm:text-sm leading-relaxed theme-body">
-                <span className="font-semibold text-amber-700 dark:text-amber-300 font-mono">
+              <div className="p-3.5 rounded-xl accent-subtle-bg border border-[var(--border-accent)] text-xs sm:text-sm leading-relaxed theme-body">
+                <span className="font-semibold accent-text font-mono">
                   Role Overview:{" "}
                 </span>
                 {selectedExperience.summary}
@@ -600,17 +600,17 @@ You can click any of the suggested questions below to dive into details!`;
 
             {/* Core Architectural & Technical Contributions */}
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-amber-700 dark:text-amber-400 font-bold">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider accent-text font-bold">
+                <Sparkles className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
                 <span>Core Architectural Impact & Responsibilities</span>
               </div>
               <div className="space-y-2.5">
                 {selectedExperience.bullets.map((bullet, idx) => (
                   <div
                     key={idx}
-                    className="flex items-start gap-3 p-3.5 rounded-xl theme-subtle-box border border-[var(--border-subtle)] hover:border-amber-500/30 transition-colors text-xs sm:text-sm leading-relaxed theme-body"
+                    className="flex items-start gap-3 p-3.5 rounded-xl theme-subtle-box border border-[var(--border-subtle)] hover:border-[var(--border-accent)] transition-colors text-xs sm:text-sm leading-relaxed theme-body"
                   >
-                    <span className="shrink-0 w-5 h-5 rounded-md bg-amber-500/15 border border-amber-500/30 text-amber-700 dark:text-amber-300 font-mono text-xs flex items-center justify-center font-bold mt-0.5 select-none">
+                    <span className="shrink-0 w-5 h-5 rounded-md accent-subtle-bg border border-[var(--border-accent)] text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] font-mono text-xs flex items-center justify-center font-bold mt-0.5 select-none">
                       {idx + 1}
                     </span>
                     <span className="flex-1">{bullet}</span>
@@ -621,14 +621,14 @@ You can click any of the suggested questions below to dive into details!`;
 
             {/* Technologies Used */}
             <div className="space-y-2.5">
-              <div className="text-xs font-mono uppercase tracking-wider text-amber-700 dark:text-amber-400 font-bold">
+              <div className="text-xs font-mono uppercase tracking-wider accent-text font-bold">
                 Technologies & Infrastructure
               </div>
               <div className="flex flex-wrap gap-2">
                 {selectedExperience.technologies.map((tech, idx) => (
                   <span
                     key={idx}
-                    className="px-2.5 py-1 rounded-lg text-xs font-mono theme-subtle-box text-neutral-800 dark:text-neutral-200 border border-[var(--border-subtle)] hover:border-amber-500/40 hover:text-amber-700 dark:hover:text-amber-300 transition-colors"
+                    className="px-2.5 py-1 rounded-lg text-xs font-mono theme-subtle-box text-neutral-800 dark:text-neutral-200 border border-[var(--border-subtle)] hover:border-[var(--border-accent)] hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] transition-colors"
                   >
                     {tech}
                   </span>
@@ -638,9 +638,9 @@ You can click any of the suggested questions below to dive into details!`;
 
             {/* 1-Click Interactive Follow-up Prompts */}
             {getExperiencePrompts(selectedExperience.company).length > 0 && (
-              <div className="p-4 sm:p-5 rounded-2xl theme-subtle-box border border-amber-500/30 space-y-3">
-                <div className="flex items-center gap-1.5 text-xs font-mono font-semibold text-amber-700 dark:text-amber-300">
-                  <MessageCircleQuestion className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <div className="p-4 sm:p-5 rounded-2xl theme-subtle-box border border-[var(--border-accent)] space-y-3">
+                <div className="flex items-center gap-1.5 text-xs font-mono font-semibold accent-text">
+                  <MessageCircleQuestion className="w-4 h-4 text-[var(--theme-accent)]" />
                   <span>Ask AsP about this role:</span>
                 </div>
                 <div className="grid grid-cols-1 gap-2">
@@ -648,10 +648,10 @@ You can click any of the suggested questions below to dive into details!`;
                     <button
                       key={idx}
                       onClick={() => handleSendPrompt(prompt)}
-                      className="w-full flex items-center justify-between p-3 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-xs sm:text-sm font-sans text-neutral-800 dark:text-neutral-200 hover:text-amber-800 dark:hover:text-amber-200 transition-all text-left active:scale-[0.99] group"
+                      className="w-full flex items-center justify-between p-3 rounded-xl accent-subtle-bg border border-[var(--border-accent)] text-xs sm:text-sm font-sans text-neutral-800 dark:text-neutral-200 hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] transition-all text-left active:scale-[0.99] group"
                     >
                       <span>{prompt}</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400 group-hover:translate-x-0.5 transition-transform shrink-0 ml-2" />
+                      <ArrowRight className="w-3.5 h-3.5 text-[var(--theme-accent)] group-hover:translate-x-0.5 transition-transform shrink-0 ml-2" />
                     </button>
                   ))}
                 </div>
@@ -662,7 +662,7 @@ You can click any of the suggested questions below to dive into details!`;
             <div className="pt-2 pb-4">
               <button
                 onClick={() => setSelectedExperience(null)}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold text-xs sm:text-sm shadow-md shadow-amber-500/20 active:scale-98 transition-all"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl accent-btn font-semibold text-xs sm:text-sm active:scale-98 transition-all"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Return to Conversation</span>
@@ -676,7 +676,7 @@ You can click any of the suggested questions below to dive into details!`;
           {/* Suggested Questions Strip */}
           <div className="px-4 py-2 border-b border-[var(--border-subtle)] bg-[var(--bg-titlebar)] flex items-center gap-1.5 overflow-x-auto scrollbar-none">
             <span className="text-[11px] font-mono theme-faint shrink-0 flex items-center gap-1">
-              <MessageCircleQuestion className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+              <MessageCircleQuestion className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
               Try:
             </span>
             {[
@@ -690,7 +690,7 @@ You can click any of the suggested questions below to dive into details!`;
               <button
                 key={item.id}
                 onClick={() => handleSelectTopic(item.id)}
-                className="shrink-0 px-2.5 py-1 rounded-md text-xs font-sans theme-subtle-box text-neutral-700 dark:text-neutral-300 hover:text-amber-700 dark:hover:text-amber-200 hover:border-amber-500/30 transition-all active:scale-95 flex items-center gap-1"
+                className="shrink-0 px-2.5 py-1 rounded-md text-xs font-sans theme-subtle-box text-neutral-700 dark:text-neutral-300 hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] hover:border-[var(--border-accent)] transition-all active:scale-95 flex items-center gap-1"
               >
                 <span>{item.text}</span>
               </button>
@@ -714,7 +714,7 @@ You can click any of the suggested questions below to dive into details!`;
                 >
                   <div className="flex items-center gap-1.5 text-[10px] font-mono theme-faint mb-1 px-1">
                     {msg.sender === "bot" && (
-                      <Bot className="w-3 h-3 text-amber-600 dark:text-amber-400 shrink-0" />
+                      <Bot className="w-3 h-3 text-[var(--theme-accent)] shrink-0" />
                     )}
                     <span>{msg.sender === "user" ? "You" : "AsP"}</span>
                     <span>·</span>
@@ -724,7 +724,7 @@ You can click any of the suggested questions below to dive into details!`;
                   <div
                     className={`max-w-[92%] sm:max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                       msg.sender === "user"
-                        ? "bg-gradient-to-r from-amber-500 to-amber-600 text-black font-semibold rounded-tr-sm shadow-md shadow-amber-500/20"
+                        ? "accent-btn font-semibold rounded-tr-sm shadow-md"
                         : "theme-bubble-bot rounded-tl-sm shadow-sm"
                     }`}
                   >
@@ -738,15 +738,15 @@ You can click any of the suggested questions below to dive into details!`;
                     {relatedExps.length > 0 && (
                       <div className="mt-3.5 pt-3 border-t border-[var(--border-subtle)] space-y-2">
                         {relatedExps.length === 1 ? (
-                          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                          <div className="p-3 rounded-xl accent-subtle-bg border border-[var(--border-accent)] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
                             <div className="flex items-center gap-2.5 min-w-0">
-                              <div className="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center shrink-0 text-amber-700 dark:text-amber-400">
+                              <div className="w-8 h-8 rounded-lg accent-subtle-bg border border-[var(--border-accent)] flex items-center justify-center shrink-0 text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)]">
                                 <Briefcase className="w-4 h-4" />
                               </div>
                               <div className="min-w-0">
                                 <div className="font-semibold text-xs theme-heading flex items-center gap-1.5">
                                   <span className="truncate">{relatedExps[0].company}</span>
-                                  <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-800 dark:text-amber-300 shrink-0">
+                                  <span className="text-[10px] font-mono px-1.5 py-0.2 rounded accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] shrink-0">
                                     {relatedExps[0].period}
                                   </span>
                                 </div>
@@ -757,7 +757,7 @@ You can click any of the suggested questions below to dive into details!`;
                             </div>
                             <button
                               onClick={() => setSelectedExperience(relatedExps[0])}
-                              className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-semibold shadow-sm transition-all active:scale-95 shrink-0"
+                              className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg accent-btn text-xs font-semibold shadow-sm transition-all active:scale-95 shrink-0"
                             >
                               <span>View Full Role Details</span>
                               <ArrowRight className="w-3.5 h-3.5" />
@@ -765,7 +765,7 @@ You can click any of the suggested questions below to dive into details!`;
                           </div>
                         ) : (
                           <div className="space-y-2">
-                            <div className="text-[11px] font-mono text-amber-700 dark:text-amber-400 font-semibold flex items-center gap-1">
+                            <div className="text-[11px] font-mono accent-text font-semibold flex items-center gap-1">
                               <Sparkles className="w-3 h-3" />
                               <span>Detailed role breakdown & architecture:</span>
                             </div>
@@ -774,17 +774,17 @@ You can click any of the suggested questions below to dive into details!`;
                                 <button
                                   key={exp.company}
                                   onClick={() => setSelectedExperience(exp)}
-                                  className="flex items-center justify-between p-2.5 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 transition-all text-left group active:scale-98"
+                                  className="flex items-center justify-between p-2.5 rounded-xl accent-subtle-bg border border-[var(--border-accent)] transition-all text-left group active:scale-98"
                                 >
                                   <div className="min-w-0 pr-2">
-                                    <div className="font-semibold text-xs theme-heading truncate group-hover:text-amber-700 dark:group-hover:text-amber-300">
+                                    <div className="font-semibold text-xs theme-heading truncate group-hover:text-[var(--theme-accent-text)] dark:group-hover:text-[var(--theme-accent-text-dark)]">
                                       {exp.company}
                                     </div>
                                     <div className="text-[10px] font-mono theme-muted truncate">
                                       {exp.period}
                                     </div>
                                   </div>
-                                  <div className="shrink-0 w-6 h-6 rounded-md bg-amber-500/20 flex items-center justify-center text-amber-700 dark:text-amber-400 group-hover:bg-amber-500 group-hover:text-black transition-colors">
+                                  <div className="shrink-0 w-6 h-6 rounded-md accent-subtle-bg flex items-center justify-center text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] group-hover:accent-btn transition-colors">
                                     <ArrowRight className="w-3.5 h-3.5" />
                                   </div>
                                 </button>
@@ -800,7 +800,7 @@ You can click any of the suggested questions below to dive into details!`;
                       <div className="mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs font-mono theme-muted">
                         <button
                           onClick={() => copyMessage(msg.id, msg.text)}
-                          className="flex items-center gap-1 hover:text-amber-600 dark:hover:text-amber-300 transition-colors"
+                          className="flex items-center gap-1 hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] transition-colors"
                           title="Copy response"
                         >
                           {copiedId === msg.id ? (
@@ -820,7 +820,7 @@ You can click any of the suggested questions below to dive into details!`;
                         {msg.topicId === "contact" && (
                           <a
                             href={`mailto:${profileData.email}`}
-                            className="text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1 font-medium"
+                            className="accent-text hover:underline flex items-center gap-1 font-medium"
                           >
                             Email Ashwin <ExternalLink className="w-3 h-3" />
                           </a>
@@ -842,7 +842,7 @@ You can click any of the suggested questions below to dive into details!`;
                           <button
                             key={fId}
                             onClick={() => handleSelectTopic(fId)}
-                            className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-sans bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 transition-all hover:scale-105 active:scale-95 text-left"
+                            className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-sans accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] transition-all hover:scale-105 active:scale-95 text-left"
                           >
                             <span>{followTopic.realisticQuestion}</span>
                             <ChevronRight className="w-3 h-3 shrink-0" />
@@ -861,7 +861,7 @@ You can click any of the suggested questions below to dive into details!`;
           <div className="p-3 sm:p-4 border-t border-[var(--border-subtle)] bg-[var(--bg-titlebar)]">
             <form
               onSubmit={handleSendMessage}
-              className="flex items-center gap-2 rounded-xl theme-subtle-box px-3.5 py-2.5 focus-within:border-amber-500/50 transition-colors"
+              className="flex items-center gap-2 rounded-xl theme-subtle-box px-3.5 py-2.5 focus-within:border-[var(--border-accent)] transition-colors"
             >
               <Search className="w-4 h-4 theme-muted shrink-0" />
               <input
@@ -875,7 +875,7 @@ You can click any of the suggested questions below to dive into details!`;
               <button
                 type="submit"
                 disabled={!inputValue.trim()}
-                className="p-1.5 rounded-lg bg-amber-500 text-black font-semibold hover:bg-amber-400 disabled:opacity-30 disabled:hover:bg-amber-500 transition-all shrink-0"
+                className="p-1.5 rounded-lg accent-btn font-semibold disabled:opacity-30 transition-all shrink-0"
                 title="Send question"
               >
                 <Send className="w-4 h-4" />

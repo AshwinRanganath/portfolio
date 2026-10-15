@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Terminal, Moon, Sun, FileText, Bot } from "lucide-react";
 import { profileData } from "@/data/profile";
+import { ThemePicker } from "@/components/ThemePicker";
 
 interface HeaderProps {
   onOpenBot: () => void;
@@ -58,7 +59,7 @@ export function Header({ onOpenBot }: HeaderProps) {
       {/* Left: Terminal brand identifier */}
       <div className="flex items-center gap-2 sm:gap-3">
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md theme-subtle-box">
-          <Terminal className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
+          <Terminal className="w-3.5 h-3.5 text-[var(--theme-accent)] transition-colors duration-300" />
           <span className="font-mono font-medium tracking-tight theme-heading">
             {profileData.handle}@platform:~$
           </span>
@@ -74,7 +75,7 @@ export function Header({ onOpenBot }: HeaderProps) {
         </div>
       </div>
 
-      {/* Right: Clock + Hotkey Trigger + Theme Toggle */}
+      {/* Right: Clock + Hotkey Trigger + Theme Palette Picker + Theme Toggle */}
       <div className="flex items-center gap-2 sm:gap-3">
         {timeStr && (
           <div className="hidden sm:flex items-center gap-1.5 font-mono text-xs theme-muted px-2.5 py-1 rounded-md theme-subtle-box">
@@ -85,12 +86,12 @@ export function Header({ onOpenBot }: HeaderProps) {
         {/* Quick Assistant Launcher */}
         <button
           onClick={onOpenBot}
-          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30 transition-all font-mono text-xs"
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-md accent-subtle-bg border border-[var(--border-accent)] text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] transition-all font-mono text-xs"
           title="Open AsP Assistant (Press /)"
         >
-          <Bot className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+          <Bot className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
           <span className="hidden sm:inline font-medium">Ask AsP</span>
-          <kbd className="px-1.5 py-0.5 rounded bg-amber-950/20 dark:bg-black/40 text-[10px] text-amber-700 dark:text-amber-300 border border-amber-500/30">
+          <kbd className="px-1.5 py-0.5 rounded bg-black/10 dark:bg-black/40 text-[10px] text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)]">
             /
           </kbd>
         </button>
@@ -104,7 +105,10 @@ export function Header({ onOpenBot }: HeaderProps) {
           <span>Resume</span>
         </a>
 
-        {/* Theme Switcher */}
+        {/* Live Palette Picker */}
+        <ThemePicker />
+
+        {/* Dark/Light Switcher */}
         <button
           onClick={toggleTheme}
           aria-label="Toggle color theme"

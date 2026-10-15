@@ -67,12 +67,12 @@ export function HeroCard({
                 onClick={() => onTabChange("profile")}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition-all ${
                   activeTab === "profile"
-                    ? "bg-[var(--bg-subtle-hover)] text-amber-700 dark:text-amber-300 font-semibold border border-amber-500/30"
+                    ? "bg-[var(--bg-subtle-hover)] accent-text font-semibold border border-[var(--border-accent)]"
                     : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200"
                 }`}
                 title="View Profile Overview"
               >
-                <span className="text-amber-600 dark:text-amber-400">📄</span>
+                <span className="accent-text">📄</span>
                 <span>ashwin_profile.json</span>
               </button>
 
@@ -80,7 +80,7 @@ export function HeroCard({
                 onClick={() => onTabChange("chat")}
                 className={`flex items-center gap-1.5 px-3 py-1 rounded-lg transition-all ${
                   activeTab === "chat"
-                    ? "bg-[var(--bg-subtle-hover)] text-amber-700 dark:text-amber-300 font-semibold border border-amber-500/30 shadow-sm"
+                    ? "bg-[var(--bg-subtle-hover)] accent-text font-semibold border border-[var(--border-accent)] shadow-sm"
                     : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200"
                 }`}
                 title="Open AsP Interactive Terminal"
@@ -99,7 +99,7 @@ export function HeroCard({
             {activeTab === "chat" ? (
               <button
                 onClick={() => onTabChange("profile")}
-                className="flex items-center gap-1 px-2.5 py-1 rounded-lg theme-subtle-box hover:text-amber-700 dark:hover:text-amber-300 hover:border-amber-500/30 transition-all text-xs active:scale-95"
+                className="flex items-center gap-1 px-2.5 py-1 rounded-lg theme-subtle-box hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] hover:border-[var(--border-accent)] transition-all text-xs active:scale-95"
                 title="Return to Profile Overview (Esc)"
               >
                 <span>← Profile</span>
@@ -114,12 +114,12 @@ export function HeroCard({
                 </span>
                 <button
                   onClick={() => onTabChange("chat")}
-                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 border border-amber-500/30 transition-all text-xs"
+                  className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg accent-subtle-bg border border-[var(--border-accent)] text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] transition-all text-xs"
                   title="Open interactive assistant (Press /)"
                 >
-                  <Bot className="w-3.5 h-3.5" />
+                  <Bot className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
                   <span className="font-medium hidden sm:inline">Ask AsP</span>
-                  <kbd className="px-1.5 py-0.2 rounded bg-amber-950/20 dark:bg-black/40 text-[10px]">
+                  <kbd className="px-1.5 py-0.2 rounded bg-black/10 dark:bg-black/40 text-[10px] text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)]">
                     /
                   </kbd>
                 </button>
@@ -140,7 +140,7 @@ export function HeroCard({
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-6 pb-6 border-b border-[var(--border-subtle)]">
             {/* Avatar with Glow and Status Beacon */}
             <div className="relative group shrink-0">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-amber-500/40 shadow-xl shadow-amber-500/15 bg-neutral-100 dark:bg-neutral-800 relative">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 accent-border accent-shadow bg-neutral-100 dark:bg-neutral-800 relative transition-all duration-300">
                 <img
                   src={profileData.avatarUrl}
                   alt={profileData.name}
@@ -163,12 +163,12 @@ export function HeroCard({
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight theme-heading font-sans">
                   {profileData.name}
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-medium bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/30">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-medium accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)]">
                   {profileData.handle}
                 </span>
               </div>
 
-              <p className="text-base sm:text-lg font-medium text-amber-700 dark:text-amber-300 flex flex-wrap items-center gap-x-2">
+              <p className="text-base sm:text-lg font-medium accent-text flex flex-wrap items-center gap-x-2">
                 <span>{profileData.title}</span>
               </p>
 
@@ -188,7 +188,7 @@ export function HeroCard({
           {/* Bio Snippet */}
           <div className="py-5 font-mono text-xs sm:text-sm theme-body leading-relaxed">
             <p className="max-w-3xl">
-              <span className="text-amber-600 dark:text-amber-400 font-semibold">{">"}</span> Product-minded Software Engineer with a Master of Technology in Computer Science Engineering (Manipal University) and 3+ years building high-throughput Java (Spring Boot) microservices, multi-tenant enterprise integration pipelines, and modern TypeScript/React applications. Pioneer of agentic workflows and automated developer tooling.
+              <span className="accent-text font-semibold">{">"}</span> Product-minded Software Engineer with a Master of Technology in Computer Science Engineering (Manipal University) and 3+ years building high-throughput Java (Spring Boot) microservices, multi-tenant enterprise integration pipelines, and modern TypeScript/React applications. Pioneer of agentic workflows and automated developer tooling.
             </p>
           </div>
 
@@ -215,11 +215,11 @@ export function HeroCard({
             {/* Primary Assistant Trigger */}
             <button
               onClick={() => onTabChange("chat")}
-              className="group flex-1 sm:flex-none flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black font-semibold text-sm transition-all duration-200 shadow-lg shadow-amber-500/25 active:scale-[0.98]"
+              className="group flex-1 sm:flex-none flex items-center justify-center gap-2.5 px-5 py-3 rounded-xl accent-btn font-semibold text-sm transition-all duration-200 active:scale-[0.98]"
             >
-              <Bot className="w-4 h-4 text-black group-hover:scale-110 transition-transform" />
+              <Bot className="w-4 h-4 text-inherit group-hover:scale-110 transition-transform" />
               <span>Ask AsP</span>
-              <kbd className="px-1.5 py-0.5 rounded bg-black/20 text-xs text-black/80 font-mono border border-black/20">
+              <kbd className="px-1.5 py-0.5 rounded bg-black/20 text-xs text-inherit font-mono border border-black/20">
                 /
               </kbd>
             </button>
@@ -262,7 +262,7 @@ export function HeroCard({
                 href={profileData.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 theme-muted hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                className="flex items-center gap-1 theme-muted hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] transition-colors"
               >
                 <LinkedinIcon className="w-4 h-4" />
                 <span>LinkedIn</span>
@@ -273,7 +273,7 @@ export function HeroCard({
                 href={profileData.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1 theme-muted hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                className="flex items-center gap-1 theme-muted hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] transition-colors"
               >
                 <GithubIcon className="w-4 h-4" />
                 <span>GitHub</span>
@@ -282,7 +282,7 @@ export function HeroCard({
               <span className="theme-faint">·</span>
               <a
                 href={`mailto:${profileData.email}`}
-                className="flex items-center gap-1 theme-muted hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                className="flex items-center gap-1 theme-muted hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] transition-colors"
               >
                 <Mail className="w-4 h-4" />
                 <span>Email</span>

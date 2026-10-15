@@ -22,7 +22,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
             href={linkMatch[2]}
             target={isExternal && !linkMatch[2].startsWith("mailto") ? "_blank" : undefined}
             rel={isExternal ? "noopener noreferrer" : undefined}
-            className="text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 underline underline-offset-2 font-medium"
+            className="accent-text hover:underline underline-offset-2 font-medium"
           >
             {linkMatch[1]}
           </a>
@@ -55,7 +55,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
         return (
           <code
             key={index}
-            className="px-1.5 py-0.5 rounded theme-subtle-box text-amber-700 dark:text-amber-300 font-mono text-[11px]"
+            className="px-1.5 py-0.5 rounded theme-subtle-box accent-text font-mono text-[11px]"
           >
             {codeMatch[1]}
           </code>
@@ -150,7 +150,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
             <ul key={idx} className="space-y-2 my-2 pl-1">
               {block.items.map((item, itemIdx) => (
                 <li key={itemIdx} className="flex items-start gap-2.5">
-                  <span className="text-amber-600 dark:text-amber-400 font-bold mt-0.5 text-xs select-none">▸</span>
+                  <span className="accent-text font-bold mt-0.5 text-xs select-none">▸</span>
                   <span className="flex-1 leading-relaxed">{parseInline(item)}</span>
                 </li>
               ))}
@@ -163,7 +163,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
             <ol key={idx} className="space-y-2.5 my-2">
               {block.items.map((item, itemIdx) => (
                 <li key={itemIdx} className="flex items-start gap-2.5">
-                  <span className="shrink-0 w-5 h-5 rounded-md theme-subtle-box text-amber-700 dark:text-amber-400 font-mono text-xs flex items-center justify-center font-bold select-none">
+                  <span className="shrink-0 w-5 h-5 rounded-md theme-subtle-box accent-text font-mono text-xs flex items-center justify-center font-bold select-none">
                     {item.num}
                   </span>
                   <span className="flex-1 leading-relaxed">{parseInline(item.text)}</span>
@@ -177,7 +177,7 @@ export function FormattedMarkdown({ content, isStreaming }: FormattedMarkdownPro
       })}
 
       {isStreaming && (
-        <span className="inline-block w-2 h-4 bg-amber-500 ml-1 animate-cursor align-middle" />
+        <span className="inline-block w-2 h-4 bg-[var(--theme-accent)] ml-1 animate-cursor align-middle" />
       )}
     </div>
   );
