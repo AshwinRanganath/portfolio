@@ -12,7 +12,7 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
   const [inputValue, setInputValue] = useState("");
 
   const quickPrompts = [
-    { label: "CNZ Gateway Architecture", query: "What did Ashwin build at CNZ Consultants?" },
+    { label: "CNZ Integrations Platform", query: "What did Ashwin build at CNZ Consultants?" },
     { label: "Unisys AST Parser", query: "Tell me about the AST parser and LLM migration at Unisys" },
     { label: "Backend & Tech Stack", query: "What is Ashwin's backend tech stack and microservices experience?" },
     { label: "AMD Spotlight Award", query: "Tell me about Ashwin's award and work at AMD India" },

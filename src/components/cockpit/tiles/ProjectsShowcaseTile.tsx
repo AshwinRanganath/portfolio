@@ -11,8 +11,8 @@ interface ProjectsShowcaseTileProps {
 export function ProjectsShowcaseTile({ onExpand }: ProjectsShowcaseTileProps) {
   const systems = [
     {
-      title: "Multi-Tenant Integration Gateway",
-      domain: "Spring Boot 3 · PostgreSQL",
+      title: "CNZ Integrations Platform",
+      domain: "Spring Boot 3 · Multi-Tenant Mesh",
       metric: "250k+ syncs/mo",
       icon: Server,
     },

@@ -187,10 +187,10 @@ export function SystemPipelineFlow({ compact = false, onNodeClick }: SystemPipel
               </span>
             </div>
             <span className="text-[10px] sm:text-[11px] font-bold font-mono text-[var(--theme-accent-text-dark)] mt-1 whitespace-nowrap">
-              Spring Boot 3
+              CNZ Integrations Platform
             </span>
             <span className="text-[8px] font-mono text-[var(--text-faint)] whitespace-nowrap">
-              Core Gateway &bull; AI Mesh
+              Spring Boot 3 Core &bull; AI Mesh
             </span>
           </button>
         </div>
@@ -235,7 +235,7 @@ export function SystemPipelineFlow({ compact = false, onNodeClick }: SystemPipel
             <span>⚡ Cin7 ERP: Real-time stock reservation, B2B order routing, and transactional ledger sync.</span>
           )}
           {activeNode === "gateway" && (
-            <span>🚀 Spring Boot 3 Gateway: Circuit breaking, retry backoffs, OAuth2 auth, and Agentic error diagnosis.</span>
+            <span>🚀 CNZ Integrations Platform: Spring Boot 3 microservices with circuit breaking, retry backoffs, OAuth2 auth, and Agentic error diagnosis.</span>
           )}
           {activeNode === "xero" && (
             <span>⚡ Xero &amp; MYOB: Multi-tenant tax resolution, line-item reconciliation, and automated invoice pushing.</span>

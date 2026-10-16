@@ -22,7 +22,7 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
     {
       value: "250k+",
       label: "Syncs / Month",
-      detail: "Multi-Tenant Integration Gateway",
+      detail: "CNZ Integrations Platform",
       icon: Activity,
       color: "#10b981",
     },

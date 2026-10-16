@@ -75,7 +75,7 @@ export function ExperienceTile({ onExpand }: ExperienceTileProps) {
           </div>
 
           <p className="text-[11px] sm:text-xs text-[var(--text-body)] font-mono leading-relaxed mt-2 opacity-90 line-clamp-2">
-            Architecting high-throughput Spring Boot 3 integration gateways syncing Shopify, Cin7 Core, Xero, and ShipHero WMS for multi-country B2B/B2C retail.
+            Architecting the high-throughput CNZ Integrations Platform (Spring Boot 3 Core) syncing Shopify, Cin7 Core, Xero, and ShipHero WMS for multi-country B2B/B2C retail.
           </p>
         </div>
 

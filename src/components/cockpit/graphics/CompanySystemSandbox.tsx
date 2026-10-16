@@ -104,10 +104,10 @@ export function CompanySystemSandbox({ companyIndex }: CompanySystemSandboxProps
                 </span>
               </div>
               <h4 className="text-xs font-bold font-mono text-[var(--theme-accent-text-dark)] mt-1.5">
-                Spring Boot 3 Gateway
+                CNZ Integrations Platform
               </h4>
               <p className="text-[10px] text-[var(--text-body)] font-mono mt-0.5">
-                Circuit Breaking &bull; Multi-Tenant Auth
+                Spring Boot 3 Core &bull; Multi-Tenant Auth
               </p>
               <div className="mt-2 pt-2 border-t border-white/10 flex items-center justify-center gap-1.5 text-[9px] font-mono text-emerald-400">
                 <Bot className="w-3 h-3" />
@@ -161,7 +161,7 @@ export function CompanySystemSandbox({ companyIndex }: CompanySystemSandboxProps
             <span className="font-bold text-[var(--theme-accent-text-dark)]">
               {selectedNode === "shopify" && "Shopify Ingestion Layer: "}
               {selectedNode === "cin7" && "Cin7 ERP Integration Layer: "}
-              {(!selectedNode || selectedNode === "gateway") && "Spring Boot 3 Core Platform Architecture: "}
+              {(!selectedNode || selectedNode === "gateway") && "CNZ Integrations Platform Architecture: "}
               {selectedNode === "xero" && "Accounting & Reconciliation Engine: "}
               {selectedNode === "shiphero" && "WMS / 3PL Warehouse Fulfillment Mesh: "}
             </span>
@@ -171,7 +171,7 @@ export function CompanySystemSandbox({ companyIndex }: CompanySystemSandboxProps
               {selectedNode === "cin7" &&
                 "Engineered transactional synchronization with Cin7 Core, reconciling inventory adjustments, purchase orders, and multi-location warehouse allocations."}
               {(!selectedNode || selectedNode === "gateway") &&
-                "Refactored legacy monolith into modular Spring Boot 3 microservices with dynamic strategy authorization (OAuth2, API keys, MD5 signatures), circuit breaking, and autonomous multi-agent error remediation."}
+                "Refactored legacy monolith into the high-throughput CNZ Integrations Platform: modular Spring Boot 3 microservices with dynamic strategy authorization (OAuth2, API keys, MD5 signatures), circuit breaking, and autonomous multi-agent error remediation."}
               {selectedNode === "xero" &&
                 "Engineered automated posting of invoices, debit notes, and COGS line items into Xero and MYOB with automatic tax-code resolution and idempotency keys."}
               {selectedNode === "shiphero" &&

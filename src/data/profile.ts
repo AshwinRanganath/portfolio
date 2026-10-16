@@ -214,17 +214,6 @@ export const profileData: ProfileData = {
       ],
       technologies: ["C#", ".NET Entity Framework", "SQL", "Angular Material", "Python", "ApexCharts"],
     },
-    {
-      company: "EMMVEE Photovoltaic Private Limited",
-      role: "Web Developer Intern",
-      location: "Bengaluru, India",
-      period: "Jul 2018 – Aug 2018",
-      summary: "Implemented production tracking modules for the internal PRISM enterprise system.",
-      bullets: [
-        "Implemented a production tracking module for the internal PRISM enterprise system, enabling operations personnel to classify material throughput and track operational metrics intuitively.",
-      ],
-      technologies: ["JavaScript", "HTML5", "CSS3", "PHP", "MySQL"],
-    },
   ],
   education: [
     {
@@ -298,8 +287,8 @@ export const profileData: ProfileData = {
    - *Enterprise Systems*: Entity Framework, LINQ, RESTful APIs, and database migrations built during his time at AMD.
 5. **SQL (PostgreSQL / Relational)**
    - *Data Stores*: Transactional schema design, query optimization, indexing, and multi-tenant isolation.
-6. **PHP & HTML5/CSS3**
-   - *Web Foundations*: Enterprise modules (EMMVEE) and accessible, responsive styling.`,
+6. **HTML5/CSS3 & Modern Web**
+   - *Web Foundations*: Accessible, responsive component styling, design systems, and frontend ergonomics.`,
       followUps: ["spoken-languages", "backend-stack", "current-role"],
       tags: ["languages", "programming", "java", "typescript", "python", "c#", "sql", "coding", "tech", "code"],
       sampleUserQueries: [
@@ -382,41 +371,19 @@ He has extensive experience conducting sprint reviews, technical architecture pr
       ],
     },
     {
-      id: "experience-emmvee",
-      realisticQuestion: "What was your internship at EMMVEE Photovoltaic?",
-      shortLabel: "Experience at EMMVEE",
-      icon: "Layers",
-      summary: "Web Developer Intern (Jul 2018 – Aug 2018)",
-      answerMarkdown: `At **EMMVEE Photovoltaic Private Limited** (Jul 2018 – Aug 2018) in Bengaluru, Ashwin worked as a **Web Developer Intern**:
-
-- **PRISM Enterprise System**: Implemented a core production tracking module for the internal PRISM enterprise system.
-- **Operational Metrics**: Enabled factory operations personnel to classify material throughput and track real-time operational metrics intuitively.
-- **Tech Used**: JavaScript, HTML5, CSS3, PHP, MySQL.`,
-      followUps: ["experience-amd", "experience-unisys", "career-journey"],
-      tags: ["emmvee", "solar", "photovoltaic", "intern", "prism", "php", "mysql"],
-      sampleUserQueries: [
-        "what did you do at emmvee",
-        "tell me about emmvee",
-        "first internship",
-        "emmvee photovoltaic",
-      ],
-    },
-    {
       id: "career-journey",
       realisticQuestion: "Where have you worked in the past? Give me your career journey.",
       shortLabel: "Career Journey & History",
       icon: "TrendingUp",
-      summary: "CNZ Consultants → Unisys → AMD India → EMMVEE Photovoltaic",
-      answerMarkdown: `Here is Ashwin's career trajectory over the past 3+ years:
+      summary: "CNZ Consultants → Unisys → AMD India",
+      answerMarkdown: `Here is Ashwin's career trajectory over the past 3+ years across enterprise systems and platform engineering:
 
 1. **CNZ Consultants** (Jan 2026 – Present) | *Senior Software Engineer & Platform Lead*
-   - Leading the modular Spring Boot 3 & Java 21 architecture overhaul, multi-domain integration pipelines (Xero, MYOB, Shopify, ShipHero), dynamic multi-tenant security, and agentic middleware diagnostics.
+   - Architected the **CNZ Integrations Platform**: leading the modular Spring Boot 3 & Java 21 architecture overhaul, multi-domain integration pipelines (Xero, MYOB, Shopify, ShipHero, Cin7), dynamic multi-tenant security, and agentic middleware diagnostics.
 2. **Unisys** (Aug 2023 – Dec 2025) | *Associate Cloud Engineer / Software Engineer*
    - Built Java AST static analysis tools, integrated OpenAI/Azure OpenAI for automated code explanation and refactoring, accelerating codebase audits by **40%**.
 3. **AMD India** (Aug 2022 – Jul 2023) | *Full Stack Developer Intern*
-   - Built high-performance C# / .NET RESTful APIs, Angular Material + ApexCharts visualization dashboards, and won the **Best Poster Award at AMD Innovation EXPO 2023**.
-4. **EMMVEE Photovoltaic** (Jul 2018 – Aug 2018) | *Web Developer Intern*
-   - Implemented production tracking modules for the PRISM enterprise management system.`,
+   - Built high-performance C# / .NET RESTful APIs, Angular Material + ApexCharts visualization dashboards, and won the **Best Poster Award at AMD Innovation EXPO 2023**.`,
       followUps: ["current-role", "experience-unisys", "education"],
       tags: ["career", "past work", "history", "experience", "journey", "companies", "timeline", "jobs"],
       sampleUserQueries: [

@@ -231,9 +231,6 @@ Type any question below or click any suggestion to get started!`,
     } else if (topicId === "experience-amd") {
       const amd = profileData.experiences.find((e) => e.company.includes("AMD"));
       if (amd) matches.push(amd);
-    } else if (topicId === "experience-emmvee") {
-      const emmvee = profileData.experiences.find((e) => e.company.includes("EMMVEE"));
-      if (emmvee) matches.push(emmvee);
     } else if (topicId === "career-journey" || topicId === "exp-overview") {
       return profileData.experiences;
     } else if (text) {
@@ -243,8 +240,7 @@ Type any question below or click any suggestion to get started!`,
         if (
           (compLower.includes("cnz") && t.includes("cnz")) ||
           (compLower.includes("unisys") && t.includes("unisys")) ||
-          (compLower.includes("amd") && t.includes("amd")) ||
-          (compLower.includes("emmvee") && t.includes("emmvee"))
+          (compLower.includes("amd") && t.includes("amd"))
         ) {
           if (!matches.some((m) => m.company === exp.company)) {
             matches.push(exp);
@@ -276,12 +272,6 @@ Type any question below or click any suggestion to get started!`,
         "Tell me about the REST APIs and Angular dashboard at AMD",
         "What did you win the AMD Innovation EXPO Best Poster Award for?",
         "How did Python automation scripts reduce server latency?",
-      ];
-    }
-    if (company.includes("EMMVEE")) {
-      return [
-        "What did you build for the PRISM enterprise system?",
-        "What was the tech stack used at EMMVEE?",
       ];
     }
     return [];
@@ -455,7 +445,7 @@ It includes full breakdowns of his 3+ years of experience across CNZ Consultants
     const fallbackAnswer = `I looked through Ashwin's profile for **"${query}"**.
 
 Here are the key areas of his background:
-- **Past Work Experience**: Software Engineer at **Unisys** (Java AST static analysis & OpenAI tools), Full Stack Intern at **AMD India** (Best Poster Award), and **EMMVEE**.
+- **Past Work Experience**: Software Engineer at **Unisys** (Java AST static analysis & OpenAI tools), Full Stack Intern at **AMD India** (Best Poster Award).
 - **Current Position**: Senior Platform Lead at **CNZ Consultants** (Java 21, Spring Boot 3, Multi-domain integrations).
 - **Programming Languages**: Java (17/21), TypeScript, JavaScript, Python 3, C#, SQL.
 - **Education**: M.Tech in Computer Science from **Manipal University** (GPA 7.9).
