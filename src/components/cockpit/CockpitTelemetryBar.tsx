@@ -130,7 +130,7 @@ export function CockpitTelemetryBar({
           onClick={toggleTheme}
           aria-label="Toggle color theme"
           className="p-2 rounded-xl bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] border border-[var(--border-accent)] text-[var(--theme-accent-fg)] transition-all shadow-sm flex items-center justify-center group"
-          title={isLight ? "Switch to Dark Mode (Stealth Titanium Chrome)" : "Switch to Light Mode (Deep Obsidian Gunmetal)"}
+          title={isLight ? "Switch to Dark Mode (Stealth Titanium Chrome)" : "Switch to Light Mode (Brushed Aluminum & Frosted Glass)"}
         >
           {isLight ? (
             <Moon className="w-4 h-4 transition-transform group-hover:-rotate-12 text-slate-800" />
