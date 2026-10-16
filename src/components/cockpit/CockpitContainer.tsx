@@ -54,7 +54,7 @@ export function CockpitContainer() {
   };
 
   return (
-    <div className="relative min-h-[100dvh] max-h-[100dvh] flex flex-col justify-between overflow-x-hidden overflow-y-auto sm:overflow-hidden bg-grid-pattern selection:bg-[var(--theme-accent)]/20 selection:text-[var(--theme-accent-text-dark)]">
+    <div className="relative min-h-[100dvh] sm:max-h-[100dvh] flex flex-col justify-between overflow-x-hidden overflow-y-auto sm:overflow-hidden bg-grid-pattern selection:bg-[var(--theme-accent)]/20 selection:text-[var(--theme-accent-text-dark)]">
       {/* Dynamic Ambient Background Glows */}
       <div className="fixed top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[380px] bg-[var(--ambient-glow-1)] blur-[150px] pointer-events-none -z-10 rounded-full" />
       <div className="fixed bottom-12 right-12 w-[450px] h-[350px] bg-[var(--ambient-glow-2)] blur-[130px] pointer-events-none -z-10 rounded-full" />
@@ -67,21 +67,21 @@ export function CockpitContainer() {
       />
 
       {/* Central Interactive Bento Deck */}
-      <main className="flex-1 flex items-center justify-center w-full max-w-7xl mx-auto px-2.5 sm:px-6 py-2 pb-20 sm:pb-20">
-        <div className="w-full h-full max-h-[82vh] flex flex-col justify-center">
-          {/* Mobile: Hero on top, 4 tiles in 2x2 grid. Desktop: Row 1 (Hero 7 + Exp 5), Row 2 (Tech 4 + Proj 4 + Asp 4) */}
-          <div className="grid grid-cols-2 lg:grid-cols-12 gap-2 sm:gap-4 flex-1 min-h-0">
+      <main className="flex-1 flex items-center justify-center w-full max-w-7xl mx-auto px-2.5 sm:px-6 py-2 pb-24 sm:pb-20">
+        <div className="w-full min-h-0 sm:h-full sm:max-h-[82vh] flex flex-col justify-center">
+          {/* Mobile: Full-width stacked cards. Desktop: Row 1 (Hero 7 + Exp 5), Row 2 (Tech 4 + Proj 4 + Asp 4) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2.5 sm:gap-4 flex-1 min-h-0">
             {/* Tile 1: Hero Identity */}
-            <div className="col-span-2 lg:col-span-7 flex flex-col min-h-0">
+            <div className="col-span-1 sm:col-span-2 lg:col-span-7 flex flex-col min-h-0">
               <HeroIdentityTile onExpand={() => setActiveSection("hero")} />
             </div>
 
             {/* Tile 2: Experience */}
-            <div className="col-span-1 lg:col-span-5 flex flex-col min-h-0">
+            <div className="col-span-1 sm:col-span-2 lg:col-span-5 flex flex-col min-h-0">
               <ExperienceTile onExpand={() => setActiveSection("experience")} />
             </div>
 
-            {/* Tile 3: Tech Radar */}
+            {/* Tile 3: Tech Stack */}
             <div className="col-span-1 lg:col-span-4 flex flex-col min-h-0">
               <TechRadarTile onExpand={() => setActiveSection("tech")} />
             </div>
@@ -92,7 +92,7 @@ export function CockpitContainer() {
             </div>
 
             {/* Tile 5: AsP AI Co-pilot */}
-            <div className="col-span-1 lg:col-span-4 flex flex-col min-h-0">
+            <div className="col-span-1 sm:col-span-2 lg:col-span-4 flex flex-col min-h-0">
               <AspCopilotTile onExpand={(q) => handleOpenAsp(q)} />
             </div>
           </div>

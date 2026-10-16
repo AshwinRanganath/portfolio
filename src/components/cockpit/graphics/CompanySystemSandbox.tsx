@@ -17,6 +17,8 @@ import {
   Sparkles,
 } from "lucide-react";
 
+import { SystemPipelineFlow } from "./SystemPipelineFlow";
+
 interface CompanySystemSandboxProps {
   companyIndex: number;
 }
@@ -40,7 +42,12 @@ export function CompanySystemSandbox({ companyIndex }: CompanySystemSandboxProps
           </span>
         </div>
 
-        {/* Interactive Diagram Flow */}
+        {/* Live Animated SVG Pipeline Flow with Continuous Packets */}
+        <div className="p-2 sm:p-3 rounded-xl bg-black/30 border border-white/5">
+          <SystemPipelineFlow onNodeClick={(nodeId) => setSelectedNode(nodeId)} />
+        </div>
+
+        {/* Interactive Diagram Nodes */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 items-center">
           {/* Column 1: Sources */}
           <div className="flex flex-col gap-2">

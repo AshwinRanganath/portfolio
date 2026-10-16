@@ -1,32 +1,22 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Bot, Sparkles, Send, ArrowUpRight } from "lucide-react";
+import React, { useState } from "react";
+import { Bot, Sparkles, Send, ArrowUpRight, Terminal } from "lucide-react";
 import { SpecularBorder } from "../SpecularBorder";
-import { NeuralWaveform } from "../graphics/NeuralWaveform";
 
 interface AspCopilotTileProps {
   onExpand: (initialQuery?: string) => void;
 }
 
 export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
-  const [activeSuggestionIdx, setActiveSuggestionIdx] = useState(0);
   const [inputValue, setInputValue] = useState("");
 
-  const suggestions = [
-    "What programming languages do you code in?",
-    "Tell me about your work at Unisys",
-    "What are you building at CNZ Consultants?",
-    "Tell me about your AMD India experience & award",
-    "What is your backend & microservices stack?",
+  const quickPrompts = [
+    { label: "CNZ Gateway Architecture", query: "What did Ashwin build at CNZ Consultants?" },
+    { label: "Unisys AST Parser", query: "Tell me about the AST parser and LLM migration at Unisys" },
+    { label: "Backend & Tech Stack", query: "What is Ashwin's backend tech stack and microservices experience?" },
+    { label: "AMD Spotlight Award", query: "Tell me about Ashwin's award and work at AMD India" },
   ];
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveSuggestionIdx((prev) => (prev + 1) % suggestions.length);
-    }, 3800);
-    return () => clearInterval(timer);
-  }, [suggestions.length]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,13 +29,10 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
   };
 
   return (
-    <SpecularBorder
-      layoutId="asp-tile"
-      className="h-full"
-    >
-      <div className="p-3 sm:p-5 flex flex-col justify-between h-full relative group">
+    <SpecularBorder layoutId="asp-tile" className="h-full">
+      <div className="p-3.5 sm:p-5 flex flex-col justify-between h-full relative group">
         {/* Header */}
-        <div className="flex items-center justify-between pb-1 border-b border-[var(--border-subtle)]">
+        <div className="flex items-center justify-between pb-2 border-b border-[var(--border-subtle)]">
           <div className="flex items-center gap-1.5 sm:gap-2">
             <div className="relative">
               <div className="p-1 sm:p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)]">
@@ -61,7 +48,7 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
                 AsP &bull; AI Co-pilot
               </h2>
               <span className="hidden sm:inline-block text-[10px] font-mono text-[var(--text-faint)]">
-                Neural Equalizer &bull; Interactive Terminal
+                Ask anything about Ashwin&apos;s experience
               </span>
             </div>
           </div>
@@ -75,52 +62,45 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
           </button>
         </div>
 
-        {/* Live Neural Audio Waveform Graphic */}
-        <div className="my-1 sm:my-1.5">
-          <NeuralWaveform />
-        </div>
-
-        {/* Dynamic Rotating Suggestion Ticker */}
-        <div
-          onClick={() => onExpand(suggestions[activeSuggestionIdx])}
-          className="my-1 p-2 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] cursor-pointer transition-all"
-        >
-          <div className="flex items-center gap-1 text-[9px] sm:text-[10px] font-mono text-[var(--theme-accent-text-dark)] mb-0.5">
+        {/* Quick Question Chips */}
+        <div className="my-2 flex flex-col gap-1.5 flex-1 justify-center">
+          <span className="text-[10px] font-mono text-[var(--text-faint)] flex items-center gap-1">
             <Sparkles className="w-3 h-3 text-[var(--theme-accent)]" />
-            <span>Interactive Prompt:</span>
-          </div>
-          <p className="text-[11px] sm:text-xs font-mono text-[var(--text-heading)] line-clamp-1 italic">
-            &ldquo;{suggestions[activeSuggestionIdx]}&rdquo;
-          </p>
-        </div>
-
-        {/* Mobile Tap-to-Chat Action */}
-        <div
-          onClick={() => onExpand()}
-          className="sm:hidden flex items-center justify-between p-2 rounded-xl bg-[var(--theme-accent-subtle)]/50 border border-[var(--border-accent)] cursor-pointer"
-        >
-          <span className="text-[10px] font-mono text-[var(--theme-accent-text-dark)]">
-            Open Chat Terminal &bull; Ask anything
+            <span>Suggested Inquiries:</span>
           </span>
-          <Send className="w-3 h-3 text-[var(--theme-accent)]" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+            {quickPrompts.map((item, idx) => (
+              <button
+                key={idx}
+                onClick={() => onExpand(item.query)}
+                className="p-1.5 sm:p-2 rounded-xl bg-[var(--bg-subtle)]/70 hover:bg-[var(--theme-accent-subtle)] border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] text-left transition-all"
+              >
+                <span className="text-[10px] font-mono font-medium text-[var(--text-heading)] line-clamp-1">
+                  &gt; {item.label}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Desktop Quick Question Input Form */}
-        <form onSubmit={handleSubmit} className="hidden sm:block relative mt-auto">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            placeholder="Ask AsP anything..."
-            className="w-full pl-3 pr-9 py-2 text-xs font-mono rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] focus:border-[var(--theme-accent-border)] text-[var(--text-heading)] placeholder-[var(--text-faint)] focus:outline-none transition-colors"
-          />
-          <button
-            type="submit"
-            className="absolute right-1.5 top-1/2 -translate-y-1/2 p-1 rounded-lg text-[var(--theme-accent-text-dark)] hover:bg-[var(--theme-accent-subtle)] transition-colors"
-            title="Submit question"
-          >
-            <Send className="w-3.5 h-3.5" />
-          </button>
+        {/* Interactive Query Input Bar */}
+        <form onSubmit={handleSubmit} className="pt-2 border-t border-[var(--border-subtle)]">
+          <div className="relative flex items-center">
+            <input
+              type="text"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              placeholder="Ask AsP anything about Ashwin's experience..."
+              className="w-full pl-3 pr-9 py-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] focus:border-[var(--theme-accent)] text-xs font-mono text-[var(--text-heading)] placeholder:text-[var(--text-faint)] outline-none transition-colors"
+            />
+            <button
+              type="submit"
+              className="absolute right-1.5 p-1 rounded-lg bg-[var(--theme-accent)] text-white hover:opacity-90 transition-opacity shadow-sm"
+              title="Submit question"
+            >
+              <Send className="w-3 h-3" />
+            </button>
+          </div>
         </form>
       </div>
     </SpecularBorder>

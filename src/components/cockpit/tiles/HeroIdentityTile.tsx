@@ -2,21 +2,44 @@
 
 import React from "react";
 import Image from "next/image";
-import { MapPin, Maximize2 } from "lucide-react";
+import { MapPin, Maximize2, Briefcase, Activity, Building, Globe } from "lucide-react";
 import { profileData } from "@/data/profile";
 import { SpecularBorder } from "../SpecularBorder";
-import { KpiArcGauge } from "../graphics/KpiArcGauge";
 
 interface HeroIdentityTileProps {
   onExpand: () => void;
 }
 
 export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
-  const kpiGauges = [
-    { value: "3+ Yrs", label: "Experience", sublabel: "Enterprise", percentage: 92, color: "var(--theme-accent)" },
-    { value: "40%", label: "Velocity", sublabel: "AST & AI", percentage: 80, color: "#38bdf8" },
-    { value: "100%", label: "Coverage", sublabel: "Microservices", percentage: 100, color: "#34d399" },
-    { value: "Global", label: "Delivery", sublabel: "NZ · US · APAC", percentage: 95, color: "#a78bfa" },
+  const profileMetrics = [
+    {
+      value: "3+ Yrs",
+      label: "Experience",
+      detail: "Enterprise Backend & Full-Stack",
+      icon: Briefcase,
+      color: "var(--theme-accent)",
+    },
+    {
+      value: "250k+",
+      label: "Syncs / Month",
+      detail: "Multi-Tenant Integration Gateway",
+      icon: Activity,
+      color: "#10b981",
+    },
+    {
+      value: "3 Roles",
+      label: "Enterprise Track",
+      detail: "CNZ · Unisys · AMD",
+      icon: Building,
+      color: "#38bdf8",
+    },
+    {
+      value: "Global",
+      label: "Delivery",
+      detail: "India & NZ Remote Operations",
+      icon: Globe,
+      color: "#a78bfa",
+    },
   ];
 
   return (
@@ -86,19 +109,30 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
           &gt; {profileData.shortBio}
         </p>
 
-        {/* Visual KPI Arc Gauges Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 pt-1.5 border-t border-[var(--border-subtle)]">
-          {kpiGauges.map((gauge, i) => (
-            <div key={i} className={i >= 2 ? "hidden sm:block" : ""}>
-              <KpiArcGauge
-                value={gauge.value}
-                label={gauge.label}
-                sublabel={gauge.sublabel}
-                percentage={gauge.percentage}
-                color={gauge.color}
-              />
-            </div>
-          ))}
+        {/* Real-World Grounded Profile Metrics (No Arbitrary Percentages) */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 pt-2 border-t border-[var(--border-subtle)]">
+          {profileMetrics.map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <div
+                key={i}
+                className="p-2 sm:p-2.5 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-subtle)] group-hover:border-[var(--theme-accent-border)] transition-colors flex flex-col justify-between"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-xs sm:text-base font-bold font-mono text-[var(--text-heading)]">
+                    {item.value}
+                  </span>
+                  <Icon className="w-3.5 h-3.5 text-[var(--theme-accent)] opacity-80" />
+                </div>
+                <div className="text-[10px] sm:text-[11px] font-semibold text-[var(--theme-accent-text-dark)] truncate">
+                  {item.label}
+                </div>
+                <div className="text-[9px] font-mono text-[var(--text-muted)] truncate hidden sm:block mt-0.5">
+                  {item.detail}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </SpecularBorder>
