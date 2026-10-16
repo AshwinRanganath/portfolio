@@ -38,9 +38,12 @@
     --theme-accent-shadow: rgba(226, 232, 240, 0.18);
     --theme-accent-btn-text: #090a0f;
 
-    /* Specular Tracing & Chrome Sheen (Dark Mode) */
-    --specular-trace: radial-gradient(420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(248, 250, 252, 0.75) 0%, rgba(203, 213, 225, 0.25) 30%, transparent 65%);
-    --specular-sheen: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.07) 0%, transparent 70%);
+    /* Specular Cursor Tracing Colors (Dark Mode - Liquid Chrome) */
+    --glow-trace-1: rgba(255, 255, 255, 0.95);
+    --glow-trace-2: rgba(203, 213, 225, 0.45);
+    --glow-halo: rgba(255, 255, 255, 0.25);
+    --glow-sheen-1: rgba(255, 255, 255, 0.14);
+    --glow-sheen-2: rgba(255, 255, 255, 0.03);
   }
 
   html.light {
@@ -80,9 +83,12 @@
     --theme-accent-shadow: rgba(15, 23, 42, 0.15);
     --theme-accent-btn-text: #ffffff;
 
-    /* Specular Tracing in Light Mode (Deep Obsidian / Gunmetal reactive halo) */
-    --specular-trace: radial-gradient(420px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(15, 23, 42, 0.5) 0%, rgba(30, 41, 59, 0.18) 32%, transparent 68%);
-    --specular-sheen: radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(15, 23, 42, 0.03) 0%, transparent 70%);
+    /* Specular Cursor Tracing Colors (Light Mode - Deep Obsidian / Gunmetal) */
+    --glow-trace-1: rgba(15, 23, 42, 1);
+    --glow-trace-2: rgba(30, 41, 59, 0.55);
+    --glow-halo: rgba(15, 23, 42, 0.32);
+    --glow-sheen-1: rgba(15, 23, 42, 0.15);
+    --glow-sheen-2: rgba(15, 23, 42, 0.03);
   }
 }
 

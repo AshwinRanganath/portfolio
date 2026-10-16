@@ -42,27 +42,32 @@ export function SpecularBorder({
   const rotateX = useTransform(smoothNormY, [-0.5, 0.5], [3, -3]);
   const rotateY = useTransform(smoothNormX, [-0.5, 0.5], [-3, 3]);
 
+  const updateMouseCoords = useCallback((clientX: number, clientY: number) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = clientX - rect.left;
+    const y = clientY - rect.top;
+
+    // Update CSS variables directly on DOM for 120fps lag-free cursor tracing
+    cardRef.current.style.setProperty("--mouse-x", `${x}px`);
+    cardRef.current.style.setProperty("--mouse-y", `${y}px`);
+
+    if (enableTilt) {
+      normX.set(x / rect.width - 0.5);
+      normY.set(y / rect.height - 0.5);
+    }
+  }, [enableTilt, normX, normY]);
+
   const handleMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!cardRef.current) return;
-      const rect = cardRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      // Update CSS variables directly on DOM for 120fps lag-free cursor tracing
-      cardRef.current.style.setProperty("--mouse-x", `${x}px`);
-      cardRef.current.style.setProperty("--mouse-y", `${y}px`);
-
-      if (enableTilt) {
-        normX.set(x / rect.width - 0.5);
-        normY.set(y / rect.height - 0.5);
-      }
+      updateMouseCoords(e.clientX, e.clientY);
     },
-    [enableTilt, normX, normY]
+    [updateMouseCoords]
   );
 
-  const handleMouseEnter = () => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsHovered(true);
+    updateMouseCoords(e.clientX, e.clientY);
   };
 
   const handleMouseLeave = () => {
@@ -89,30 +94,37 @@ export function SpecularBorder({
         rotateY: enableTilt ? rotateY : 0,
         transformStyle: "preserve-3d",
       }}
-      className={`group relative rounded-2xl p-[1px] transition-all duration-300 ${
-        isHovered
-          ? "shadow-[0_20px_45px_-12px_var(--theme-accent-shadow)]"
-          : "shadow-[var(--shadow-card)]"
-      } ${className}`}
+      className={`group relative rounded-2xl p-[1px] transition-all duration-300 shadow-[var(--shadow-card)] ${className}`}
     >
-      {/* Specular reactive border glow layer (tracing exact cursor) */}
+      {/* 1. Outer cursor-tracing atmospheric halo (dark halo in light mode, chrome halo in dark mode) */}
       <div
-        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 -z-10"
+        className="pointer-events-none absolute -inset-2 rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-100 blur-sm -z-10"
         style={{
-          background: "var(--specular-trace)",
+          background:
+            "radial-gradient(280px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow-halo) 0%, transparent 65%)",
         }}
       />
 
-      {/* Subtle default hairline border */}
-      <div className="pointer-events-none absolute inset-0 rounded-2xl border border-[var(--border-subtle)] group-hover:border-transparent transition-colors duration-200" />
+      {/* 2. Specular reactive border glow layer (tracing exact cursor along the 1px hairline perimeter) */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-200 group-hover:opacity-100 z-0"
+        style={{
+          background:
+            "radial-gradient(350px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow-trace-1) 0%, var(--glow-trace-2) 30%, transparent 65%)",
+        }}
+      />
 
-      {/* Card Body Container with frosted glass */}
-      <div className="relative h-full w-full rounded-2xl bg-[var(--bg-card)] backdrop-blur-xl overflow-hidden flex flex-col border border-[var(--border-subtle)]/50">
+      {/* 3. Subtle default hairline border */}
+      <div className="pointer-events-none absolute inset-0 rounded-2xl border border-[var(--border-subtle)] group-hover:border-transparent transition-colors duration-200 z-0" />
+
+      {/* 4. Card Body Container with frosted glass */}
+      <div className="relative z-[1] h-full w-full rounded-[15px] bg-[var(--bg-card)] backdrop-blur-xl overflow-hidden flex flex-col">
         {/* Specular glass sheen highlight inside card */}
         <div
           className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 z-10"
           style={{
-            background: "var(--specular-sheen)",
+            background:
+              "radial-gradient(280px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), var(--glow-sheen-1) 0%, var(--glow-sheen-2) 40%, transparent 70%)",
           }}
         />
         {children}
