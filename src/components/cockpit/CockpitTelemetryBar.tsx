@@ -80,7 +80,7 @@ export function CockpitTelemetryBar({
           <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
             <Terminal className="w-3.5 h-3.5 text-[var(--text-muted)] transition-colors duration-300" />
             <span className="font-mono font-medium tracking-tight text-[var(--text-heading)]">
-              {profileData.handle}@cockpit:~$
+              {profileData.handle}@portfolio
             </span>
           </div>
         )}
