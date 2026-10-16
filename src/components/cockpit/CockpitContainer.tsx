@@ -6,7 +6,7 @@ import { CockpitDock, CockpitSection } from "./CockpitDock";
 import { HeroIdentityTile } from "./tiles/HeroIdentityTile";
 import { ExperienceTile } from "./tiles/ExperienceTile";
 import { TechRadarTile } from "./tiles/TechRadarTile";
-import { ProjectsShowcaseTile } from "./tiles/ProjectsShowcaseTile";
+import { EducationCredentialsTile } from "./tiles/EducationCredentialsTile";
 import { AspCopilotTile } from "./tiles/AspCopilotTile";
 import { ExpandedStageModal } from "./views/ExpandedStageModal";
 
@@ -86,9 +86,9 @@ export function CockpitContainer() {
               <TechRadarTile onExpand={() => setActiveSection("tech")} />
             </div>
 
-            {/* Tile 4: Projects Showcase */}
+            {/* Tile 4: Education & Honors */}
             <div className="col-span-1 lg:col-span-4 flex flex-col min-h-0">
-              <ProjectsShowcaseTile onExpand={() => setActiveSection("projects")} />
+              <EducationCredentialsTile onExpand={() => setActiveSection("projects")} />
             </div>
 
             {/* Tile 5: AsP AI Co-pilot */}

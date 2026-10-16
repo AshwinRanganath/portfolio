@@ -2,12 +2,12 @@
 
 import React, { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ArrowLeft, Bot, Briefcase, Cpu, Rocket, User } from "lucide-react";
+import { X, ArrowLeft, Bot, Briefcase, Cpu, GraduationCap, User } from "lucide-react";
 import { CockpitSection } from "../CockpitDock";
 import { HeroExpandedView } from "./HeroExpandedView";
 import { ExperienceExpandedView } from "./ExperienceExpandedView";
 import { TechExpandedView } from "./TechExpandedView";
-import { ProjectsExpandedView } from "./ProjectsExpandedView";
+import { EducationExpandedView } from "./EducationExpandedView";
 import { ChatTerminal } from "@/components/ChatTerminal";
 
 interface ExpandedStageModalProps {
@@ -58,9 +58,9 @@ export function ExpandedStageModal({
         };
       case "projects":
         return {
-          title: "Featured Systems & Integration Platforms",
-          tab: "systems_architecture.md",
-          icon: Rocket,
+          title: "Education, Academic Credentials & Honors",
+          tab: "education_credentials.ts",
+          icon: GraduationCap,
         };
       case "asp":
         return {
@@ -169,7 +169,7 @@ export function ExpandedStageModal({
               <TechExpandedView onAskAsp={onAskAsp} />
             )}
             {activeSection === "projects" && (
-              <ProjectsExpandedView onAskAsp={onAskAsp} />
+              <EducationExpandedView onAskAsp={onAskAsp} />
             )}
             {activeSection === "asp" && (
               <div className="h-[75vh] flex flex-col">

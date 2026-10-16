@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { LayoutGrid, Briefcase, Cpu, Rocket, Bot, FileText } from "lucide-react";
+import { LayoutGrid, Briefcase, Cpu, GraduationCap, Bot, FileText } from "lucide-react";
 import { motion } from "framer-motion";
 
 export type CockpitSection = "home" | "hero" | "experience" | "tech" | "projects" | "asp";
@@ -24,8 +24,8 @@ export function CockpitDock({ activeSection, onSelectSection }: CockpitDockProps
   const dockItems: DockItem[] = [
     { id: "home", label: "Cockpit", icon: LayoutGrid, hotkey: "Esc" },
     { id: "experience", label: "Experience", icon: Briefcase, hotkey: "1" },
-    { id: "tech", label: "Tech Radar", icon: Cpu, hotkey: "2" },
-    { id: "projects", label: "Systems", icon: Rocket, hotkey: "3" },
+    { id: "tech", label: "Tech Stack", icon: Cpu, hotkey: "2" },
+    { id: "projects", label: "Education", icon: GraduationCap, hotkey: "3" },
     { id: "asp", label: "AsP Co-pilot", icon: Bot, hotkey: "/" },
     {
       id: "home",
