@@ -169,20 +169,20 @@ export const profileData: ProfileData = {
   experiences: [
     {
       company: "CNZ Consultants",
-      role: "Senior Software Engineer (Java & Full-Stack Platform Lead)",
+      role: "Senior Software Engineer (Java & Integration Platform Lead)",
       location: "Remote (New Zealand)",
       period: "Jan 2026 – Present",
       summary:
-        "Leading the modular architecture overhaul, enterprise integration pipelines, multi-tenant auth layer, and agentic diagnostic workflows.",
+        "Architecting and maintaining high-throughput Java 17 and Spring Boot microservices orchestrating resilient multi-tenant data pipelines between enterprise ERPs and Warehouse Management Systems.",
       bullets: [
-        "Refactored legacy monolithic integrations into a modular, layered Spring Boot architecture, decoupling reusable Core HTTP clients from client-specific business handlers.",
-        "Architected multi-domain integration pipelines spanning Accounting (Xero, MYOB invoices & COGS ledgers), E-Commerce (Shopify catalogs & orders), WMS (ShipHero, ControlPort, GRL), and automated SFTP syncs (CartonCloud).",
-        "Implemented dynamic multi-tenant credential resolution and extensible strategy-based authorization (OAuth2, API key headers, MD5 query signatures, Azure AD) supporting dozens of client organizations.",
-        "Engineered live FX currency engines, catalog sync services, and full-stack telemetry dashboards (React / TypeScript) with 1-click bottleneck remediation drawers.",
-        "Pioneered agentic engineering and multi-agent AI workflows within middleware pipelines to automate service diagnostics, payload telemetry inspections, and exception remediation.",
-        "Designed resilient REST APIs with circuit breaking, exponential backoff, and PostgreSQL transactional stores with containerized Docker deployments.",
+        "Architect and maintain high-throughput Java 17 and Spring Boot microservices orchestrating resilient multi-tenant data pipelines between enterprise ERPs (Cin7 Core, Cin7 Omni) and Warehouse Management Systems (ShipHero, ControlPort, Consignly, GRL).",
+        "Engineer automated order lifecycle pipelines managing inbound stock processing (ASN), wave/batch order allocation, fulfillment write-backs, and dispatch status tracking, ensuring zero data loss and strict transactional consistency.",
+        "Implement automated bottleneck detection and inline remediation mechanisms for inventory allocation holds, SKU mapping mismatches, and delivery address exceptions, dramatically reducing manual intervention for warehouse operations teams.",
+        "Pioneer agentic engineering and multi-agent workflows to automate service diagnostics, payload telemetry inspections, and exception alerts across high-volume scheduled and webhook-driven jobs.",
+        "Design resilient REST API clients with backoff/retry strategies, PostgreSQL transactional data stores, and event telemetry reporting via Microsoft Graph API to ensure operational transparency under high third-party rate limits.",
+        "Take full end-to-end ownership of features from architectural design to containerized Docker deployment, collaborating closely with distributed cross-functional teams and warehouse operations managers.",
       ],
-      technologies: ["Java 21", "Spring Boot", "TypeScript", "React", "PostgreSQL", "Docker", "OAuth2", "Xero", "Shopify"],
+      technologies: ["Java 17 / 21", "Spring Boot", "WMS & Fulfillment", "Microservices", "PostgreSQL", "Docker", "RESTful APIs"],
     },
     {
       company: "Unisys",
