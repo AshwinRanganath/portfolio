@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Bot, Sparkles, Send, ArrowUpRight, Terminal } from "lucide-react";
+import { Bot, Sparkles, Send, ArrowUpRight } from "lucide-react";
 import { SpecularBorder } from "../SpecularBorder";
 
 interface AspCopilotTileProps {
@@ -12,10 +12,10 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
   const [inputValue, setInputValue] = useState("");
 
   const quickPrompts = [
-    { label: "CNZ Integrations Platform", query: "What did Ashwin build at CNZ Consultants?" },
-    { label: "Unisys AST Parser", query: "Tell me about the AST parser and LLM migration at Unisys" },
-    { label: "Backend & Tech Stack", query: "What is Ashwin's backend tech stack and microservices experience?" },
-    { label: "AMD Spotlight Award", query: "Tell me about Ashwin's award and work at AMD India" },
+    { label: "CNZ Platform", query: "What did Ashwin build at CNZ Consultants?" },
+    { label: "Unisys AST Engine", query: "Tell me about the AST parser and LLM migration at Unisys" },
+    { label: "Tech Stack", query: "What is Ashwin's backend tech stack and microservices experience?" },
+    { label: "AMD Award", query: "Tell me about Ashwin's award and work at AMD India" },
   ];
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -48,7 +48,7 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
                 AsP &bull; AI Co-pilot
               </h2>
               <span className="hidden sm:inline-block text-[10px] font-mono text-[var(--text-faint)]">
-                Ask anything about Ashwin&apos;s experience
+                Interactive Assistant
               </span>
             </div>
           </div>
@@ -66,16 +66,16 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
         <div className="my-2 flex flex-col gap-1.5 flex-1 justify-center">
           <span className="text-[10px] font-mono text-[var(--text-faint)] flex items-center gap-1">
             <Sparkles className="w-3 h-3 text-[var(--theme-accent)]" />
-            <span>Suggested Inquiries:</span>
+            <span>Quick Inquiries:</span>
           </span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+          <div className="grid grid-cols-2 gap-1.5">
             {quickPrompts.map((item, idx) => (
               <button
                 key={idx}
                 onClick={() => onExpand(item.query)}
-                className="p-1.5 sm:p-2 rounded-xl bg-[var(--bg-subtle)]/70 hover:bg-[var(--theme-accent-subtle)] border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] text-left transition-all"
+                className="px-2 py-1.5 rounded-xl bg-[var(--bg-subtle)]/70 hover:bg-[var(--theme-accent-subtle)] border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] text-left transition-all truncate"
               >
-                <span className="text-[10px] font-mono font-medium text-[var(--text-heading)] line-clamp-1">
+                <span className="text-[10px] font-mono font-medium text-[var(--text-heading)] truncate block">
                   &gt; {item.label}
                 </span>
               </button>
@@ -90,7 +90,7 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              placeholder="Ask AsP anything about Ashwin's experience..."
+              placeholder="Ask anything about Ashwin's experience..."
               className="w-full pl-3 pr-9 py-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] focus:border-[var(--theme-accent)] text-xs font-mono text-[var(--text-heading)] placeholder:text-[var(--text-faint)] outline-none transition-colors"
             />
             <button

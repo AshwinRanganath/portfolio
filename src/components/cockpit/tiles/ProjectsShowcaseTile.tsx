@@ -12,20 +12,20 @@ export function ProjectsShowcaseTile({ onExpand }: ProjectsShowcaseTileProps) {
   const systems = [
     {
       title: "CNZ Integrations Platform",
-      domain: "Spring Boot 3 · Multi-Tenant Mesh",
-      metric: "250k+ syncs/mo",
+      domain: "Shopify · Cin7 · Xero · ShipHero",
+      metric: "250k+/mo",
       icon: Server,
     },
     {
-      title: "Java AST & LLM Migration Engine",
+      title: "Java AST & LLM Migration",
       domain: "JavaParser · Azure OpenAI",
-      metric: "40% audit speedup",
+      metric: "40% Fast",
       icon: Code2,
     },
     {
-      title: "Real-Time Telemetry Profiler",
-      domain: "Hardware Agent · React UI",
-      metric: "Award Winner @ AMD",
+      title: "Hardware Telemetry Profiler",
+      domain: "Real-time profiler agent @ AMD",
+      metric: "Award Winner",
       icon: Cpu,
     },
   ];
@@ -53,20 +53,20 @@ export function ProjectsShowcaseTile({ onExpand }: ProjectsShowcaseTileProps) {
             </div>
             <div>
               <h2 className="text-xs sm:text-sm font-bold text-[var(--text-heading)] group-hover:text-[var(--theme-accent-text-dark)] transition-colors">
-                Key Systems &bull; Architecture
+                Key Systems
               </h2>
               <span className="hidden sm:inline-block text-[10px] font-mono text-[var(--text-faint)]">
-                Production-Deployed Platforms
+                Production Platforms
               </span>
             </div>
           </div>
           <span className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-mono text-[var(--theme-accent-text-dark)] group-hover:translate-x-0.5 transition-transform">
-            <span className="hidden sm:inline">Showcase</span>
+            <span>Showcase</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </span>
         </div>
 
-        {/* Real Systems List */}
+        {/* High-Level Systems List */}
         <div className="my-2 flex flex-col gap-2 flex-1 justify-center">
           {systems.map((sys, idx) => {
             const Icon = sys.icon;
@@ -96,19 +96,19 @@ export function ProjectsShowcaseTile({ onExpand }: ProjectsShowcaseTileProps) {
           })}
         </div>
 
-        {/* Real Telemetry Strip */}
-        <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-[var(--border-subtle)] text-[10px] font-mono">
-          <div className="p-1.5 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-center">
-            <span className="text-[8px] text-[var(--text-faint)] block uppercase">Volume</span>
+        {/* Clean Telemetry Strip */}
+        <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-[var(--border-subtle)] text-[10px] font-mono text-center">
+          <div className="p-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
             <span className="font-bold text-[var(--theme-accent-text-dark)]">250k+/mo</span>
+            <span className="text-[8px] text-[var(--text-faint)] block">Volume</span>
           </div>
-          <div className="p-1.5 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-center">
-            <span className="text-[8px] text-[var(--text-faint)] block uppercase">Uptime</span>
+          <div className="p-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
             <span className="font-bold text-emerald-400">99.98%</span>
+            <span className="text-[8px] text-[var(--text-faint)] block">Uptime</span>
           </div>
-          <div className="p-1.5 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-center">
-            <span className="text-[8px] text-[var(--text-faint)] block uppercase">Deployments</span>
-            <span className="font-bold text-[#38bdf8]">3 Enterprise</span>
+          <div className="p-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
+            <span className="font-bold text-[#38bdf8]">3 Systems</span>
+            <span className="text-[8px] text-[var(--text-faint)] block">Deployed</span>
           </div>
         </div>
       </div>

@@ -15,30 +15,22 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
     {
       value: "3+ Yrs",
       label: "Experience",
-      detail: "Enterprise Backend & Full-Stack",
       icon: Briefcase,
-      color: "var(--theme-accent)",
     },
     {
       value: "250k+",
-      label: "Syncs / Month",
-      detail: "CNZ Integrations Platform",
+      label: "Syncs / Mo",
       icon: Activity,
-      color: "#10b981",
     },
     {
-      value: "3 Roles",
-      label: "Enterprise Track",
-      detail: "CNZ · Unisys · AMD",
+      value: "3",
+      label: "Tenures",
       icon: Building,
-      color: "#38bdf8",
     },
     {
       value: "Global",
       label: "Delivery",
-      detail: "India & NZ Remote Operations",
       icon: Globe,
-      color: "#a78bfa",
     },
   ];
 
@@ -105,30 +97,27 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
         </div>
 
         {/* Bio Excerpt */}
-        <p className="text-[11px] sm:text-xs text-[var(--text-body)] line-clamp-1 sm:line-clamp-2 my-1.5 sm:my-2 font-mono leading-relaxed opacity-90">
+        <p className="text-[11px] sm:text-xs text-[var(--text-body)] line-clamp-1 my-2 font-mono leading-relaxed opacity-90">
           &gt; {profileData.shortBio}
         </p>
 
-        {/* Real-World Grounded Profile Metrics (No Arbitrary Percentages) */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2 pt-2 border-t border-[var(--border-subtle)]">
+        {/* Clean, High-Level Key Metrics */}
+        <div className="grid grid-cols-4 gap-1.5 sm:gap-2 pt-2 border-t border-[var(--border-subtle)]">
           {profileMetrics.map((item, i) => {
             const Icon = item.icon;
             return (
               <div
                 key={i}
-                className="p-2 sm:p-2.5 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-subtle)] group-hover:border-[var(--theme-accent-border)] transition-colors flex flex-col justify-between"
+                className="p-2 sm:p-2.5 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-subtle)] group-hover:border-[var(--theme-accent-border)] transition-colors flex flex-col items-center sm:items-start text-center sm:text-left justify-center"
               >
-                <div className="flex items-center justify-between mb-1">
+                <div className="flex items-center gap-1 sm:justify-between w-full mb-0.5">
                   <span className="text-xs sm:text-base font-bold font-mono text-[var(--text-heading)]">
                     {item.value}
                   </span>
-                  <Icon className="w-3.5 h-3.5 text-[var(--theme-accent)] opacity-80" />
+                  <Icon className="w-3.5 h-3.5 text-[var(--theme-accent)] opacity-70 hidden sm:block" />
                 </div>
-                <div className="text-[10px] sm:text-[11px] font-semibold text-[var(--theme-accent-text-dark)] truncate">
+                <div className="text-[10px] sm:text-[11px] font-medium text-[var(--theme-accent-text-dark)] truncate">
                   {item.label}
-                </div>
-                <div className="text-[9px] font-mono text-[var(--text-muted)] truncate hidden sm:block mt-0.5">
-                  {item.detail}
                 </div>
               </div>
             );

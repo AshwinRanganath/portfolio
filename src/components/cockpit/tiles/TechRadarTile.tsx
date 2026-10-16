@@ -13,20 +13,17 @@ export function TechRadarTile({ onExpand }: TechRadarTileProps) {
     {
       name: "Backend & Systems",
       icon: Server,
-      color: "var(--theme-accent)",
-      skills: ["Java 21", "Spring Boot 3", "Microservices", "PostgreSQL", "REST / SFTP", "Resilience4j"],
+      skills: ["Java 21", "Spring Boot 3", "Microservices", "PostgreSQL"],
     },
     {
-      name: "Frontend & Web",
+      name: "Frontend & Platform",
       icon: Layout,
-      color: "#38bdf8",
-      skills: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS", "Zustand"],
+      skills: ["TypeScript", "React 19", "Next.js 16", "Tailwind"],
     },
     {
       name: "AI & Integrations",
       icon: Sparkles,
-      color: "#34d399",
-      skills: ["Azure OpenAI", "Shopify API", "Cin7 Core", "Xero", "Java AST"],
+      skills: ["Azure OpenAI", "AST Parsers", "Shopify API", "Cin7 / Xero"],
     },
   ];
 
@@ -53,21 +50,21 @@ export function TechRadarTile({ onExpand }: TechRadarTileProps) {
             </div>
             <div>
               <h2 className="text-xs sm:text-sm font-bold text-[var(--text-heading)] group-hover:text-[var(--theme-accent-text-dark)] transition-colors">
-                Tech Stack &bull; Capabilities
+                Tech Stack
               </h2>
               <span className="hidden sm:inline-block text-[10px] font-mono text-[var(--text-faint)]">
-                Production-Tested Enterprise Stack
+                Core Engineering Pillars
               </span>
             </div>
           </div>
           <span className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-mono text-[var(--theme-accent-text-dark)] group-hover:translate-x-0.5 transition-transform">
-            <span className="hidden sm:inline">Matrix</span>
+            <span>Matrix</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </span>
         </div>
 
-        {/* Categorized Production Stack Domains (No Arbitrary Percentages) */}
-        <div className="my-2 flex flex-col gap-2.5 flex-1 justify-center">
+        {/* High-Level Primary Stack Pillars */}
+        <div className="my-2 flex flex-col gap-2 flex-1 justify-center">
           {domains.map((domain, idx) => {
             const Icon = domain.icon;
             return (
@@ -93,8 +90,8 @@ export function TechRadarTile({ onExpand }: TechRadarTileProps) {
 
         {/* Footer */}
         <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-[10px] font-mono text-[var(--text-faint)]">
-          <span>Enterprise architecture &bull; CI/CD &bull; Cloud</span>
-          <span className="text-[var(--theme-accent-text-dark)] font-semibold">View Matrix &rarr;</span>
+          <span>Production-tested</span>
+          <span className="text-[var(--theme-accent-text-dark)] font-semibold">View Full Matrix &rarr;</span>
         </div>
       </div>
     </SpecularBorder>
