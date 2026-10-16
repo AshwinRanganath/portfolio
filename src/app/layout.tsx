@@ -82,7 +82,7 @@ export default function RootLayout({
                   if (savedAccent && valid.indexOf(savedAccent) !== -1) {
                     document.documentElement.setAttribute('data-accent', savedAccent);
                   } else {
-                    document.documentElement.setAttribute('data-accent', 'amber');
+                    document.documentElement.setAttribute('data-accent', 'titanium');
                   }
                 } catch (e) {}
               })();

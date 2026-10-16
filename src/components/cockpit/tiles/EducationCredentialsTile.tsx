@@ -32,11 +32,11 @@ export function EducationCredentialsTile({ onExpand }: EducationCredentialsTileP
         {/* Header */}
         <div className="flex items-center justify-between pb-2 border-b border-[var(--border-subtle)]">
           <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="p-1 sm:p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)]">
-              <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--theme-accent)]" />
+            <div className="p-1 sm:p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)]">
+              <GraduationCap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--theme-accent-fg)]" />
             </div>
             <div>
-              <h2 className="text-xs sm:text-sm font-bold text-[var(--text-heading)] group-hover:text-[var(--theme-accent-text-dark)] transition-colors">
+              <h2 className="text-xs sm:text-sm font-bold text-[var(--text-heading)] group-hover:text-[var(--theme-accent-fg)] transition-colors">
                 Education &bull; Honors
               </h2>
               <span className="hidden sm:inline-block text-[10px] font-mono text-[var(--text-faint)]">
@@ -44,7 +44,7 @@ export function EducationCredentialsTile({ onExpand }: EducationCredentialsTileP
               </span>
             </div>
           </div>
-          <span className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-mono text-[var(--theme-accent-text-dark)] group-hover:translate-x-0.5 transition-transform">
+          <span className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-mono text-[var(--theme-accent-fg)] group-hover:translate-x-0.5 transition-transform font-medium">
             <span>Credentials</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </span>
@@ -56,14 +56,14 @@ export function EducationCredentialsTile({ onExpand }: EducationCredentialsTileP
           <div className="p-2 sm:p-2.5 rounded-xl bg-[var(--bg-subtle)]/70 border border-[var(--border-subtle)] group-hover:border-[var(--theme-accent-border)] transition-colors flex items-center justify-between gap-2">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="p-1.5 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)] shrink-0">
-                <BookOpen className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+                <BookOpen className="w-3.5 h-3.5 text-[var(--theme-accent-fg)]" />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <h3 className="text-xs font-bold text-[var(--text-heading)] truncate">
                     M.Tech &bull; Computer Science
                   </h3>
-                  <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)]">
+                  <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)] border border-[var(--border-accent)] font-semibold">
                     GPA {mtech.gpa}
                   </span>
                 </div>
@@ -95,14 +95,14 @@ export function EducationCredentialsTile({ onExpand }: EducationCredentialsTileP
           <div className="p-2 sm:p-2.5 rounded-xl bg-[var(--bg-subtle)]/50 border border-[var(--border-subtle)] transition-colors flex items-center justify-between gap-2">
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="p-1.5 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)] shrink-0">
-                <Award className="w-3.5 h-3.5 text-amber-400" />
+                <Award className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400" />
               </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <h3 className="text-xs font-bold text-[var(--text-heading)] truncate">
                     {award.title}
                   </h3>
-                  <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                  <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 font-semibold">
                     Winner
                   </span>
                 </div>
@@ -117,7 +117,7 @@ export function EducationCredentialsTile({ onExpand }: EducationCredentialsTileP
         {/* Footer */}
         <div className="pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-[10px] font-mono text-[var(--text-faint)]">
           <span>Manipal &bull; VTU &bull; AMD Innovation EXPO</span>
-          <span className="text-[var(--theme-accent-text-dark)] font-semibold">View Details &rarr;</span>
+          <span className="text-[var(--theme-accent-fg)] font-semibold">View Details &rarr;</span>
         </div>
       </div>
     </SpecularBorder>

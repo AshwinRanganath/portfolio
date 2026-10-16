@@ -136,8 +136,8 @@ export function ExpandedStageModal({
               </div>
 
               {/* Tab Chip */}
-              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--theme-accent-text-dark)]">
-                <Icon className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+              <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--theme-accent-fg)]">
+                <Icon className="w-3.5 h-3.5 text-[var(--theme-accent-fg)]" />
                 <span id="cockpit-stage-title" className="font-semibold">
                   {meta.tab}
                 </span>
@@ -151,7 +151,7 @@ export function ExpandedStageModal({
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Back</span>
-              <kbd className="px-1 py-0.2 rounded bg-black/30 text-[10px] text-[var(--text-faint)]">
+              <kbd className="px-1.5 py-0.2 rounded bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-[10px] text-[var(--text-muted)] font-mono">
                 Esc
               </kbd>
             </button>

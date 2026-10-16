@@ -69,7 +69,7 @@ export function CockpitDock({ activeSection, onSelectSection }: CockpitDockProps
               onClick={() => onSelectSection(item.id)}
               className={`group relative flex flex-col sm:flex-row items-center gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 rounded-xl transition-all font-mono text-xs select-none ${
                 isActive
-                  ? "text-[var(--theme-accent-text-dark)] bg-[var(--theme-accent-subtle)] font-semibold shadow-inner"
+                  ? "text-[var(--theme-accent-fg)] bg-[var(--theme-accent-subtle)] font-bold shadow-inner"
                   : "text-[var(--text-muted)] hover:text-[var(--text-heading)] hover:bg-[var(--bg-subtle)]"
               }`}
               title={`${item.label} (Press ${item.hotkey})`}
@@ -84,17 +84,17 @@ export function CockpitDock({ activeSection, onSelectSection }: CockpitDockProps
 
               <Icon
                 className={`w-4 h-4 transition-transform group-hover:scale-110 ${
-                  isActive ? "text-[var(--theme-accent)]" : ""
+                  isActive ? "text-[var(--theme-accent-fg)]" : ""
                 }`}
               />
               <span className="hidden md:inline">{item.label}</span>
 
               {/* Hotkey tag */}
               <kbd
-                className={`hidden lg:inline-block px-1 py-0.2 rounded text-[10px] ${
+                className={`hidden lg:inline-block px-1.5 py-0.2 rounded text-[10px] ${
                   isActive
-                    ? "bg-black/30 text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)]"
-                    : "bg-white/5 text-[var(--text-faint)] border border-white/5"
+                    ? "bg-[var(--bg-subtle)] text-[var(--theme-accent-fg)] border border-[var(--border-accent)] font-semibold"
+                    : "bg-[var(--bg-subtle)] text-[var(--text-faint)] border border-[var(--border-subtle)]"
                 }`}
               >
                 {item.hotkey}

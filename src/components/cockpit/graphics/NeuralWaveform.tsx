@@ -8,12 +8,12 @@ export function NeuralWaveform() {
   const bars = [12, 28, 45, 20, 60, 35, 75, 50, 85, 40, 65, 30, 55, 22, 40, 15];
 
   return (
-    <div className="w-full flex items-center justify-between p-2 rounded-xl bg-black/30 border border-white/5 select-none overflow-hidden">
+    <div className="w-full flex items-center justify-between p-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] select-none overflow-hidden">
       {/* Left: AI Pulsing Orb */}
       <div className="flex items-center gap-2 shrink-0">
         <div className="relative">
           <div className="w-7 h-7 rounded-lg bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] flex items-center justify-center">
-            <Bot className="w-4 h-4 text-[var(--theme-accent)]" />
+            <Bot className="w-4 h-4 text-[var(--theme-accent-fg)]" />
           </div>
           <span className="absolute -bottom-0.5 -right-0.5 flex h-2 w-2">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -24,7 +24,7 @@ export function NeuralWaveform() {
           <span className="text-[10px] font-bold font-mono text-[var(--text-heading)]">
             Neural Signal
           </span>
-          <span className="text-[8px] font-mono text-emerald-400">Listening &bull; Ready</span>
+          <span className="text-[8px] font-mono text-emerald-500 dark:text-emerald-400 font-semibold">Listening &bull; Ready</span>
         </div>
       </div>
 
@@ -33,7 +33,7 @@ export function NeuralWaveform() {
         {bars.map((height, i) => (
           <motion.div
             key={i}
-            className="w-1 rounded-full bg-[var(--theme-accent)]"
+            className="w-1 rounded-full bg-[var(--theme-accent-fg)]"
             animate={{
               height: [
                 `${Math.max(6, height * 0.3)}px`,
@@ -54,8 +54,8 @@ export function NeuralWaveform() {
       </div>
 
       {/* Right: Telemetry Tag */}
-      <div className="hidden sm:flex items-center gap-1 text-[9px] font-mono text-[var(--theme-accent-text-dark)] shrink-0">
-        <Sparkles className="w-3 h-3 text-[var(--theme-accent)]" />
+      <div className="hidden sm:flex items-center gap-1 text-[9px] font-mono text-[var(--theme-accent-fg)] shrink-0 font-medium">
+        <Sparkles className="w-3 h-3 text-[var(--theme-accent-fg)]" />
         <span>v2.4 Engine</span>
       </div>
     </div>

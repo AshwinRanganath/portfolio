@@ -35,8 +35,8 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
         <div className="flex items-center justify-between pb-2 border-b border-[var(--border-subtle)]">
           <div className="flex items-center gap-1.5 sm:gap-2">
             <div className="relative">
-              <div className="p-1 sm:p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)]">
-                <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--theme-accent)]" />
+              <div className="p-1 sm:p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)]">
+                <Bot className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--theme-accent-fg)]" />
               </div>
               <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -44,7 +44,7 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
               </span>
             </div>
             <div>
-              <h2 className="text-xs sm:text-sm font-bold text-[var(--text-heading)] group-hover:text-[var(--theme-accent-text-dark)] transition-colors">
+              <h2 className="text-xs sm:text-sm font-bold text-[var(--text-heading)] group-hover:text-[var(--theme-accent-fg)] transition-colors">
                 AsP &bull; AI Co-pilot
               </h2>
               <span className="hidden sm:inline-block text-[10px] font-mono text-[var(--text-faint)]">
@@ -54,7 +54,7 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
           </div>
           <button
             onClick={() => onExpand()}
-            className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-mono text-[var(--theme-accent-text-dark)] hover:opacity-80 transition-opacity"
+            className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-mono text-[var(--theme-accent-fg)] hover:opacity-80 transition-opacity font-medium"
             title="Launch Full Terminal"
           >
             <span>Launch</span>
@@ -65,7 +65,7 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
         {/* Quick Question Chips */}
         <div className="my-2 flex flex-col gap-1.5 flex-1 justify-center">
           <span className="text-[10px] font-mono text-[var(--text-faint)] flex items-center gap-1">
-            <Sparkles className="w-3 h-3 text-[var(--theme-accent)]" />
+            <Sparkles className="w-3 h-3 text-[var(--theme-accent-fg)]" />
             <span>Quick Inquiries:</span>
           </span>
           <div className="grid grid-cols-2 gap-1.5">
@@ -91,11 +91,11 @@ export function AspCopilotTile({ onExpand }: AspCopilotTileProps) {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder="Ask anything about Ashwin's experience..."
-              className="w-full pl-3 pr-9 py-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] focus:border-[var(--theme-accent)] text-xs font-mono text-[var(--text-heading)] placeholder:text-[var(--text-faint)] outline-none transition-colors"
+              className="w-full pl-3 pr-9 py-2 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] focus:border-[var(--theme-accent-border)] text-xs font-mono text-[var(--text-heading)] placeholder:text-[var(--text-faint)] outline-none transition-colors"
             />
             <button
               type="submit"
-              className="absolute right-1.5 p-1 rounded-lg bg-[var(--theme-accent)] text-white hover:opacity-90 transition-opacity shadow-sm"
+              className="absolute right-1.5 p-1 rounded-lg bg-[var(--theme-accent-fg)] text-[var(--bg-primary)] hover:opacity-90 transition-opacity shadow-sm"
               title="Submit question"
             >
               <Send className="w-3 h-3" />

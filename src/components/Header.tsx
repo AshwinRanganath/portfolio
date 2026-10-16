@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { Terminal, Moon, Sun, FileText, Bot } from "lucide-react";
 import { profileData } from "@/data/profile";
-import { ThemePicker } from "@/components/ThemePicker";
 
 interface HeaderProps {
   onOpenBot: () => void;
@@ -105,15 +104,12 @@ export function Header({ onOpenBot }: HeaderProps) {
           <span>Resume</span>
         </a>
 
-        {/* Live Palette Picker */}
-        <ThemePicker />
-
         {/* Dark/Light Switcher */}
         <button
           onClick={toggleTheme}
           aria-label="Toggle color theme"
-          className="p-1.5 rounded-md theme-subtle-box theme-muted hover:theme-heading transition-colors"
-          title={isLight ? "Switch to Dark Mode" : "Switch to Light Mode"}
+          className="p-1.5 rounded-md theme-subtle-box text-[var(--theme-accent-fg)] hover:theme-heading transition-colors"
+          title={isLight ? "Switch to Dark Mode (Stealth Titanium Chrome)" : "Switch to Light Mode (Deep Obsidian Gunmetal)"}
         >
           {isLight ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
         </button>

@@ -29,7 +29,7 @@ export function ExperienceExpandedView({ onAskAsp }: ExperienceExpandedViewProps
             onClick={() => setSelectedIdx(idx)}
             className={`flex items-center gap-2 px-3 py-2 rounded-xl font-mono text-xs transition-all shrink-0 select-none ${
               selectedIdx === idx
-                ? "bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] font-semibold shadow-sm"
+                ? "bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)] border border-[var(--border-accent)] font-semibold shadow-sm"
                 : "bg-[var(--bg-subtle)] text-[var(--text-muted)] hover:text-[var(--text-heading)] border border-[var(--border-subtle)]"
             }`}
           >
@@ -52,13 +52,13 @@ export function ExperienceExpandedView({ onAskAsp }: ExperienceExpandedViewProps
                 {currentExp.role}
               </h3>
               {selectedIdx === 0 && (
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-semibold">
                   Current
                 </span>
               )}
             </div>
             <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--text-muted)] mt-1 font-mono">
-              <span className="text-[var(--theme-accent-text-dark)] font-semibold">
+              <span className="text-[var(--theme-accent-fg)] font-semibold">
                 {currentExp.company}
               </span>
               <span>&bull;</span>
@@ -77,9 +77,9 @@ export function ExperienceExpandedView({ onAskAsp }: ExperienceExpandedViewProps
           {/* Ask AsP About Role Button */}
           <button
             onClick={() => onAskAsp(`Tell me about your work at ${currentExp.company}`)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-xs font-mono text-[var(--theme-accent-text-dark)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all shrink-0 self-start sm:self-auto"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-xs font-mono text-[var(--theme-accent-fg)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all shrink-0 self-start sm:self-auto font-medium"
           >
-            <Bot className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+            <Bot className="w-3.5 h-3.5 text-[var(--theme-accent-fg)]" />
             <span>Ask AsP about this</span>
           </button>
         </div>
@@ -88,13 +88,13 @@ export function ExperienceExpandedView({ onAskAsp }: ExperienceExpandedViewProps
         <CompanySystemSandbox companyIndex={selectedIdx} />
 
         {/* Summary Narrative */}
-        <p className="text-xs sm:text-sm text-[var(--text-body)] leading-relaxed italic bg-black/10 dark:bg-black/20 p-3 rounded-xl border border-white/5">
+        <p className="text-xs sm:text-sm text-[var(--text-body)] leading-relaxed italic bg-[var(--bg-subtle)] p-3 rounded-xl border border-[var(--border-subtle)]">
           &ldquo;{currentExp.summary}&rdquo;
         </p>
 
         {/* Bullet Points */}
         <div className="flex flex-col gap-2.5">
-          <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--theme-accent-text-dark)] font-semibold">
+          <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--theme-accent-fg)] font-semibold">
             Key Contributions &amp; Architectural Impact:
           </h4>
           <ul className="flex flex-col gap-2">

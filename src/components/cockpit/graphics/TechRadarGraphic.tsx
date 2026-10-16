@@ -64,20 +64,20 @@ export function TechRadarGraphic() {
               fill="none"
               stroke="currentColor"
               strokeWidth="0.8"
-              className="text-white/10 dark:text-white/5"
+              className="text-slate-900/15 dark:text-white/10"
             />
             <polygon
               points="60,20 95,82 25,82"
               fill="none"
               stroke="currentColor"
               strokeWidth="0.8"
-              className="text-white/20 dark:text-white/10"
+              className="text-slate-900/20 dark:text-white/15"
             />
 
             {/* Axis Lines from Center */}
-            <line x1={center.x} y1={center.y} x2="60" y2="12" stroke="currentColor" strokeWidth="0.8" className="text-white/10" />
-            <line x1={center.x} y1={center.y} x2="102" y2="87" stroke="currentColor" strokeWidth="0.8" className="text-white/10" />
-            <line x1={center.x} y1={center.y} x2="18" y2="87" stroke="currentColor" strokeWidth="0.8" className="text-white/10" />
+            <line x1={center.x} y1={center.y} x2="60" y2="12" stroke="currentColor" strokeWidth="0.8" className="text-slate-900/15 dark:text-white/10" />
+            <line x1={center.x} y1={center.y} x2="102" y2="87" stroke="currentColor" strokeWidth="0.8" className="text-slate-900/15 dark:text-white/10" />
+            <line x1={center.x} y1={center.y} x2="18" y2="87" stroke="currentColor" strokeWidth="0.8" className="text-slate-900/15 dark:text-white/10" />
 
             {/* Filled Animated Radar Area */}
             <motion.polygon
@@ -106,15 +106,15 @@ export function TechRadarGraphic() {
               <div key={idx} className="flex flex-col gap-0.5">
                 <div className="flex items-center justify-between text-[11px] font-mono">
                   <span className="flex items-center gap-1 font-semibold text-[var(--text-heading)] truncate">
-                    <Icon className="w-3 h-3 text-[var(--theme-accent)] shrink-0" />
+                    <Icon className="w-3 h-3 text-[var(--theme-accent-fg)] shrink-0" />
                     <span className="truncate">{p.name}</span>
                   </span>
-                  <span className="text-[10px] font-bold text-[var(--theme-accent-text-dark)] shrink-0">
+                  <span className="text-[10px] font-bold text-[var(--theme-accent-fg)] shrink-0">
                     {p.score}
                   </span>
                 </div>
                 {/* Visual Progress Bar */}
-                <div className="w-full h-1.5 rounded-full bg-black/40 overflow-hidden border border-white/5">
+                <div className="w-full h-1.5 rounded-full bg-[var(--bg-subtle)] overflow-hidden border border-[var(--border-subtle)]">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${p.level}%` }}
@@ -123,7 +123,7 @@ export function TechRadarGraphic() {
                     style={{
                       background:
                         idx === 0
-                          ? "var(--theme-accent)"
+                          ? "var(--theme-accent-fg)"
                           : idx === 1
                           ? "#38bdf8"
                           : "#a78bfa",

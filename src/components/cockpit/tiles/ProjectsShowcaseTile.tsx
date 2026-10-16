@@ -48,11 +48,11 @@ export function ProjectsShowcaseTile({ onExpand }: ProjectsShowcaseTileProps) {
         {/* Header */}
         <div className="flex items-center justify-between pb-2 border-b border-[var(--border-subtle)]">
           <div className="flex items-center gap-1.5 sm:gap-2">
-            <div className="p-1 sm:p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)]">
-              <Rocket className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--theme-accent)]" />
+            <div className="p-1 sm:p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)]">
+              <Rocket className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[var(--theme-accent-fg)]" />
             </div>
             <div>
-              <h2 className="text-xs sm:text-sm font-bold text-[var(--text-heading)] group-hover:text-[var(--theme-accent-text-dark)] transition-colors">
+              <h2 className="text-xs sm:text-sm font-bold text-[var(--text-heading)] group-hover:text-[var(--theme-accent-fg)] transition-colors">
                 Key Systems
               </h2>
               <span className="hidden sm:inline-block text-[10px] font-mono text-[var(--text-faint)]">
@@ -60,7 +60,7 @@ export function ProjectsShowcaseTile({ onExpand }: ProjectsShowcaseTileProps) {
               </span>
             </div>
           </div>
-          <span className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-mono text-[var(--theme-accent-text-dark)] group-hover:translate-x-0.5 transition-transform">
+          <span className="flex items-center gap-0.5 sm:gap-1 text-[10px] sm:text-[11px] font-mono text-[var(--theme-accent-fg)] group-hover:translate-x-0.5 transition-transform font-medium">
             <span>Showcase</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
           </span>
@@ -77,7 +77,7 @@ export function ProjectsShowcaseTile({ onExpand }: ProjectsShowcaseTileProps) {
               >
                 <div className="flex items-center gap-2.5 min-w-0">
                   <div className="p-1.5 rounded-lg bg-[var(--bg-card)] border border-[var(--border-subtle)] shrink-0">
-                    <Icon className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+                    <Icon className="w-3.5 h-3.5 text-[var(--theme-accent-fg)]" />
                   </div>
                   <div className="min-w-0">
                     <h3 className="text-xs font-bold text-[var(--text-heading)] truncate">
@@ -88,7 +88,7 @@ export function ProjectsShowcaseTile({ onExpand }: ProjectsShowcaseTileProps) {
                     </p>
                   </div>
                 </div>
-                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] shrink-0">
+                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-md bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)] border border-[var(--border-accent)] shrink-0">
                   {sys.metric}
                 </span>
               </div>
@@ -99,7 +99,7 @@ export function ProjectsShowcaseTile({ onExpand }: ProjectsShowcaseTileProps) {
         {/* Clean Telemetry Strip */}
         <div className="grid grid-cols-3 gap-1.5 pt-2 border-t border-[var(--border-subtle)] text-[10px] font-mono text-center">
           <div className="p-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
-            <span className="font-bold text-[var(--theme-accent-text-dark)]">250k+/mo</span>
+            <span className="font-bold text-[var(--theme-accent-fg)]">250k+/mo</span>
             <span className="text-[8px] text-[var(--text-faint)] block">Volume</span>
           </div>
           <div className="p-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">

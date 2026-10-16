@@ -23,9 +23,9 @@ export function ProjectsExpandedView({ onAskAsp }: ProjectsExpandedViewProps) {
         </div>
         <button
           onClick={() => onAskAsp("What major platforms and projects have you built?")}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-xs font-mono text-[var(--theme-accent-text-dark)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all shrink-0 self-start sm:self-auto"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-xs font-mono text-[var(--theme-accent-fg)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all shrink-0 self-start sm:self-auto font-medium"
         >
-          <Sparkles className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+          <Sparkles className="w-3.5 h-3.5 text-[var(--theme-accent-fg)]" />
           <span>Ask AsP about Projects</span>
         </button>
       </div>
@@ -40,14 +40,14 @@ export function ProjectsExpandedView({ onAskAsp }: ProjectsExpandedViewProps) {
             {/* Title & Category */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
               <div className="flex items-center gap-2">
-                <div className="p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)]">
-                  <Rocket className="w-4 h-4 text-[var(--theme-accent)]" />
+                <div className="p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)]">
+                  <Rocket className="w-4 h-4 text-[var(--theme-accent-fg)]" />
                 </div>
                 <div>
                   <h4 className="text-sm sm:text-base font-bold text-[var(--text-heading)]">
                     {proj.title}
                   </h4>
-                  <span className="text-[11px] font-mono text-[var(--theme-accent-text-dark)]">
+                  <span className="text-[11px] font-mono text-[var(--theme-accent-fg)] font-medium">
                     {proj.category}
                   </span>
                 </div>
@@ -57,7 +57,7 @@ export function ProjectsExpandedView({ onAskAsp }: ProjectsExpandedViewProps) {
                 onClick={() => onAskAsp(`Tell me about your ${proj.title} project`)}
                 className="flex items-center gap-1.5 px-2.5 py-1 rounded-xl bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--text-body)] hover:text-[var(--text-heading)] transition-all self-start sm:self-auto"
               >
-                <Bot className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+                <Bot className="w-3.5 h-3.5 text-[var(--theme-accent-fg)]" />
                 <span>Ask AsP</span>
               </button>
             </div>
@@ -68,10 +68,10 @@ export function ProjectsExpandedView({ onAskAsp }: ProjectsExpandedViewProps) {
             </p>
 
             {/* Impact Highlight */}
-            <div className="p-3 rounded-xl bg-black/20 dark:bg-black/30 border border-white/5 flex items-start gap-2.5">
-              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+            <div className="p-3 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] flex items-start gap-2.5">
+              <CheckCircle2 className="w-4 h-4 text-emerald-500 dark:text-emerald-400 shrink-0 mt-0.5" />
               <div className="text-xs text-[var(--text-heading)]">
-                <span className="font-semibold text-emerald-400 font-mono">Measurable Impact: </span>
+                <span className="font-semibold text-emerald-600 dark:text-emerald-400 font-mono">Measurable Impact: </span>
                 <span>{proj.impact}</span>
               </div>
             </div>
@@ -81,7 +81,7 @@ export function ProjectsExpandedView({ onAskAsp }: ProjectsExpandedViewProps) {
               {proj.technologies.map((t, tIdx) => (
                 <span
                   key={tIdx}
-                  className="text-xs font-mono px-2 py-0.5 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-muted)]"
+                  className="text-xs font-mono px-2 py-0.5 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-body)]"
                 >
                   {t}
                 </span>

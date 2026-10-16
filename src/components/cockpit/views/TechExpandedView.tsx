@@ -30,9 +30,9 @@ export function TechExpandedView({ onAskAsp }: TechExpandedViewProps) {
         </div>
         <button
           onClick={() => onAskAsp("What programming languages do you code in?")}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-xs font-mono text-[var(--theme-accent-text-dark)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all shrink-0 self-start sm:self-auto"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-xs font-mono text-[var(--theme-accent-fg)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all shrink-0 self-start sm:self-auto font-medium"
         >
-          <Sparkles className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+          <Sparkles className="w-3.5 h-3.5 text-[var(--theme-accent-fg)]" />
           <span>Ask AsP about Tech Stack</span>
         </button>
       </div>
@@ -48,8 +48,8 @@ export function TechExpandedView({ onAskAsp }: TechExpandedViewProps) {
             >
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)]">
-                    <Icon className="w-4 h-4 text-[var(--theme-accent)]" />
+                  <div className="p-1.5 rounded-lg bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)]">
+                    <Icon className="w-4 h-4 text-[var(--theme-accent-fg)]" />
                   </div>
                   <h4 className="text-sm font-bold text-[var(--text-heading)]">
                     {skillGroup.category}
@@ -59,7 +59,7 @@ export function TechExpandedView({ onAskAsp }: TechExpandedViewProps) {
                   {skillGroup.items.map((item, itemIdx) => (
                     <span
                       key={itemIdx}
-                      className="text-xs font-mono px-2.5 py-1 rounded-lg bg-black/20 dark:bg-black/40 border border-white/5 text-[var(--text-body)] hover:border-[var(--theme-accent-border)] hover:text-[var(--theme-accent-text-dark)] transition-colors cursor-default"
+                      className="text-xs font-mono px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] text-[var(--text-body)] hover:border-[var(--theme-accent-border)] hover:text-[var(--theme-accent-fg)] transition-colors cursor-default"
                     >
                       {item}
                     </span>
@@ -73,16 +73,16 @@ export function TechExpandedView({ onAskAsp }: TechExpandedViewProps) {
 
       {/* Programming Languages Proficiency Grid */}
       <div className="p-4 rounded-2xl bg-[var(--bg-subtle)]/70 border border-[var(--border-subtle)]">
-        <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--theme-accent-text-dark)] font-semibold mb-3">
+        <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--theme-accent-fg)] font-semibold mb-3">
           Programming &amp; Scripting Languages
         </h4>
         <div className="flex flex-wrap gap-2">
           {profileData.languages.programming.map((lang, idx) => (
             <div
               key={idx}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/20 border border-white/5 font-mono text-xs text-[var(--text-heading)]"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)] font-mono text-xs text-[var(--text-heading)]"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-accent)]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--theme-accent-fg)]" />
               <span>{lang}</span>
             </div>
           ))}

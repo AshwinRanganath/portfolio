@@ -51,27 +51,27 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
             {/* Name, Handle, Title & Location */}
             <div>
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <h1 className="text-base sm:text-xl font-bold tracking-tight text-[var(--text-heading)] group-hover:text-[var(--theme-accent-text-dark)] transition-colors">
+                <h1 className="text-base sm:text-xl font-bold tracking-tight text-[var(--text-heading)] group-hover:text-[var(--theme-accent-fg)] transition-colors">
                   {profileData.name}
                 </h1>
                 <span className="text-[10px] sm:text-[11px] font-mono px-1.5 py-0.5 rounded-md bg-[var(--bg-subtle)] text-[var(--text-muted)] border border-[var(--border-subtle)]">
                   @{profileData.handle}
                 </span>
               </div>
-              <p className="text-[11px] sm:text-sm font-medium text-[var(--theme-accent-text-dark)] mt-0.5">
+              <p className="text-[11px] sm:text-sm font-medium text-[var(--theme-accent-fg)] mt-0.5">
                 {profileData.title}
               </p>
               <div className="flex items-center gap-1.5 text-[10px] sm:text-[11px] text-[var(--text-muted)] mt-1 font-mono">
                 <MapPin className="w-3 h-3 text-[var(--text-faint)]" />
                 <span>{profileData.location}</span>
                 <span className="text-[var(--text-faint)] hidden sm:inline">&bull;</span>
-                <span className="text-emerald-400 font-semibold hidden sm:inline">Available for Roles</span>
+                <span className="text-emerald-600 dark:text-emerald-400 font-semibold hidden sm:inline">Available for Roles</span>
               </div>
             </div>
           </div>
 
           {/* Expand badge icon */}
-          <div className="p-1.5 rounded-lg bg-[var(--bg-subtle)] text-[var(--text-muted)] group-hover:text-[var(--theme-accent-text-dark)] group-hover:bg-[var(--theme-accent-subtle)] transition-colors">
+          <div className="p-1.5 rounded-lg bg-[var(--bg-subtle)] text-[var(--text-muted)] group-hover:text-[var(--theme-accent-fg)] group-hover:bg-[var(--theme-accent-subtle)] transition-colors">
             <Maximize2 className="w-3.5 h-3.5" />
           </div>
         </div>
@@ -94,7 +94,7 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] hover:text-[var(--theme-accent-text-dark)] transition-colors flex items-center gap-1.5 text-[11px]"
+              className="px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] hover:text-[var(--theme-accent-fg)] transition-colors flex items-center gap-1.5 text-[11px]"
               title="LinkedIn Profile"
             >
               <LinkedinIcon className="w-3 h-3" />
@@ -105,7 +105,7 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] hover:text-[var(--theme-accent-text-dark)] transition-colors flex items-center gap-1.5 text-[11px]"
+              className="px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] hover:text-[var(--theme-accent-fg)] transition-colors flex items-center gap-1.5 text-[11px]"
               title="GitHub Profile"
             >
               <GithubIcon className="w-3 h-3" />
@@ -114,10 +114,10 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
             <a
               href={`mailto:${profileData.email}`}
               onClick={(e) => e.stopPropagation()}
-              className="px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] hover:text-[var(--theme-accent-text-dark)] transition-colors flex items-center gap-1.5 text-[11px]"
+              className="px-2.5 py-1 rounded-lg bg-[var(--bg-subtle)] border border-[var(--border-subtle)] hover:border-[var(--theme-accent-border)] hover:text-[var(--theme-accent-fg)] transition-colors flex items-center gap-1.5 text-[11px]"
               title="Send Email"
             >
-              <Mail className="w-3 h-3 text-[var(--theme-accent)]" />
+              <Mail className="w-3 h-3 text-[var(--theme-accent-fg)]" />
               <span className="hidden sm:inline">{profileData.email}</span>
               <span className="sm:hidden">Email</span>
             </a>
@@ -126,9 +126,9 @@ export function HeroIdentityTile({ onExpand }: HeroIdentityTileProps) {
           <a
             href="/resume"
             onClick={(e) => e.stopPropagation()}
-            className="px-2.5 py-1 rounded-lg bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-[var(--theme-accent-text-dark)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all font-semibold flex items-center gap-1.5 text-[11px]"
+            className="px-2.5 py-1 rounded-lg bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-[var(--theme-accent-fg)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all font-semibold flex items-center gap-1.5 text-[11px]"
           >
-            <FileText className="w-3 h-3 text-[var(--theme-accent)]" />
+            <FileText className="w-3 h-3 text-[var(--theme-accent-fg)]" />
             <span>Resume</span>
           </a>
         </div>

@@ -51,7 +51,7 @@ export function HeroExpandedView({ onAskAsp }: HeroExpandedViewProps) {
             </span>
           </div>
 
-          <p className="text-sm font-semibold text-[var(--theme-accent-text-dark)] mt-1">
+          <p className="text-sm font-semibold text-[var(--theme-accent-fg)] mt-1">
             {profileData.title}
           </p>
 
@@ -67,7 +67,7 @@ export function HeroExpandedView({ onAskAsp }: HeroExpandedViewProps) {
             href={`mailto:${profileData.email}`}
             className="flex-1 sm:flex-initial flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--bg-subtle)] hover:bg-[var(--bg-subtle-hover)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--text-heading)] transition-colors"
           >
-            <Mail className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+            <Mail className="w-3.5 h-3.5 text-[var(--theme-accent-fg)]" />
             <span>Email</span>
           </a>
           <a
@@ -93,7 +93,7 @@ export function HeroExpandedView({ onAskAsp }: HeroExpandedViewProps) {
 
       {/* Narrative Bio */}
       <div className="p-4 rounded-2xl bg-[var(--bg-subtle)]/60 border border-[var(--border-subtle)]">
-        <h3 className="text-xs uppercase font-mono tracking-wider text-[var(--theme-accent-text-dark)] font-semibold mb-2">
+        <h3 className="text-xs uppercase font-mono tracking-wider text-[var(--theme-accent-fg)] font-semibold mb-2">
           Engineering Philosophy &amp; Background
         </h3>
         <p className="text-xs sm:text-sm text-[var(--text-body)] leading-relaxed">
@@ -106,19 +106,19 @@ export function HeroExpandedView({ onAskAsp }: HeroExpandedViewProps) {
         {/* Formal Education */}
         <div className="p-4 rounded-2xl bg-[var(--bg-subtle)]/60 border border-[var(--border-subtle)]">
           <div className="flex items-center gap-2 mb-3">
-            <GraduationCap className="w-4 h-4 text-[var(--theme-accent)]" />
-            <h3 className="text-xs uppercase font-mono tracking-wider text-[var(--theme-accent-text-dark)] font-semibold">
+            <GraduationCap className="w-4 h-4 text-[var(--theme-accent-fg)]" />
+            <h3 className="text-xs uppercase font-mono tracking-wider text-[var(--theme-accent-fg)] font-semibold">
               Formal Education
             </h3>
           </div>
           <div className="flex flex-col gap-3">
             {profileData.education.map((edu, idx) => (
-              <div key={idx} className="p-3 rounded-xl bg-black/20 border border-white/5">
+              <div key={idx} className="p-3 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-semibold text-[var(--text-heading)]">{edu.institution}</span>
                   <span className="text-[10px] font-mono text-[var(--text-faint)]">{edu.period}</span>
                 </div>
-                <p className="text-xs text-[var(--theme-accent-text-dark)] mt-0.5">{edu.degree}</p>
+                <p className="text-xs text-[var(--theme-accent-fg)] font-medium mt-0.5">{edu.degree}</p>
                 <div className="flex items-center justify-between mt-1 text-[11px] text-[var(--text-muted)] font-mono">
                   <span>GPA: {edu.gpa}</span>
                   <span>{edu.location}</span>
@@ -131,17 +131,17 @@ export function HeroExpandedView({ onAskAsp }: HeroExpandedViewProps) {
         {/* Spoken Languages & Global Delivery */}
         <div className="p-4 rounded-2xl bg-[var(--bg-subtle)]/60 border border-[var(--border-subtle)]">
           <div className="flex items-center gap-2 mb-3">
-            <Globe className="w-4 h-4 text-[var(--theme-accent)]" />
-            <h3 className="text-xs uppercase font-mono tracking-wider text-[var(--theme-accent-text-dark)] font-semibold">
+            <Globe className="w-4 h-4 text-[var(--theme-accent-fg)]" />
+            <h3 className="text-xs uppercase font-mono tracking-wider text-[var(--theme-accent-fg)] font-semibold">
               Spoken Languages &amp; Global Delivery
             </h3>
           </div>
           <div className="flex flex-col gap-2.5">
             {profileData.languages.spoken.map((lang, idx) => (
-              <div key={idx} className="p-2.5 rounded-xl bg-black/20 border border-white/5">
+              <div key={idx} className="p-2.5 rounded-xl bg-[var(--bg-subtle)] border border-[var(--border-subtle)]">
                 <div className="flex items-center justify-between text-xs">
                   <span className="font-semibold text-[var(--text-heading)]">{lang.name}</span>
-                  <span className="text-[10px] font-mono text-[var(--theme-accent-text-dark)]">
+                  <span className="text-[10px] font-mono text-[var(--theme-accent-fg)] font-medium">
                     {lang.name === "English" ? "Cross-Border Delivery" : "Fluent"}
                   </span>
                 </div>
@@ -155,14 +155,14 @@ export function HeroExpandedView({ onAskAsp }: HeroExpandedViewProps) {
       {/* Ask AsP Call-to-action */}
       <div className="p-4 rounded-2xl bg-[var(--theme-accent-subtle)]/70 border border-[var(--border-accent)] flex items-center justify-between gap-4">
         <div className="flex items-center gap-2.5">
-          <Sparkles className="w-4 h-4 text-[var(--theme-accent)] shrink-0" />
+          <Sparkles className="w-4 h-4 text-[var(--theme-accent-fg)] shrink-0" />
           <span className="text-xs text-[var(--text-heading)] font-mono">
             Want to learn more about Ashwin&apos;s past projects and architectural decisions?
           </span>
         </div>
         <button
           onClick={() => onAskAsp("Where have you worked in the past? Give me your career journey.")}
-          className="shrink-0 px-3 py-1.5 rounded-xl bg-[var(--theme-accent)] text-black font-semibold text-xs font-mono hover:opacity-90 transition-opacity"
+          className="shrink-0 px-3 py-1.5 rounded-xl bg-[var(--theme-accent-fg)] text-[var(--bg-primary)] font-semibold text-xs font-mono hover:opacity-90 transition-opacity"
         >
           Ask AsP 🤖
         </button>

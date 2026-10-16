@@ -87,17 +87,12 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [accent, setAccentState] = useState<AccentTheme>("amber");
+  const [accent, setAccentState] = useState<AccentTheme>("titanium");
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem("portfolio-accent-theme") as AccentTheme;
-      if (saved && THEME_OPTIONS.some((t) => t.id === saved)) {
-        setAccentState(saved);
-        document.documentElement.setAttribute("data-accent", saved);
-      } else {
-        document.documentElement.setAttribute("data-accent", "amber");
-      }
+      localStorage.setItem("portfolio-accent-theme", "titanium");
+      document.documentElement.setAttribute("data-accent", "titanium");
     } catch {
       // Ignore localStorage errors
     }

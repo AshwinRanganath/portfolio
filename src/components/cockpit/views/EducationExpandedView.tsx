@@ -27,9 +27,9 @@ export function EducationExpandedView({ onAskAsp }: EducationExpandedViewProps) 
         </div>
         <button
           onClick={() => onAskAsp("Tell me about Ashwin's education and degrees")}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-xs font-mono text-[var(--theme-accent-text-dark)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all shrink-0 self-start sm:self-auto"
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[var(--theme-accent-subtle)] border border-[var(--border-accent)] text-xs font-mono text-[var(--theme-accent-fg)] hover:bg-[var(--theme-accent-subtle-hover)] transition-all shrink-0 self-start sm:self-auto font-medium"
         >
-          <Bot className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+          <Bot className="w-3.5 h-3.5 text-[var(--theme-accent-fg)]" />
           <span>Ask AsP about Education</span>
         </button>
       </div>
@@ -40,20 +40,20 @@ export function EducationExpandedView({ onAskAsp }: EducationExpandedViewProps) 
         <div className="p-5 rounded-2xl bg-[var(--bg-subtle)]/70 border border-[var(--border-subtle)] flex flex-col gap-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[var(--border-subtle)] pb-3">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 rounded-xl bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)]">
-                <BookOpen className="w-5 h-5 text-[var(--theme-accent)]" />
+              <div className="p-2 rounded-xl bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)]">
+                <BookOpen className="w-5 h-5 text-[var(--theme-accent-fg)]" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
                   <h4 className="text-base font-bold text-[var(--text-heading)]">
                     {mtech.degree}
                   </h4>
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)]">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--theme-accent-subtle)] text-[var(--theme-accent-fg)] border border-[var(--border-accent)] font-semibold">
                     GPA {mtech.gpa}
                   </span>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)] mt-0.5">
-                  <span className="font-semibold text-[var(--theme-accent-text-dark)]">
+                  <span className="font-semibold text-[var(--theme-accent-fg)]">
                     {mtech.institution}
                   </span>
                   <span>&bull;</span>
