@@ -17,8 +17,6 @@ import {
   Sparkles,
 } from "lucide-react";
 
-import { SystemPipelineFlow } from "./SystemPipelineFlow";
-
 interface CompanySystemSandboxProps {
   companyIndex: number;
 }
@@ -34,17 +32,12 @@ export function CompanySystemSandbox({ companyIndex }: CompanySystemSandboxProps
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
             <span className="font-mono font-bold text-[var(--text-heading)]">
-              Real-World System Flow: Enterprise Multi-Domain Mesh
+              Real-World System Architecture: Enterprise Multi-Domain Mesh
             </span>
           </div>
           <span className="text-[10px] font-mono text-[var(--theme-accent-text-dark)]">
             Click any node for architecture spec
           </span>
-        </div>
-
-        {/* Live Animated SVG Pipeline Flow with Continuous Packets */}
-        <div className="p-2 sm:p-3 rounded-xl bg-black/30 border border-white/5">
-          <SystemPipelineFlow onNodeClick={(nodeId) => setSelectedNode(nodeId)} />
         </div>
 
         {/* Interactive Diagram Nodes */}
