@@ -111,7 +111,7 @@ export function ExpandedStageModal({
               onClose();
             }
           }}
-          className="relative w-full max-w-4xl max-h-[88vh] rounded-3xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col z-10"
+          className="relative w-full max-w-4xl h-[84vh] max-h-[88vh] rounded-3xl bg-[var(--bg-card)] border border-[var(--border-subtle)] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] overflow-hidden flex flex-col z-10"
         >
           {/* Mobile Drag Pill Handle */}
           <div className="sm:hidden flex justify-center pt-2 pb-1 bg-[var(--bg-titlebar)]">
@@ -172,7 +172,7 @@ export function ExpandedStageModal({
               <EducationExpandedView onAskAsp={onAskAsp} />
             )}
             {activeSection === "asp" && (
-              <div className="h-[75vh] flex flex-col">
+              <div className="flex-1 min-h-0 flex flex-col">
                 <ChatTerminal
                   initialTopicId={initialTopicId}
                   onReturnToProfile={onClose}

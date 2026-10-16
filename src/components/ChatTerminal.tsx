@@ -52,9 +52,18 @@ export function ChatTerminal({
   const [inputValue, setInputValue] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [selectedExperience, setSelectedExperience] = useState<Experience | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const detailContainerRef = useRef<HTMLDivElement>(null);
+  const lastUserMsgIdRef = useRef<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const activeStreamRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Scroll experience detail view to top whenever opened
+  useEffect(() => {
+    if (selectedExperience && detailContainerRef.current) {
+      detailContainerRef.current.scrollTop = 0;
+    }
+  }, [selectedExperience]);
 
   // Handle external reset trigger (e.g. from window traffic light red button)
   useEffect(() => {
@@ -72,20 +81,14 @@ export function ChatTerminal({
           sender: "bot",
           text: `Hi there! 👋 I am **AsP**, Ashwin's interactive portfolio assistant.
 
-You can ask me real questions about his background, such as:
-- **"What programming languages do you code in?"**
-- **"Tell me about your time at Unisys"**
-- **"What did you do at AMD India?"**
-- **"Where have you worked in the past?"**
-- **"What are you building at CNZ Consultants?"**
-- **"Where did you study?"**
+I can walk you through his 3+ years architecting scalable Java microservices, distributed enterprise integration pipelines at CNZ, static analysis at Unisys, and telemetry profilers at AMD.
 
-Type any question below or click any suggestion to get started!`,
+Pick a quick question below or ask anything to get started!`,
           followUps: [
             "programming-languages",
             "experience-unisys",
-            "career-journey",
             "current-role",
+            "experience-amd",
           ],
           timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
         },
@@ -100,12 +103,33 @@ Type any question below or click any suggestion to get started!`,
     }
   }, [isActive, initialTopicId]);
 
-  // Auto-scroll on new message
+  // Smart scrolling on messages update
   useEffect(() => {
-    if (isActive && !selectedExperience) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (!isActive || selectedExperience) return;
+
+    if (messages.length <= 1) {
+      // Welcome message only: ensure viewport is at the top
+      if (scrollContainerRef.current) {
+        scrollContainerRef.current.scrollTop = 0;
+      }
+      return;
     }
-  }, [messages, isActive, selectedExperience]);
+
+    if (lastUserMsgIdRef.current) {
+      const userEl = document.getElementById(lastUserMsgIdRef.current);
+      if (userEl && scrollContainerRef.current) {
+        // Scroll so user's message is positioned cleanly near the top of the chat area
+        const containerRect = scrollContainerRef.current.getBoundingClientRect();
+        const userRect = userEl.getBoundingClientRect();
+        const offset = userRect.top - containerRect.top + scrollContainerRef.current.scrollTop - 16;
+        scrollContainerRef.current.scrollTo({
+          top: Math.max(0, offset),
+          behavior: "smooth",
+        });
+        lastUserMsgIdRef.current = null;
+      }
+    }
+  }, [messages.length, isActive, selectedExperience]);
 
   // Focus input when opened
   useEffect(() => {
@@ -195,6 +219,14 @@ Type any question below or click any suggestion to get started!`,
           )
         );
       }
+
+      // Smoothly follow down only if user is already reading near the bottom
+      if (scrollContainerRef.current) {
+        const { scrollHeight, scrollTop, clientHeight } = scrollContainerRef.current;
+        if (scrollHeight - scrollTop - clientHeight < 120) {
+          scrollContainerRef.current.scrollTop = scrollHeight;
+        }
+      }
     }, 12);
   };
 
@@ -211,6 +243,7 @@ Type any question below or click any suggestion to get started!`,
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
+    lastUserMsgIdRef.current = userMsg.id;
     setMessages((prev) => [...prev, userMsg]);
 
     // Stream bot response
@@ -476,6 +509,7 @@ You can click any of the suggested questions below to dive into details!`;
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
 
+    lastUserMsgIdRef.current = userMsg.id;
     setMessages((prev) => [...prev, userMsg]);
 
     // Resolve and stream answer
@@ -491,6 +525,7 @@ You can click any of the suggested questions below to dive into details!`;
       text: promptText,
       timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     };
+    lastUserMsgIdRef.current = userMsg.id;
     setMessages((prev) => [...prev, userMsg]);
     resolveUserQuery(promptText);
   };
@@ -534,7 +569,7 @@ You can click any of the suggested questions below to dive into details!`;
             <div className="flex items-center gap-2 min-w-0 pr-2">
               <button
                 onClick={() => setSelectedExperience(null)}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] font-mono text-xs transition-all active:scale-95 shrink-0"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg theme-subtle-box text-[var(--theme-accent-fg)] border border-[var(--border-accent)] font-mono text-xs transition-all active:scale-95 shrink-0 cursor-pointer"
                 title="Back to conversation"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
@@ -548,7 +583,7 @@ You can click any of the suggested questions below to dive into details!`;
 
             <button
               onClick={() => setSelectedExperience(null)}
-              className="p-1.5 rounded-lg theme-muted hover:theme-heading hover:bg-[var(--bg-subtle)] transition-colors shrink-0"
+              className="p-1.5 rounded-lg theme-muted hover:theme-heading hover:bg-[var(--bg-subtle)] transition-colors shrink-0 cursor-pointer"
               title="Close Detail View"
             >
               <X className="w-4 h-4" />
@@ -556,118 +591,120 @@ You can click any of the suggested questions below to dive into details!`;
           </div>
 
           {/* Detail Scrollable Body */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
-            {/* Header Hero Card */}
-            <div className="p-4 sm:p-5 rounded-2xl theme-subtle-box border border-[var(--border-accent)] space-y-3">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="p-2.5 rounded-xl accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] shrink-0">
-                    <Briefcase className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h2 className="text-lg sm:text-xl font-bold theme-heading font-sans">
-                      {selectedExperience.company}
-                    </h2>
-                    <p className="text-xs sm:text-sm font-medium accent-text">
-                      {selectedExperience.role}
-                    </p>
-                  </div>
-                </div>
-                <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shrink-0">
-                  Verified Role
-                </span>
-              </div>
-
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono theme-muted pt-2 border-t border-[var(--border-subtle)]">
-                <span className="flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 theme-faint" />
-                  {selectedExperience.period}
-                </span>
-                <span className="theme-faint hidden sm:inline">·</span>
-                <span className="flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 theme-faint" />
-                  {selectedExperience.location}
-                </span>
-              </div>
-
-              {/* Summary Box */}
-              <div className="p-3.5 rounded-xl accent-subtle-bg border border-[var(--border-accent)] text-xs sm:text-sm leading-relaxed theme-body">
-                <span className="font-semibold accent-text font-mono">
-                  Role Overview:{" "}
-                </span>
-                {selectedExperience.summary}
-              </div>
-            </div>
-
-            {/* Core Architectural & Technical Contributions */}
-            <div className="space-y-3">
-              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider accent-text font-bold">
-                <Sparkles className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
-                <span>Core Architectural Impact & Responsibilities</span>
-              </div>
-              <div className="space-y-2.5">
-                {selectedExperience.bullets.map((bullet, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-start gap-3 p-3.5 rounded-xl theme-subtle-box border border-[var(--border-subtle)] hover:border-[var(--border-accent)] transition-colors text-xs sm:text-sm leading-relaxed theme-body"
-                  >
-                    <span className="shrink-0 w-5 h-5 rounded-md accent-subtle-bg border border-[var(--border-accent)] text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] font-mono text-xs flex items-center justify-center font-bold mt-0.5 select-none">
-                      {idx + 1}
-                    </span>
-                    <span className="flex-1">{bullet}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Technologies Used */}
-            <div className="space-y-2.5">
-              <div className="text-xs font-mono uppercase tracking-wider accent-text font-bold">
-                Technologies & Infrastructure
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {selectedExperience.technologies.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="px-2.5 py-1 rounded-lg text-xs font-mono theme-subtle-box text-neutral-800 dark:text-neutral-200 border border-[var(--border-subtle)] hover:border-[var(--border-accent)] hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] transition-colors"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* 1-Click Interactive Follow-up Prompts */}
-            {getExperiencePrompts(selectedExperience.company).length > 0 && (
+          <div ref={detailContainerRef} className="flex-1 overflow-y-auto p-4 sm:p-6">
+            <div className="max-w-3xl mx-auto space-y-6">
+              {/* Header Hero Card */}
               <div className="p-4 sm:p-5 rounded-2xl theme-subtle-box border border-[var(--border-accent)] space-y-3">
-                <div className="flex items-center gap-1.5 text-xs font-mono font-semibold accent-text">
-                  <MessageCircleQuestion className="w-4 h-4 text-[var(--theme-accent)]" />
-                  <span>Ask AsP about this role:</span>
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl accent-subtle-bg text-[var(--theme-accent-fg)] border border-[var(--border-accent)] shrink-0">
+                      <Briefcase className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h2 className="text-lg sm:text-xl font-bold theme-heading font-sans">
+                        {selectedExperience.company}
+                      </h2>
+                      <p className="text-xs sm:text-sm font-medium accent-text">
+                        {selectedExperience.role}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 rounded-full text-[10px] font-mono bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30 shrink-0">
+                    Verified Role
+                  </span>
                 </div>
-                <div className="grid grid-cols-1 gap-2">
-                  {getExperiencePrompts(selectedExperience.company).map((prompt, idx) => (
-                    <button
+
+                <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono theme-muted pt-2 border-t border-[var(--border-subtle)]">
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 theme-faint" />
+                    {selectedExperience.period}
+                  </span>
+                  <span className="theme-faint hidden sm:inline">·</span>
+                  <span className="flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 theme-faint" />
+                    {selectedExperience.location}
+                  </span>
+                </div>
+
+                {/* Summary Box */}
+                <div className="p-3.5 rounded-xl accent-subtle-bg border border-[var(--border-accent)] text-xs sm:text-sm leading-relaxed theme-body">
+                  <span className="font-semibold accent-text font-mono">
+                    Role Overview:{" "}
+                  </span>
+                  {selectedExperience.summary}
+                </div>
+              </div>
+
+              {/* Core Architectural & Technical Contributions */}
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider accent-text font-bold">
+                  <Sparkles className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+                  <span>Core Architectural Impact & Responsibilities</span>
+                </div>
+                <div className="space-y-2.5">
+                  {selectedExperience.bullets.map((bullet, idx) => (
+                    <div
                       key={idx}
-                      onClick={() => handleSendPrompt(prompt)}
-                      className="w-full flex items-center justify-between p-3 rounded-xl accent-subtle-bg border border-[var(--border-accent)] text-xs sm:text-sm font-sans text-neutral-800 dark:text-neutral-200 hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] transition-all text-left active:scale-[0.99] group"
+                      className="flex items-start gap-3 p-3.5 rounded-xl theme-subtle-box border border-[var(--border-subtle)] hover:border-[var(--border-accent)] transition-colors text-xs sm:text-sm leading-relaxed theme-body"
                     >
-                      <span>{prompt}</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-[var(--theme-accent)] group-hover:translate-x-0.5 transition-transform shrink-0 ml-2" />
-                    </button>
+                      <span className="shrink-0 w-5 h-5 rounded-md accent-subtle-bg border border-[var(--border-accent)] text-[var(--theme-accent-fg)] font-mono text-xs flex items-center justify-center font-bold mt-0.5 select-none">
+                        {idx + 1}
+                      </span>
+                      <span className="flex-1">{bullet}</span>
+                    </div>
                   ))}
                 </div>
               </div>
-            )}
 
-            {/* Return Button */}
-            <div className="pt-2 pb-4">
-              <button
-                onClick={() => setSelectedExperience(null)}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl accent-btn font-semibold text-xs sm:text-sm active:scale-98 transition-all"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                <span>Return to Conversation</span>
-              </button>
+              {/* Technologies Used */}
+              <div className="space-y-2.5">
+                <div className="text-xs font-mono uppercase tracking-wider accent-text font-bold">
+                  Technologies & Infrastructure
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedExperience.technologies.map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2.5 py-1 rounded-lg text-xs font-mono theme-subtle-box theme-heading border border-[var(--border-subtle)] hover:border-[var(--border-accent)] hover:text-[var(--theme-accent-fg)] transition-colors"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* 1-Click Interactive Follow-up Prompts */}
+              {getExperiencePrompts(selectedExperience.company).length > 0 && (
+                <div className="p-4 sm:p-5 rounded-2xl theme-subtle-box border border-[var(--border-accent)] space-y-3">
+                  <div className="flex items-center gap-1.5 text-xs font-mono font-semibold accent-text">
+                    <MessageCircleQuestion className="w-4 h-4 text-[var(--theme-accent)]" />
+                    <span>Ask AsP about this role:</span>
+                  </div>
+                  <div className="grid grid-cols-1 gap-2">
+                    {getExperiencePrompts(selectedExperience.company).map((prompt, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => handleSendPrompt(prompt)}
+                        className="w-full flex items-center justify-between p-3 rounded-xl theme-subtle-box border border-[var(--border-subtle)] hover:border-[var(--border-accent)] text-xs sm:text-sm font-sans theme-heading hover:text-[var(--theme-accent-fg)] transition-all text-left active:scale-[0.99] group cursor-pointer"
+                      >
+                        <span>{prompt}</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-[var(--theme-accent)] group-hover:translate-x-0.5 transition-transform shrink-0 ml-2" />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Return Button */}
+              <div className="pt-2 pb-4">
+                <button
+                  onClick={() => setSelectedExperience(null)}
+                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl accent-btn font-semibold text-xs sm:text-sm active:scale-98 transition-all cursor-pointer"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span>Return to Conversation</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -675,194 +712,206 @@ You can click any of the suggested questions below to dive into details!`;
         /* Standard Conversation View */
         <div className="flex-1 flex flex-col min-h-0">
           {/* Suggested Questions Strip */}
-          <div className="px-4 py-2 border-b border-[var(--border-subtle)] bg-[var(--bg-titlebar)] flex items-center gap-1.5 overflow-x-auto scrollbar-none">
-            <span className="text-[11px] font-mono theme-faint shrink-0 flex items-center gap-1">
-              <MessageCircleQuestion className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
-              Try:
-            </span>
-            {[
-              { id: "programming-languages", text: "Languages you know" },
-              { id: "experience-unisys", text: "Unisys experience" },
-              { id: "experience-amd", text: "AMD role & award" },
-              { id: "career-journey", text: "Past career journey" },
-              { id: "current-role", text: "Current role at CNZ" },
-              { id: "education", text: "Education & GPA" },
-            ].map((item) => (
-              <button
-                key={item.id}
-                onClick={() => handleSelectTopic(item.id)}
-                className="shrink-0 px-2.5 py-1 rounded-md text-xs font-sans theme-subtle-box text-neutral-700 dark:text-neutral-300 hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] hover:border-[var(--border-accent)] transition-all active:scale-95 flex items-center gap-1"
-              >
-                <span>{item.text}</span>
-              </button>
-            ))}
+          <div className="px-4 py-2 border-b border-[var(--border-subtle)] bg-[var(--bg-titlebar)] overflow-x-auto scrollbar-none">
+            <div className="max-w-3xl mx-auto w-full flex items-center gap-1.5 overflow-x-auto scrollbar-none">
+              <span className="text-[11px] font-mono theme-faint shrink-0 flex items-center gap-1">
+                <MessageCircleQuestion className="w-3.5 h-3.5 text-[var(--theme-accent)]" />
+                Try:
+              </span>
+              {[
+                { id: "programming-languages", text: "Languages you know" },
+                { id: "experience-unisys", text: "Unisys experience" },
+                { id: "experience-amd", text: "AMD role & award" },
+                { id: "career-journey", text: "Past career journey" },
+                { id: "current-role", text: "Current role at CNZ" },
+                { id: "education", text: "Education & GPA" },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => handleSelectTopic(item.id)}
+                  className="shrink-0 px-2.5 py-1 rounded-md text-xs font-sans theme-subtle-box theme-heading hover:text-[var(--theme-accent-fg)] hover:border-[var(--border-accent)] transition-all active:scale-95 flex items-center gap-1 cursor-pointer"
+                >
+                  <span>{item.text}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Messages Stream */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-4">
-            {messages.map((msg) => {
-              const relatedExps =
-                msg.sender === "bot" && !msg.isStreaming
-                  ? getRelatedExperiences(msg.topicId, msg.text)
-                  : [];
+          <div
+            ref={scrollContainerRef}
+            className="flex-1 overflow-y-auto p-4 sm:p-6"
+          >
+            <div className="max-w-3xl mx-auto w-full space-y-4">
+              {messages.map((msg) => {
+                const isWelcome = msg.id === "welcome-1" || msg.id.startsWith("cleared-");
+                const relatedExps =
+                  msg.sender === "bot" && !msg.isStreaming && !isWelcome
+                    ? getRelatedExperiences(msg.topicId, msg.text)
+                    : [];
 
-              return (
-                <div
-                  key={msg.id}
-                  className={`flex flex-col ${
-                    msg.sender === "user" ? "items-end" : "items-start"
-                  }`}
-                >
-                  <div className="flex items-center gap-1.5 text-[10px] font-mono theme-faint mb-1 px-1">
-                    {msg.sender === "bot" && (
-                      <Bot className="w-3 h-3 text-[var(--theme-accent)] shrink-0" />
-                    )}
-                    <span>{msg.sender === "user" ? "You" : "AsP"}</span>
-                    <span>·</span>
-                    <span>{msg.timestamp}</span>
-                  </div>
-
+                return (
                   <div
-                    className={`max-w-[92%] sm:max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-                      msg.sender === "user"
-                        ? "accent-btn font-semibold rounded-tr-sm shadow-md"
-                        : "theme-bubble-bot rounded-tl-sm shadow-sm"
+                    key={msg.id}
+                    id={msg.id}
+                    className={`flex flex-col ${
+                      msg.sender === "user" ? "items-end" : "items-start"
                     }`}
                   >
-                    {/* Render Rich Markdown content */}
-                    <FormattedMarkdown
-                      content={msg.text}
-                      isStreaming={msg.isStreaming}
-                    />
+                    <div className="flex items-center gap-1.5 text-[10px] font-mono theme-faint mb-1 px-1">
+                      {msg.sender === "bot" && (
+                        <Bot className="w-3 h-3 text-[var(--theme-accent)] shrink-0" />
+                      )}
+                      <span>{msg.sender === "user" ? "You" : "AsP"}</span>
+                      <span>·</span>
+                      <span>{msg.timestamp}</span>
+                    </div>
 
-                    {/* Prominent Action Cards for Work Experience */}
-                    {relatedExps.length > 0 && (
-                      <div className="mt-3.5 pt-3 border-t border-[var(--border-subtle)] space-y-2">
-                        {relatedExps.length === 1 ? (
-                          <div className="p-3 rounded-xl accent-subtle-bg border border-[var(--border-accent)] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-                            <div className="flex items-center gap-2.5 min-w-0">
-                              <div className="w-8 h-8 rounded-lg accent-subtle-bg border border-[var(--border-accent)] flex items-center justify-center shrink-0 text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)]">
-                                <Briefcase className="w-4 h-4" />
-                              </div>
-                              <div className="min-w-0">
-                                <div className="font-semibold text-xs theme-heading flex items-center gap-1.5">
-                                  <span className="truncate">{relatedExps[0].company}</span>
-                                  <span className="text-[10px] font-mono px-1.5 py-0.2 rounded accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] shrink-0">
-                                    {relatedExps[0].period}
-                                  </span>
-                                </div>
-                                <div className="text-[11px] theme-muted font-sans truncate">
-                                  {relatedExps[0].role}
-                                </div>
-                              </div>
-                            </div>
-                            <button
-                              onClick={() => setSelectedExperience(relatedExps[0])}
-                              className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg accent-btn text-xs font-semibold shadow-sm transition-all active:scale-95 shrink-0"
-                            >
-                              <span>View Full Role Details</span>
-                              <ArrowRight className="w-3.5 h-3.5" />
-                            </button>
-                          </div>
-                        ) : (
-                          <div className="space-y-2">
-                            <div className="text-[11px] font-mono accent-text font-semibold flex items-center gap-1">
-                              <Sparkles className="w-3 h-3" />
-                              <span>Detailed role breakdown & architecture:</span>
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                              {relatedExps.map((exp) => (
-                                <button
-                                  key={exp.company}
-                                  onClick={() => setSelectedExperience(exp)}
-                                  className="flex items-center justify-between p-2.5 rounded-xl accent-subtle-bg border border-[var(--border-accent)] transition-all text-left group active:scale-98"
-                                >
-                                  <div className="min-w-0 pr-2">
-                                    <div className="font-semibold text-xs theme-heading truncate group-hover:text-[var(--theme-accent-text)] dark:group-hover:text-[var(--theme-accent-text-dark)]">
-                                      {exp.company}
-                                    </div>
-                                    <div className="text-[10px] font-mono theme-muted truncate">
-                                      {exp.period}
-                                    </div>
-                                  </div>
-                                  <div className="shrink-0 w-6 h-6 rounded-md accent-subtle-bg flex items-center justify-center text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] group-hover:accent-btn transition-colors">
-                                    <ArrowRight className="w-3.5 h-3.5" />
-                                  </div>
-                                </button>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
+                    <div
+                      className={`rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                        msg.sender === "user"
+                          ? "accent-btn font-medium rounded-tr-sm shadow-md max-w-[85%] sm:max-w-[75%]"
+                          : "theme-bubble-bot rounded-tl-sm shadow-sm w-full max-w-[95%] sm:max-w-[92%]"
+                      }`}
+                    >
+                      {/* Render content: plain text for user, rich markdown for bot */}
+                      {msg.sender === "user" ? (
+                        <p className="leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                      ) : (
+                        <FormattedMarkdown
+                          content={msg.text}
+                          isStreaming={msg.isStreaming}
+                        />
+                      )}
 
-                    {/* Message Utilities (Copy) for Bot */}
-                    {msg.sender === "bot" && !msg.isStreaming && msg.text && (
-                      <div className="mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs font-mono theme-muted">
-                        <button
-                          onClick={() => copyMessage(msg.id, msg.text)}
-                          className="flex items-center gap-1 hover:text-[var(--theme-accent-text)] dark:hover:text-[var(--theme-accent-text-dark)] transition-colors"
-                          title="Copy response"
-                        >
-                          {copiedId === msg.id ? (
-                            <>
-                              <Check className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
-                              <span className="text-emerald-500 dark:text-emerald-400 font-medium">
-                                Copied
-                              </span>
-                            </>
+                      {/* Prominent Action Cards for Work Experience */}
+                      {relatedExps.length > 0 && (
+                        <div className="mt-3.5 pt-3 border-t border-[var(--border-subtle)] space-y-2">
+                          {relatedExps.length === 1 ? (
+                            <div className="p-3 rounded-xl theme-subtle-box border border-[var(--border-subtle)] flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <div className="w-8 h-8 rounded-lg accent-subtle-bg border border-[var(--border-accent)] flex items-center justify-center shrink-0 text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)]">
+                                  <Briefcase className="w-4 h-4" />
+                                </div>
+                                <div className="min-w-0">
+                                  <div className="font-semibold text-xs theme-heading flex items-center gap-1.5">
+                                    <span className="truncate">{relatedExps[0].company}</span>
+                                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded theme-subtle-box text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-subtle)] shrink-0">
+                                      {relatedExps[0].period}
+                                    </span>
+                                  </div>
+                                  <div className="text-[11px] theme-muted font-sans truncate">
+                                    {relatedExps[0].role}
+                                  </div>
+                                </div>
+                              </div>
+                              <button
+                                onClick={() => setSelectedExperience(relatedExps[0])}
+                                className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg accent-btn text-xs font-semibold shadow-sm transition-all active:scale-95 shrink-0 cursor-pointer"
+                              >
+                                <span>View Full Role Details</span>
+                                <ArrowRight className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
                           ) : (
-                            <>
-                              <Copy className="w-3.5 h-3.5" />
-                              <span>Copy</span>
-                            </>
+                            <div className="space-y-2">
+                              <div className="text-[11px] font-mono theme-heading font-semibold flex items-center gap-1">
+                                <Sparkles className="w-3 h-3 text-[var(--theme-accent)]" />
+                                <span>Detailed role breakdown & architecture:</span>
+                              </div>
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                                {relatedExps.map((exp) => (
+                                  <button
+                                    key={exp.company}
+                                    onClick={() => setSelectedExperience(exp)}
+                                    className="flex items-center justify-between p-2.5 rounded-xl theme-subtle-box border border-[var(--border-subtle)] hover:border-[var(--border-accent)] transition-all text-left group active:scale-98 cursor-pointer"
+                                  >
+                                    <div className="min-w-0 pr-2">
+                                      <div className="font-semibold text-xs theme-heading truncate group-hover:text-[var(--theme-accent-fg)]">
+                                        {exp.company}
+                                      </div>
+                                      <div className="text-[10px] font-mono theme-muted truncate">
+                                        {exp.period}
+                                      </div>
+                                    </div>
+                                    <div className="shrink-0 w-6 h-6 rounded-md accent-subtle-bg flex items-center justify-center text-[var(--theme-accent-fg)] group-hover:accent-btn transition-colors">
+                                      <ArrowRight className="w-3.5 h-3.5" />
+                                    </div>
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
                           )}
-                        </button>
-                        {msg.topicId === "contact" && (
-                          <a
-                            href={`mailto:${profileData.email}`}
-                            className="accent-text hover:underline flex items-center gap-1 font-medium"
+                        </div>
+                      )}
+
+                      {/* Message Utilities (Copy) for Bot */}
+                      {msg.sender === "bot" && !msg.isStreaming && msg.text && (
+                        <div className="mt-3 pt-2 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs font-mono theme-muted">
+                          <button
+                            onClick={() => copyMessage(msg.id, msg.text)}
+                            className="flex items-center gap-1 hover:text-[var(--theme-accent-fg)] transition-colors cursor-pointer"
+                            title="Copy response"
                           >
-                            Email Ashwin <ExternalLink className="w-3 h-3" />
-                          </a>
-                        )}
+                            {copiedId === msg.id ? (
+                              <>
+                                <Check className="w-3.5 h-3.5 text-emerald-500 dark:text-emerald-400" />
+                                <span className="text-emerald-500 dark:text-emerald-400 font-medium">
+                                  Copied
+                                </span>
+                              </>
+                            ) : (
+                              <>
+                                <Copy className="w-3.5 h-3.5" />
+                                <span>Copy</span>
+                              </>
+                            )}
+                          </button>
+                          {msg.topicId === "contact" && (
+                            <a
+                              href={`mailto:${profileData.email}`}
+                              className="accent-text hover:underline flex items-center gap-1 font-medium"
+                            >
+                              Email Ashwin <ExternalLink className="w-3 h-3" />
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Follow-up Suggestion Chips with Realistic Wording */}
+                    {msg.followUps && msg.followUps.length > 0 && !msg.isStreaming && (
+                      <div className="flex flex-wrap items-center gap-1.5 mt-2.5 max-w-[95%]">
+                        <span className="text-[10px] font-mono theme-faint mr-1">
+                          Related questions:
+                        </span>
+                        {msg.followUps.map((fId) => {
+                          const followTopic = profileData.botTopics.find((t) => t.id === fId);
+                          if (!followTopic) return null;
+                          return (
+                            <button
+                              key={fId}
+                              onClick={() => handleSelectTopic(fId)}
+                              className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-sans theme-subtle-box theme-body border border-[var(--border-subtle)] hover:border-[var(--border-accent)] hover:text-[var(--theme-accent-fg)] transition-all hover:scale-105 active:scale-95 text-left cursor-pointer"
+                            >
+                              <span>{followTopic.realisticQuestion}</span>
+                              <ChevronRight className="w-3 h-3 shrink-0" />
+                            </button>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
-
-                  {/* Follow-up Suggestion Chips with Realistic Wording */}
-                  {msg.followUps && msg.followUps.length > 0 && !msg.isStreaming && (
-                    <div className="flex flex-wrap items-center gap-1.5 mt-2.5 max-w-[85%]">
-                      <span className="text-[10px] font-mono theme-faint mr-1">
-                        Related questions:
-                      </span>
-                      {msg.followUps.map((fId) => {
-                        const followTopic = profileData.botTopics.find((t) => t.id === fId);
-                        if (!followTopic) return null;
-                        return (
-                          <button
-                            key={fId}
-                            onClick={() => handleSelectTopic(fId)}
-                            className="flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-sans accent-subtle-bg text-[var(--theme-accent-text)] dark:text-[var(--theme-accent-text-dark)] border border-[var(--border-accent)] transition-all hover:scale-105 active:scale-95 text-left"
-                          >
-                            <span>{followTopic.realisticQuestion}</span>
-                            <ChevronRight className="w-3 h-3 shrink-0" />
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-            <div ref={messagesEndRef} />
+                );
+              })}
+            </div>
           </div>
 
           {/* Bottom Terminal Input Bar */}
           <div className="p-3 sm:p-4 border-t border-[var(--border-subtle)] bg-[var(--bg-titlebar)]">
             <form
               onSubmit={handleSendMessage}
-              className="flex items-center gap-2 rounded-xl theme-subtle-box px-3.5 py-2.5 focus-within:border-[var(--border-accent)] transition-colors"
+              className="max-w-3xl mx-auto flex items-center gap-2 rounded-xl theme-subtle-box px-3.5 py-2.5 focus-within:border-[var(--border-accent)] transition-colors"
             >
               <Search className="w-4 h-4 theme-muted shrink-0" />
               <input
@@ -876,18 +925,18 @@ You can click any of the suggested questions below to dive into details!`;
               <button
                 type="submit"
                 disabled={!inputValue.trim()}
-                className="p-1.5 rounded-lg accent-btn font-semibold disabled:opacity-30 transition-all shrink-0"
+                className="p-1.5 rounded-lg accent-btn font-semibold disabled:opacity-30 transition-all shrink-0 cursor-pointer disabled:cursor-not-allowed"
                 title="Send question"
               >
                 <Send className="w-4 h-4" />
               </button>
             </form>
-            <div className="mt-2 flex items-center justify-between text-[11px] font-mono theme-faint px-1">
+            <div className="max-w-3xl mx-auto mt-2 flex items-center justify-between text-[11px] font-mono theme-faint px-1">
               <span>Type any question & press Enter</span>
               <div className="flex items-center gap-2">
                 <button
                   onClick={clearChat}
-                  className="hover:theme-heading hover:underline flex items-center gap-1"
+                  className="hover:theme-heading hover:underline flex items-center gap-1 cursor-pointer"
                 >
                   <RotateCcw className="w-3 h-3" />
                   <span>Reset Chat</span>
